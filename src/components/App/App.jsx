@@ -6,7 +6,7 @@ import './App.scss';
 const App = () => {
   return (
     <Router>
-      <div className='App'>Hello Group 46 !</div>
+      <div>Hello Group 46 !</div>
     </Router>
   );
 };
