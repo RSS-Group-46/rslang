@@ -6,9 +6,9 @@ html {
 }
 
 .auth-container {
-  min-height: 100vh !important;
-  max-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center !important;
   align-items: center !important;
+  min-height: 100vh !important;
 }

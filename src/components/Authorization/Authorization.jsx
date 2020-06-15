@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useContext } from 'react';
 import AuthContext from '../../contexts/auth.context';
 import useHttp from '../../hooks/http.hook';
@@ -8,6 +7,8 @@ const Authorization = () => {
   const auth = useContext(AuthContext);
   const { request } = useHttp();
   const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     setForm({
@@ -18,6 +19,8 @@ const Authorization = () => {
 
   const handleRegister = async () => {
     try {
+      setError('');
+      setMessage('');
       const VALID = /(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[+-_@$!%*?&#.,;:[\]{}])[a-zA-Z0-9+-_@$!%*?&#.,;:[\]{}]{8,16}/.test(
         form.password,
       );
@@ -28,14 +31,17 @@ const Authorization = () => {
           'POST',
           { ...form },
         );
+        setMessage('User Created');
       }
     } catch (e) {
-      console.log(e);
+      setError(e.message);
     }
   };
 
   const handleLogIn = async () => {
     try {
+      setError('');
+      setMessage('');
       const VALID = /(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[+-_@$!%*?&#.,;:[\]{}])[a-zA-Z0-9+-_@$!%*?&#.,;:[\]{}]{8,16}/.test(
         form.password,
       );
@@ -50,12 +56,26 @@ const Authorization = () => {
         auth.logIn(data.token, data.userId);
       }
     } catch (e) {
-      console.log(e);
+      setError(e.message);
     }
   };
 
   return (
     <div className="container auth-container">
+      {error.length > 0 ? (
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      ) : (
+        ''
+      )}
+      {message.length > 0 ? (
+        <div className="alert alert-dark" role="alert">
+          {message}
+        </div>
+      ) : (
+        ''
+      )}
       <form
         className="card"
         onSubmit={(e) => {
