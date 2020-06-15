@@ -1,9 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import {
-  BASE_URL, STATISTICS_URL, VOLCABULARY_URL, MINI_GAMES_URL, PROMO_URL, TEAM_URL,
-  SETTINGS_URL, AUTH_URL, LEARNED_URL, COMPICATED_URL, DELETED_URL, SPEAKIT_URL,
-  PUZZLE_URL, SAVANNAH_URL, AUDIOCALL_URL, SPRINT_URL
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
+import {
+  BASE_URL,
+  STATISTICS_URL,
+  VOLCABULARY_URL,
+  MINI_GAMES_URL,
+  PROMO_URL,
+  TEAM_URL,
+  SETTINGS_URL,
+  AUTH_URL,
+  LEARNED_URL,
+  COMPICATED_URL,
+  DELETED_URL,
+  SPEAKIT_URL,
+  PUZZLE_URL,
+  SAVANNAH_URL,
+  AUDIOCALL_URL,
+  SPRINT_URL,
 } from '../../constants/urlConstants';
 
 import './App.scss';
@@ -13,7 +31,7 @@ const App = () => {
   return (
     <Router>
       <div>navbar</div>
-      {isAuth &&
+      {isAuth && (
         <Switch>
           <Route exact path={BASE_URL}>
             <div>Hello Group 46 !</div>
@@ -57,20 +75,20 @@ const App = () => {
           <Route exact path={SETTINGS_URL}>
             <div>settings</div>
           </Route>
-          <Redirect to={BASE_URL}></Redirect>
+          <Redirect to={BASE_URL} />
         </Switch>
-      }
-      {!isAuth &&
+      )}
+      {!isAuth && (
         <Switch>
           <Route exact path={AUTH_URL}>
             <div>auth page</div>
           </Route>
-          <Redirect to={AUTH_URL}></Redirect>
+          <Redirect to={AUTH_URL} />
         </Switch>
-      }
+      )}
       <div>footer</div>
     </Router>
-  )
-}
+  );
+};
 
 export default App;
