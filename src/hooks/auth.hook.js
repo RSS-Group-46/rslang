@@ -23,9 +23,9 @@ const useAuth = () => {
   }, []);
 
   useEffect(() => {
-    const DATA = JSON.parse(localStorage.getItem(storageName));
-    if (DATA && DATA.token) {
-      logIn(DATA.token, DATA.id);
+    const data = JSON.parse(localStorage.getItem(storageName));
+    if (data && data.token) {
+      logIn(data.token, data.id);
     }
   }, [logIn]);
 
