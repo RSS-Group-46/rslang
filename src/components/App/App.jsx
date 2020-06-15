@@ -26,12 +26,15 @@ import {
 
 import './App.scss';
 import Authorization from '../Authorization/Authorization';
+import AuthContext from '../../contexts/auth.context';
+import useAuth from '../../hooks/auth.hook';
 
 const App = () => {
-  const isAuth = false;
+  const { token, userId, logIn, logOut } = useAuth();
+  const isAuth = !!token;
   return (
     <Router>
-      {/* <div>navbar</div> */}
+      <div>navbar</div>
       {isAuth && (
         <Switch>
           <Route exact path={BASE_URL}>
@@ -79,15 +82,17 @@ const App = () => {
           <Redirect to={BASE_URL} />
         </Switch>
       )}
+      <div>footer</div>
       {!isAuth && (
-        <Switch>
-          <Route exact path={AUTH_URL}>
-            <Authorization />
-          </Route>
-          <Redirect to={AUTH_URL} />
-        </Switch>
+        <AuthContext.Provider value={{ token, userId, logIn, logOut, useAuth }}>
+          <Switch>
+            <Route exact path={AUTH_URL}>
+              <Authorization />
+            </Route>
+            <Redirect to={AUTH_URL} />
+          </Switch>
+        </AuthContext.Provider>
       )}
-      {/* <div>footer</div> */}
     </Router>
   );
 };
