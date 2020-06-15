@@ -25,12 +25,13 @@ import {
 } from '../../constants/urlConstants';
 
 import './App.scss';
+import Authorization from '../Authorization/Authorization';
 
 const App = () => {
-  const isAuth = true;
+  const isAuth = false;
   return (
     <Router>
-      <div>navbar</div>
+      {/* <div>navbar</div> */}
       {isAuth && (
         <Switch>
           <Route exact path={BASE_URL}>
@@ -81,12 +82,12 @@ const App = () => {
       {!isAuth && (
         <Switch>
           <Route exact path={AUTH_URL}>
-            <div>auth page</div>
+            <Authorization />
           </Route>
           <Redirect to={AUTH_URL} />
         </Switch>
       )}
-      <div>footer</div>
+      {/* <div>footer</div> */}
     </Router>
   );
 };

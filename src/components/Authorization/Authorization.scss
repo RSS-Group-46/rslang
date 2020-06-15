@@ -1,1 +1,14 @@
 @import '../../styles/variables';
+
+body,
+html {
+  height: 100vh;
+}
+
+.auth-container {
+  min-height: 100vh !important;
+  max-height: 100vh;
+  display: flex;
+  justify-content: center !important;
+  align-items: center !important;
+}
