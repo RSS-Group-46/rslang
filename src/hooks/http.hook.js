@@ -14,16 +14,16 @@ const useHttp = () => {
           headers['Content-type'] = 'application/json';
         }
 
-        const RESPONSE = await fetch(url, { method, body, headers });
-        const DATA = await RESPONSE.json();
+        const response = await fetch(url, { method, body, headers });
+        const data = await RESPONSE.json();
 
-        if (!RESPONSE.ok) {
-          throw new Error(DATA.message || 'Something went wrong');
+        if (!response.ok) {
+          throw new Error(data.message || 'Something went wrong');
         }
 
         setLoading(false);
 
-        return DATA;
+        return data;
       } catch (e) {
         setLoading(false);
         setError(e.message);
