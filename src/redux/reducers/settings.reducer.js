@@ -1,5 +1,3 @@
-
-
 const initialState = {
   volume: 0.5, // some stuff like mini-games have sounds, should not be at 100% volume I guess
 };
