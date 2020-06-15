@@ -57,7 +57,7 @@ const App = () => {
           <Route exact path={SETTINGS_URL}>
             <div>settings</div>
           </Route>
-          <Redirect to={BASE_URL}></Redirect>
+          <Redirect to={BASE_URL} />
         </Switch>
       }
       {!isAuth &&
@@ -65,7 +65,7 @@ const App = () => {
           <Route exact path={AUTH_URL}>
             <div>auth page</div>
           </Route>
-          <Redirect to={AUTH_URL}></Redirect>
+          <Redirect to={AUTH_URL} />
         </Switch>
       }
       <div>footer</div>
