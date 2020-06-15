@@ -1,5 +1,4 @@
 import React from 'react';
-import 'bootswatch/dist/slate/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Route,
