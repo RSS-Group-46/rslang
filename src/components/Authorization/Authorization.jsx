@@ -23,12 +23,11 @@ const Authorization = () => {
       );
 
       if (VALID) {
-        const data = await request(
+        await request(
           'https://afternoon-falls-25894.herokuapp.com/users',
           'POST',
           { ...form },
         );
-        console.log(data.message);
       }
     } catch (e) {
       console.log(e);
