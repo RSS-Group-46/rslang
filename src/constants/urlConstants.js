@@ -18,6 +18,6 @@ export const DELETED_URL = '/deleted';
 // mini-games
 export const SPEAKIT_URL = '/speakit';
 export const PUZZLE_URL = '/puzzle';
-export const SAVANNA_URL = '/savanna';
+export const SAVANNAH_URL = '/savannah';
 export const AUDIOCALL_URL = '/audiocall';
 export const SPRINT_URL = '/sprint';

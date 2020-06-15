@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import {
   BASE_URL, STATISTICS_URL, VOLCABULARY_URL, MINI_GAMES_URL, PROMO_URL, TEAM_URL,
   SETTINGS_URL, AUTH_URL, LEARNED_URL, COMPICATED_URL, DELETED_URL, SPEAKIT_URL,
-  PUZZLE_URL, SAVANNA_URL, AUDIOCALL_URL, SPRINT_URL
+  PUZZLE_URL, SAVANNAH_URL, AUDIOCALL_URL, SPRINT_URL
 } from '../../constants/urlConstants';
 
 import './App.scss';
@@ -39,8 +39,8 @@ const App = () => {
           <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
             <div>puzzle</div>
           </Route>
-          <Route exact path={MINI_GAMES_URL + SAVANNA_URL}>
-            <div>savanna</div>
+          <Route exact path={MINI_GAMES_URL + SAVANNAH_URL}>
+            <div>savannah</div>
           </Route>
           <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
             <div>audiocall</div>
