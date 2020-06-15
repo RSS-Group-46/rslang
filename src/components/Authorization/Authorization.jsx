@@ -18,13 +18,18 @@ const Authorization = () => {
 
   const handleRegister = async () => {
     try {
-      const data = await request(
-        'https://afternoon-falls-25894.herokuapp.com/users',
-        'POST',
-        { ...form },
+      const VALID = /(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[+-_@$!%*?&#.,;:[\]{}])[a-zA-Z0-9+-_@$!%*?&#.,;:[\]{}]{8,16}/.test(
+        form.password,
       );
 
-      console.log(data.message);
+      if (VALID) {
+        const data = await request(
+          'https://afternoon-falls-25894.herokuapp.com/users',
+          'POST',
+          { ...form },
+        );
+        console.log(data.message);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -32,13 +37,19 @@ const Authorization = () => {
 
   const handleLogIn = async () => {
     try {
-      const data = await request(
-        'https://afternoon-falls-25894.herokuapp.com/signin',
-        'POST',
-        { ...form },
+      const VALID = /(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[+-_@$!%*?&#.,;:[\]{}])[a-zA-Z0-9+-_@$!%*?&#.,;:[\]{}]{8,16}/.test(
+        form.password,
       );
 
-      auth.logIn(data.token, data.userId);
+      if (VALID) {
+        const data = await request(
+          'https://afternoon-falls-25894.herokuapp.com/signin',
+          'POST',
+          { ...form },
+        );
+
+        auth.logIn(data.token, data.userId);
+      }
     } catch (e) {
       console.log(e);
     }
@@ -46,7 +57,12 @@ const Authorization = () => {
 
   return (
     <div className="container auth-container">
-      <div className="card">
+      <form
+        className="card"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
         <div className="card-header text-center">Authorization</div>
         <div className="card-body">
           <div className="input-group mb-3">
@@ -56,13 +72,14 @@ const Authorization = () => {
               </span>
             </div>
             <input
-              type="text"
+              type="email"
               className="form-control"
               placeholder="email@example.com"
               aria-label="email"
               aria-describedby="email"
               name="email"
               onChange={handleChange}
+              required
             />
           </div>
           <div className="input-group mb-3">
@@ -79,26 +96,28 @@ const Authorization = () => {
               aria-describedby="password"
               name="password"
               onChange={handleChange}
+              pattern="(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[+-_@$!%*?&#.,;:[\]{}])[a-zA-Z0-9+-_@$!%*?&#.,;:[\]{}]{8,16}"
+              required
             />
           </div>
         </div>
         <div className="card-footer d-flex justify-content-center">
           <button
-            type="button"
+            type="submit"
             className="btn btn-primary mr-4"
             onClick={handleLogIn}
           >
             Log In
           </button>
           <button
-            type="button"
+            type="submit"
             className="btn btn-secondary"
             onClick={handleRegister}
           >
             Sing Up
           </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
