@@ -12,10 +12,10 @@ const Team = () => {
       <p className="team__greeting">Best regards, development team!</p>
       <p className="team__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae nemo nulla praesentium unde alias vero omnis animi vel corporis totam harum iusto nesciunt, ipsa eveniet accusamus officia optio. Voluptate, accusantium. Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae nemo nulla praesentium unde alias vero omnis animi vel corporis totam harum iusto nesciunt, ipsa eveniet accusamus officia optio. Voluptate, accusantium.</p>
 
-      <ul className="team__list">
+      <section className="team__list">
         {dataTeam.map((info) => {
           return (
-            <li className="team__item border-primary" key={info.id}>
+            <article className="team__item border-primary" key={info.id}>
               <div className="team__icons">
                 <img
                   className="team__icon team__icons--avatar"
@@ -27,7 +27,7 @@ const Team = () => {
                   <a href={info.urlGitHub}>
                     <img src={octocatImg} alt="github" />
                   </a>
-                  {info.urlLinked === '' ? null : (
+                  {info.urlLinked && (
                     <a href={info.urlLinked}>
                       <img src={linkedinImg} alt="linkedin" />
                     </a>
@@ -49,10 +49,10 @@ const Team = () => {
                   - project
                 </ul>
               </div>
-            </li>
+            </article>
           );
         })}
-      </ul>
+      </section>
     </div>
   );
 };
