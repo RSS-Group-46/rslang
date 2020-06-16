@@ -28,7 +28,7 @@ import './App.scss';
 import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
 import useAuth from '../../hooks/auth.hook';
-import Header from '../header/header';
+import Header from '../Header/Header';
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
