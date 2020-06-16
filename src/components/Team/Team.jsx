@@ -7,37 +7,46 @@ import './Team.scss';
 
 const Team = () => {
   return (
-    <div>
-      <h2>Team members</h2>
-      <span>Best regards, development team!</span>
-      <p>Some text about team</p>
+    <div className="team">
+      <h2 className="team__title">Team members</h2>
+      <p className="team__greeting">Best regards, development team!</p>
+      <p className="team__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae nemo nulla praesentium unde alias vero omnis animi vel corporis totam harum iusto nesciunt, ipsa eveniet accusamus officia optio. Voluptate, accusantium. Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae nemo nulla praesentium unde alias vero omnis animi vel corporis totam harum iusto nesciunt, ipsa eveniet accusamus officia optio. Voluptate, accusantium.</p>
 
-      <ul>
+      <ul className="team__list">
         {dataTeam.map((info) => {
           return (
-            <li key={info.id}>
-              <div>
-                <img src={info.avatarGit} alt="avatar" />
-              </div>
-              <span>Location: <span>{info.location}</span></span>
-              <div>
-                <a href={info.urlGitHub}>
-                  <img src={octocatImg} alt="github" />
-                </a>
-                {info.urlLinked === '' ? null : (
-                  <a href={info.urlLinked}>
-                    <img src={linkedinImg} alt="linkedin" />
+            <li className="team__item border-primary" key={info.id}>
+              <div className="team__icons">
+                <img
+                  className="team__icon team__icons--avatar"
+                  src={info.avatarGit}
+                  alt="avatar"
+                />
+                <span className="team__location">{info.location}</span>
+                <div className="team__social">
+                  <a href={info.urlGitHub}>
+                    <img src={octocatImg} alt="github" />
                   </a>
-                )}
+                  {info.urlLinked === '' ? null : (
+                    <a href={info.urlLinked}>
+                      <img src={linkedinImg} alt="linkedin" />
+                    </a>
+                  )}
+                </div>
               </div>
               <div className="team-item__skills">
                 <h5>{`${info.name} ${info.surname}`}</h5>
                 <ul>
                   <li />
+                   - project
                   <li />
+                  - project
                   <li />
+                  - project
                   <li />
+                  - project
                   <li />
+                  - project
                 </ul>
               </div>
             </li>
