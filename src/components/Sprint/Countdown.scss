@@ -1,0 +1,39 @@
+@import '../../styles/variables';
+
+.countdown {
+  position: relative;
+
+  .countdown__visual {
+    stroke-dasharray: 151px;
+    stroke-dashoffset: 151px;
+    stroke-linecap: butt;
+    stroke-width: 4px;
+    stroke: $blue;
+    fill: none;
+
+    svg {
+      width: 52px;
+      height: 52px;
+      transform: rotateZ(-90deg);
+    }
+  }
+
+  .countdown__text {
+    position: absolute;
+    top: 20px;
+    width: 52px;
+  
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  @keyframes countdown-animation {
+    0% {
+      stroke-dashoffset: 0px;
+    }
+    100% {
+      stroke-dashoffset: 151px;
+    }
+  }
+}
