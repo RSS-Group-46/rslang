@@ -1,9 +1,10 @@
 import React from 'react';
-import dataTeam from '../../data/dataTeam';
 import octocatImg from '../../assets/icons/octocat.png';
 import linkedinImg from '../../assets/icons/linkedin.png';
 
 import './Team.scss';
+
+const dataTeam = require('../../data/dataTeam.json');
 
 const Team = () => {
   return (
