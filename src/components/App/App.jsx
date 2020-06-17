@@ -8,27 +8,28 @@ import {
 import {
   BASE_URL,
   STATISTICS_URL,
-  VOLCABULARY_URL,
-  MINI_GAMES_URL,
-  PROMO_URL,
-  TEAM_URL,
-  SETTINGS_URL,
-  AUTH_URL,
+  VOCABULARY_URL,
   LEARNED_URL,
-  COMPICATED_URL,
+  COMPLICATED_URL,
   DELETED_URL,
+  MINI_GAMES_URL,
   SPEAKIT_URL,
   PUZZLE_URL,
   SAVANNAH_URL,
   AUDIOCALL_URL,
   SPRINT_URL,
+  PROMO_URL,
+  TEAM_URL,
+  SETTINGS_URL,
+  AUTH_URL,
 } from '../../constants/urlConstants';
-
-import './App.scss';
 import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
 import useAuth from '../../hooks/auth.hook';
+import Team from '../Team/Team';
 import Header from '../Header/Header';
+
+import './App.scss';
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
@@ -45,13 +46,13 @@ const App = () => {
             <Route exact path={STATISTICS_URL}>
               <div>statistics</div>
             </Route>
-            <Route exact path={VOLCABULARY_URL + LEARNED_URL}>
+            <Route exact path={VOCABULARY_URL + LEARNED_URL}>
               <div>learned</div>
             </Route>
-            <Route exact path={VOLCABULARY_URL + COMPICATED_URL}>
+            <Route exact path={VOCABULARY_URL + COMPLICATED_URL}>
               <div>complicated</div>
             </Route>
-            <Route exact path={VOLCABULARY_URL + DELETED_URL}>
+            <Route exact path={VOCABULARY_URL + DELETED_URL}>
               <div>deleted</div>
             </Route>
             <Route exact path={MINI_GAMES_URL}>
@@ -75,8 +76,8 @@ const App = () => {
             <Route exact path={PROMO_URL}>
               <div>promo</div>
             </Route>
-            <Route exact path={TEAM_URL}>
-              <div>team</div>
+            <Route path={TEAM_URL}>
+              <Team />
             </Route>
             <Route exact path={SETTINGS_URL}>
               <div>settings</div>
