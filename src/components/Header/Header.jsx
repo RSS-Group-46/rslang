@@ -53,7 +53,7 @@ const Header = () => {
               </li>
               <li className="nav-item">
                 <NavLink className="nav-link" to={MINI_GAMES_URL}>
-                  Mini-games
+                  Mini-Games
                 </NavLink>
               </li>
 
@@ -65,7 +65,7 @@ const Header = () => {
 
               <li className="nav-item">
                 <NavLink className="nav-link" to={TEAM_URL}>
-                  About team
+                  About Team
                 </NavLink>
               </li>
             </ul>
