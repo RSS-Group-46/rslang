@@ -7,8 +7,8 @@ import store from './redux/store';
 import './styles/init.scss';
 
 ReactDOM.render(
-  <Provider store={store} >
+  <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
