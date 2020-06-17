@@ -37,6 +37,7 @@ const useWords = () => {
         }));
 
       setData(withUrlsCorrected);
+      setError(null);
       } catch (err) {
         setError(err.message || 'Error get words from API');
       }
