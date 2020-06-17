@@ -10,6 +10,7 @@ const useWords = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [group, setGroup] = useState(0);
+  const [error, setError] = useState(null);
   const [curWordIndex, setCurWordIndex] = useState(0);
   const { loading: wordsLoading, request } = useHttp();
 
@@ -24,6 +25,7 @@ const useWords = () => {
 
   useEffect(() => {
     const fetchWords = async () => {
+      try {
       const res = await request(wordsURL);
       const withUrlsCorrected = res.map((obj) => (
         {
@@ -35,12 +37,15 @@ const useWords = () => {
         }));
 
       setData(withUrlsCorrected);
+      } catch (err) {
+        setError(err.message || 'Error get words from API');
+      }
     };
     fetchWords();
   }, [request, wordsURL]);
 
 
-  return { words: data, wordsLoading, word: data[curWordIndex], nextWords };
+  return { words: data, wordsLoading, word: data[curWordIndex], nextWords, error };
 }
 
 export default useWords;
