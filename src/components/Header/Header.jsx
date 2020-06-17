@@ -5,7 +5,7 @@ import 'jquery/dist/jquery';
 import {
   BASE_URL,
   STATISTICS_URL,
-  VOLCABULARY_URL,
+  VOCABULARY_URL,
   MINI_GAMES_URL,
   PROMO_URL,
   TEAM_URL,
@@ -47,7 +47,7 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to={VOLCABULARY_URL}>
+                <NavLink className="nav-link" to={VOCABULARY_URL}>
                   Vocabulary
                 </NavLink>
               </li>
