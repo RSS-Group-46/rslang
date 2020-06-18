@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeCardOption } from '../../../redux/actions/settings.actions';
+import { changeOption } from '../../../redux/actions/settings.actions';
 
 const showTranscriptionOptionName = 'showTranslation';
 const showDescribeOptionName = 'showDescribe';
 const showExampleOptionName = 'showExample';
 
 const CardInfoOptions = () => {
-  const showTranslation = useSelector((state) => state.settings.cards.showTranslation);
-  const showDescribe = useSelector((state) => state.settings.cards.showDescribe);
-  const showExample = useSelector((state) => state.settings.cards.showExample);
+  const showTranslation = useSelector((state) => state.settings.showTranslation);
+  const showDescribe = useSelector((state) => state.settings.showDescribe);
+  const showExample = useSelector((state) => state.settings.showExample);
 
   const dispatch = useDispatch();
 
-  const doChangeOption = (optionName, value) => dispatch(changeCardOption(optionName, value));
+  const doChangeOption = (optionName, value) => dispatch(changeOption(optionName, value));
 
   useEffect(() => {
     const anyChoosed = showTranslation || showDescribe || showExample;

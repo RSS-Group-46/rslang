@@ -2,11 +2,10 @@ import React, { useState, createRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import CardsSettings from './Cards/CardsSettings';
 import './Settings.scss';
-import { changeWordsPerDayAmount } from '../../redux/actions/settings.actions';
-import pushUserSettings from '../../services/settings.service';
+import { changeWordsPerDayAmount, changeOptions } from '../../redux/actions/settings.actions';
+import { pushUserSettings, pullUserSettings, prepareSettingsForApp } from '../../services/settings.service';
 import { USER_DATA_STORAGE_NAME } from '../../constants/commonConstants';
-
-export const WORDS_PER_DAY_DEFAULT_VALUE = 5;
+import { WORDS_PER_DAY_DEFAULT_VALUE, SETTINS_INITIAL_STATE } from '../../constants/settingsConstants';
 
 const gearSize = 40;
 const headerPadding = 10;
@@ -14,6 +13,7 @@ const containerWidth = 400;
 
 const getSettingsBodyClassNames = (showSettings) => `card-body ${showSettings ? '' : 'hide'}`;
 const getSettingsShift = (showSettings) => showSettings ? 0 : containerWidth - (gearSize + headerPadding * 2);
+const getIsSettingsChanged = (settings) => JSON.stringify(settings) !== JSON.stringify(SETTINS_INITIAL_STATE);
 
 const Settings = () => {
   const [updateWordsAmount, setUpdateWordsAmount] = useState(false);
@@ -22,13 +22,28 @@ const Settings = () => {
   const settings = useSelector((state) => state.settings);
   const formInput = createRef();
   const dispatch = useDispatch();
+  const userData = localStorage.getItem(USER_DATA_STORAGE_NAME);
 
   useEffect(() => {
-    const userData = localStorage.getItem(USER_DATA_STORAGE_NAME);
-    if (userData && userData.token && userData.userId) {
+    if (userData) {
+      console.log('pulling settings');
+      pullUserSettings(JSON.parse(userData))
+        .then(data => {
+          if (data) {
+            const prepared = prepareSettingsForApp(data);
+            dispatch(changeOptions(prepared))
+          }
+        })
+        .catch(error => console.error(error));
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (userData && getIsSettingsChanged(settings)) {
+      console.log('pushing settings');
       pushUserSettings(settings, JSON.parse(userData))
     }
-  }, [settings])
+  }, [settings]);
 
   const handleUpdateWordAmount = () => {
     dispatch(changeWordsPerDayAmount(Number(formInput.current.value) || WORDS_PER_DAY_DEFAULT_VALUE));
@@ -66,7 +81,7 @@ const Settings = () => {
 
   return (
     <>
-      <div className="card mb-3 settings" style={{ left: `-${getSettingsShift(showSettings)}px` }}>
+      <div className="card mb-3 settings" style={{ left: `-${getSettingsShift(showSettings)}px`, maxWidth: `${containerWidth}px` }}>
         <div className="card-header" style={{ padding: `${headerPadding}px` }}>
           <div>Settings</div>
           {/* eslint-disable-next-line */}

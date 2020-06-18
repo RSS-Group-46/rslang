@@ -1,17 +1,17 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeCardOption } from '../../../redux/actions/settings.actions';
+import { changeOption } from '../../../redux/actions/settings.actions';
 
 const showTranscriptionOptionName = 'showTranscription';
 const showAssociationPictureOptionName = 'showAssociationPicture';
 
 const CardAdditionalOptions = () => {
-  const showTranscription = useSelector((state) => state.settings.cards.showTranscription);
-  const showAssociationPicture = useSelector((state) => state.settings.cards.showAssociationPicture);
+  const showTranscription = useSelector((state) => state.settings.showTranscription);
+  const showAssociationPicture = useSelector((state) => state.settings.showAssociationPicture);
 
   const dispatch = useDispatch();
 
-  const doChangeOption = (optionName, value) => dispatch(changeCardOption(optionName, value));
+  const doChangeOption = (optionName, value) => dispatch(changeOption(optionName, value));
 
   return (
     <>

@@ -1,19 +1,19 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeCardOption } from '../../../redux/actions/settings.actions';
+import { changeOption } from '../../../redux/actions/settings.actions';
 
 const showAnswerButtonOptionName = 'showAnswerButton';
 const showDeleteButtonOptionName = 'showDeleteButton';
 const showMoveToComplicatedOptionName = 'showMoveToComplicatedButton';
 
 const CardWordOperationOptions = () => {
-  const showAnswerButton = useSelector((state) => state.settings.cards.showAnswerButton);
-  const showDeleteButton = useSelector((state) => state.settings.cards.showDeleteButton);
-  const showMoveToComplicatedButton = useSelector((state) => state.settings.cards.showMoveToComplicatedButton);
+  const showAnswerButton = useSelector((state) => state.settings.showAnswerButton);
+  const showDeleteButton = useSelector((state) => state.settings.showDeleteButton);
+  const showMoveToComplicatedButton = useSelector((state) => state.settings.showMoveToComplicatedButton);
 
   const dispatch = useDispatch();
 
-  const doChangeOption = (optionName, value) => dispatch(changeCardOption(optionName, value));
+  const doChangeOption = (optionName, value) => dispatch(changeOption(optionName, value));
 
   return (
     <>
