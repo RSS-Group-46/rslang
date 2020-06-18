@@ -31,6 +31,10 @@
     transform: rotate(180deg);
     transition: transform 2s ease-in-out;
   }
+
+  &:focus {
+    outline-width: 0;
+  }
 }
 
 .settings_to-learn {
@@ -38,9 +42,11 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: baseline;
+  margin-bottom: 1rem;
 
   div {
     margin-right: 0.4rem;
+    word-wrap: normal;
   }
 }
 

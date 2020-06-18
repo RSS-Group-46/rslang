@@ -18,15 +18,14 @@ const getIsSettingsChanged = (settings) => JSON.stringify(settings) !== JSON.str
 const Settings = () => {
   const [updateWordsAmount, setUpdateWordsAmount] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-
   const settings = useSelector((state) => state.settings);
-  const formInput = createRef();
   const dispatch = useDispatch();
+
+  const formInput = createRef();
   const userData = localStorage.getItem(USER_DATA_STORAGE_NAME);
 
   useEffect(() => {
     if (userData) {
-      console.log('pulling settings');
       pullUserSettings(JSON.parse(userData))
         .then(data => {
           if (data) {
@@ -34,16 +33,14 @@ const Settings = () => {
             dispatch(changeOptions(prepared))
           }
         })
-        .catch(error => console.error(error));
     }
-  }, [userData]);
+  }, [userData, dispatch]);
 
   useEffect(() => {
     if (userData && getIsSettingsChanged(settings)) {
-      console.log('pushing settings');
       pushUserSettings(settings, JSON.parse(userData))
     }
-  }, [settings]);
+  }, [settings, userData]);
 
   const handleUpdateWordAmount = () => {
     dispatch(changeWordsPerDayAmount(Number(formInput.current.value) || WORDS_PER_DAY_DEFAULT_VALUE));
@@ -54,7 +51,15 @@ const Settings = () => {
     setShowSettings(!showSettings);
   }
 
-  const toLearn = <button type="button" className="badge badge-pill badge-success" onClick={() => setUpdateWordsAmount(true)}>{settings.wordsPerDay}</button>;
+  const toLearn = (
+    <button 
+      type="button"
+      className="badge badge-pill badge-success"
+      onClick={() => setUpdateWordsAmount(true)}
+    >
+      {settings.wordsPerDay}
+    </button>
+  );
 
   const wordsAmountForm = (
     <div className="to-learn_set-form row">
@@ -84,8 +89,14 @@ const Settings = () => {
       <div className="card mb-3 settings" style={{ left: `-${getSettingsShift(showSettings)}px`, maxWidth: `${containerWidth}px` }}>
         <div className="card-header" style={{ padding: `${headerPadding}px` }}>
           <div>Settings</div>
-          {/* eslint-disable-next-line */}
-          <div className="header_gear-logo" style={{ height: `${gearSize}px`, width: `${gearSize}px` }} onClick={handleGearClick} />
+          <div 
+            className="header_gear-logo"
+            role="button"
+            tabIndex={0}
+            style={{ height: `${gearSize}px`, width: `${gearSize}px` }}
+            onClick={handleGearClick}
+            onKeyDown={handleGearClick}
+          />
         </div>
         <div className={getSettingsBodyClassNames(showSettings)}>
           <form>

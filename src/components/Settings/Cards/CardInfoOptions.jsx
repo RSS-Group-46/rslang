@@ -10,7 +10,6 @@ const CardInfoOptions = () => {
   const showTranslation = useSelector((state) => state.settings.showTranslation);
   const showDescribe = useSelector((state) => state.settings.showDescribe);
   const showExample = useSelector((state) => state.settings.showExample);
-
   const dispatch = useDispatch();
 
   const doChangeOption = (optionName, value) => dispatch(changeOption(optionName, value));

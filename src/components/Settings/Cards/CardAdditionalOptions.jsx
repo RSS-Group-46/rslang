@@ -8,7 +8,6 @@ const showAssociationPictureOptionName = 'showAssociationPicture';
 const CardAdditionalOptions = () => {
   const showTranscription = useSelector((state) => state.settings.showTranscription);
   const showAssociationPicture = useSelector((state) => state.settings.showAssociationPicture);
-
   const dispatch = useDispatch();
 
   const doChangeOption = (optionName, value) => dispatch(changeOption(optionName, value));

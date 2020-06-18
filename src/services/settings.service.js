@@ -7,13 +7,11 @@ const prepareSettingsForServer = (settings) => {
 }
 
 export const prepareSettingsForApp = (settings) => {
-  console.log(settings);
   const { wordsPerDay, optional } = settings;
   return { wordsPerDay, ...optional };
 }
 
 export const pushUserSettings = (settings, userData) => {
-  console.log(settings)
   const normalizedSettings = prepareSettingsForServer(settings);
   const { userId, token } = userData;
   fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`,
@@ -26,8 +24,6 @@ export const pushUserSettings = (settings, userData) => {
         'Accept': 'application/json',
       }
     })
-    .then(response => response.json())
-    .catch(error => console.error(error));
 }
 
 export const pullUserSettings = async (userData) => {
@@ -44,12 +40,6 @@ export const pullUserSettings = async (userData) => {
   if (response.ok) {
     return response.json();
   }
-  console.log(`settings for user ${userId} is not present`);
+  // settings for user is not present;
   return null;
-  // .then(response => response.json())
-  // .then(data => {
-  //   console.log(data)
-  //   return data;
-  // })
-  // .catch(error => console.error(error));
 }
