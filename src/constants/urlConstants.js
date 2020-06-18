@@ -3,7 +3,7 @@
 // root
 export const BASE_URL = '/';
 export const AUTH_URL = '/auth';
-export const VOLCABULARY_URL = '/vocabulary';
+export const VOCABULARY_URL = '/vocabulary';
 export const STATISTICS_URL = '/statistics';
 export const MINI_GAMES_URL = '/mini-games';
 export const PROMO_URL = '/promo';
@@ -12,7 +12,7 @@ export const SETTINGS_URL = '/settings';
 
 // vocabulary
 export const LEARNED_URL = '/learned';
-export const COMPICATED_URL = '/complicated';
+export const COMPLICATED_URL = '/complicated';
 export const DELETED_URL = '/deleted';
 
 // mini-games
