@@ -1,0 +1,72 @@
+@import '../../styles/variables';
+
+.settings {
+  // font-family: $headings-font-family;
+  max-width: 400px;
+  left: 0;
+  transition: left 0.5s ease-in-out;
+
+  .card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2rem;
+    position: relative;
+  }
+
+  .card-body.hide {
+    visibility: hidden;
+  }
+}
+
+.header_gear-logo {
+  background-image: url('/icons/settings.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 40px;
+  width: 40px;
+
+  &:hover {
+    cursor: pointer;
+    transform: rotate(180deg);
+    transition: transform 2s ease-in-out;
+  }
+}
+
+.settings_to-learn {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+
+  div {
+    margin-right: 0.4rem;
+  }
+}
+
+.to-learn_set-form {
+  width: 35%;
+}
+
+.custom-switch {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.custom-control.custom-checkbox {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+legend {
+  margin-left: 2rem;
+  margin-top: 2rem;
+  font-weight: bold;
+  font-size: 2rem !important;
+}
+
+small {
+  font-size: 1rem !important;
+}

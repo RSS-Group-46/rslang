@@ -28,10 +28,14 @@ import './App.scss';
 import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
 import useAuth from '../../hooks/auth.hook';
+import Settings from '../Settings/Settings';
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
-  const isAuth = !!token;
+  console.log(`${token}, ${userId}`)
+  // const isAuth = !!token;
+  const data = localStorage.getItem('userData');
+  const isAuth = data !== null;
   return (
     <Router>
       <div>navbar</div>
@@ -77,7 +81,7 @@ const App = () => {
             <div>team</div>
           </Route>
           <Route exact path={SETTINGS_URL}>
-            <div>settings</div>
+            <Settings />
           </Route>
           <Redirect to={BASE_URL} />
         </Switch>

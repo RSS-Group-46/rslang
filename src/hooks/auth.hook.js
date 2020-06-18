@@ -1,6 +1,5 @@
 import { useCallback, useState, useEffect } from 'react';
-
-const storageName = 'userData';
+import { USER_DATA_STORAGE_NAME } from '../constants/commonConstants';
 
 const useAuth = () => {
   const [token, setToken] = useState(null);
@@ -11,7 +10,7 @@ const useAuth = () => {
     setUserId(id);
 
     localStorage.setItem(
-      storageName,
+      USER_DATA_STORAGE_NAME,
       JSON.stringify({ userId: id, token: jwtToken }),
     );
   }, []);
@@ -19,12 +18,12 @@ const useAuth = () => {
   const logOut = useCallback(() => {
     setToken(null);
     setUserId(null);
-    localStorage.removeItem(storageName);
+    localStorage.removeItem(USER_DATA_STORAGE_NAME);
   }, []);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem(storageName));
-    if (data && data.token) {
+    const data = JSON.parse(localStorage.getItem(USER_DATA_STORAGE_NAME));
+    if (data && data.token && data.id) {
       logIn(data.token, data.id);
     }
   }, [logIn]);
