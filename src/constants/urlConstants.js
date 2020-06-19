@@ -8,6 +8,7 @@ export const STATISTICS_URL = '/statistics';
 export const MINI_GAMES_URL = '/mini-games';
 export const PROMO_URL = '/promo';
 export const TEAM_URL = '/team';
+export const ERROR = '/error';
 
 // vocabulary
 export const LEARNED_URL = '/learned';
