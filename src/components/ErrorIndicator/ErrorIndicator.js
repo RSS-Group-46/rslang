@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import imageError from '../../assets/images/error-boundary.png';
+import { BASE_URL } from '../../constants/urlConstants';
 
 import './ErrorIndicator.scss';
 
@@ -8,7 +9,7 @@ const ErrorIndicator = ({ handleCloseError }) => {
   const history = useHistory();
 
   const handleButton = () => {
-    history.push('/');
+    history.push(BASE_URL);
     handleCloseError();
   };
 
