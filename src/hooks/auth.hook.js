@@ -23,7 +23,7 @@ const useAuth = () => {
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem(USER_DATA_STORAGE_NAME));
-    if (data && data.token && data.userId) {
+    if (data && data.token) {
       logIn(data.token, data.userId);
     }
   }, [logIn]);
