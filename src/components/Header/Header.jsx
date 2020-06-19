@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/js/src/collapse';
-import 'jquery/dist/jquery';
+import 'jquery';
 import {
   BASE_URL,
   STATISTICS_URL,
