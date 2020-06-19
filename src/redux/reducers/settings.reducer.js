@@ -1,7 +1,7 @@
 import * as types from '../../constants/actionTypeConstants';
-import { SETTINS_INITIAL_STATE } from '../../constants/settingsConstants';
+import { SETTINGS_INITIAL_STATE } from '../../constants/settingsConstants';
 
-export default (state = SETTINS_INITIAL_STATE, action) => {
+export default (state = SETTINGS_INITIAL_STATE, action) => {
   switch (action.type) {
     case types.CHANGE_OPTION: {
       const { optionName, value } = action.payload;

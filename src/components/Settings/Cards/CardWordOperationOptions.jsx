@@ -1,15 +1,20 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeOption } from '../../../redux/actions/settings.actions';
+import { 
+  selectShowAnswerButton,
+  selectShowDeleteButton,
+  selectShowMoveToComplicatedButton
+} from '../../../redux/selectors/settings.selectors';
 
 const showAnswerButtonOptionName = 'showAnswerButton';
 const showDeleteButtonOptionName = 'showDeleteButton';
 const showMoveToComplicatedOptionName = 'showMoveToComplicatedButton';
 
 const CardWordOperationOptions = () => {
-  const showAnswerButton = useSelector((state) => state.settings.showAnswerButton);
-  const showDeleteButton = useSelector((state) => state.settings.showDeleteButton);
-  const showMoveToComplicatedButton = useSelector((state) => state.settings.showMoveToComplicatedButton);
+  const showAnswerButton = useSelector(selectShowAnswerButton);
+  const showDeleteButton = useSelector(selectShowDeleteButton);
+  const showMoveToComplicatedButton = useSelector(selectShowMoveToComplicatedButton);
 
   const dispatch = useDispatch();
 

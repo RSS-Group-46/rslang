@@ -1,23 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeOption } from '../../../redux/actions/settings.actions';
+import {
+  selectShowTranslation,
+  selectShowDescribe,
+  selectShowExample
+} from '../../../redux/selectors/settings.selectors';
 
 const showTranscriptionOptionName = 'showTranslation';
 const showDescribeOptionName = 'showDescribe';
 const showExampleOptionName = 'showExample';
+const optionNames = [showTranscriptionOptionName, showDescribeOptionName, showExampleOptionName];
+
+const getRandomNameToChoose = (toExclude) => {
+  const excludingIndex = optionNames.indexOf(toExclude);
+  return [...optionNames.slice(0, excludingIndex), ...optionNames.slice(excludingIndex + 1)][0];
+}
 
 const CardInfoOptions = () => {
-  const showTranslation = useSelector((state) => state.settings.showTranslation);
-  const showDescribe = useSelector((state) => state.settings.showDescribe);
-  const showExample = useSelector((state) => state.settings.showExample);
+  const [lastClicked, setLastClicked] = useState(null);
+  const showTranslation = useSelector(selectShowTranslation);
+  const showDescribe = useSelector(selectShowDescribe);
+  const showExample = useSelector(selectShowExample);
   const dispatch = useDispatch();
 
-  const doChangeOption = (optionName, value) => dispatch(changeOption(optionName, value));
+  const doChangeOption = (optionName, value) => {
+    setLastClicked(optionName);
+    dispatch(changeOption(optionName, value))
+  };
 
   useEffect(() => {
     const anyChoosed = showTranslation || showDescribe || showExample;
-    if (!anyChoosed) {
-      doChangeOption(showTranscriptionOptionName, true);
+    if (!anyChoosed && lastClicked) {
+      doChangeOption(getRandomNameToChoose(lastClicked), true);
     }
   })
 

@@ -1,0 +1,9 @@
+export const selectSettings = (state) => state.settings;
+export const selectShowTranscription = (state) => state.settings.showTranscription;
+export const selectShowAssociationPicture = (state) => state.settings.showAssociationPicture;
+export const selectShowTranslation = (state) => state.settings.showTranslation;
+export const selectShowDescribe = (state) => state.settings.showDescribe;
+export const selectShowExample = (state) => state.settings.showExample;
+export const selectShowAnswerButton = (state) => state.settings.showAnswerButton;
+export const selectShowDeleteButton = (state) => state.settings.showDeleteButton;
+export const selectShowMoveToComplicatedButton = (state) => state.settings.showMoveToComplicatedButton;

@@ -3,9 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import CardsSettings from './Cards/CardsSettings';
 import './Settings.scss';
 import { changeWordsPerDayAmount, changeOptions } from '../../redux/actions/settings.actions';
+import { selectSettings } from '../../redux/selectors/settings.selectors';
 import { pushUserSettings, pullUserSettings, prepareSettingsForApp } from '../../services/settings.service';
 import { USER_DATA_STORAGE_NAME } from '../../constants/commonConstants';
-import { WORDS_PER_DAY_DEFAULT_VALUE, SETTINS_INITIAL_STATE } from '../../constants/settingsConstants';
+import { WORDS_PER_DAY_DEFAULT_VALUE, SETTINGS_INITIAL_STATE } from '../../constants/settingsConstants';
 
 const gearSize = 40;
 const headerPadding = 10;
@@ -13,12 +14,12 @@ const containerWidth = 400;
 
 const getSettingsBodyClassNames = (showSettings) => `card-body ${showSettings ? '' : 'hide'}`;
 const getSettingsShift = (showSettings) => showSettings ? 0 : containerWidth - (gearSize + headerPadding * 2);
-const getIsSettingsChanged = (settings) => JSON.stringify(settings) !== JSON.stringify(SETTINS_INITIAL_STATE);
+const getIsSettingsChanged = (settings) => JSON.stringify(settings) !== JSON.stringify(SETTINGS_INITIAL_STATE);
 
 const Settings = () => {
   const [updateWordsAmount, setUpdateWordsAmount] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const settings = useSelector((state) => state.settings);
+  const settings = useSelector(selectSettings);
   const dispatch = useDispatch();
 
   const formInput = createRef();

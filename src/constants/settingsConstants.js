@@ -1,5 +1,5 @@
 export const WORDS_PER_DAY_DEFAULT_VALUE = 5;
-export const SETTINS_INITIAL_STATE = {
+export const SETTINGS_INITIAL_STATE = {
   wordsPerDay: WORDS_PER_DAY_DEFAULT_VALUE,
 
   // info on cards (at least one must be choosed)
