@@ -36,6 +36,7 @@ import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
+import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
 
 import './App.scss';
 
@@ -82,7 +83,7 @@ const App = () => {
                   <div>savannah</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
-                  <div>audiocall</div>
+                  <StartPageAudioChallenge />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPRINT_URL}>
                   <div>sprint</div>
