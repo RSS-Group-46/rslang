@@ -87,7 +87,7 @@ const Settings = () => {
 
   return (
     <>
-      <div className="card mb-3 settings" style={{ left: `-${getSettingsShift(showSettings)}px`, maxWidth: `${containerWidth}px` }}>
+      <div className="card mb-3 settings" style={{ left: `-${getSettingsShift(showSettings)}px`, width: `${containerWidth}px` }}>
         <div className="card-header" style={{ padding: `${headerPadding}px` }}>
           <div>Settings</div>
           <div 
