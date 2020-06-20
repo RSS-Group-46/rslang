@@ -1,5 +1,3 @@
-/* eslint-disable react/void-dom-elements-no-children */
-/* eslint-disable jsx-a11y/tabindex-no-positive */
 import React, { useState, useEffect } from 'react';
 import Loader from '../Loader/Loader';
 import ButtonNextWords from './ButtonDontKnowWords';
@@ -9,10 +7,21 @@ import ButtonLevel from './ButtonLevel';
 import ButtonRound from './ButtonRound';
 import { API_SIMILAR_WORDS } from '../../constants/audioChallenge';
 import Picture from './picture';
+import ProgressRound from './ProgressRound';
 import '@fortawesome/fontawesome-free/js/all';
 
-const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel, level, handleRound, round }) => {
-  const [numberWord, setNumberWord] = useState(0);
+const AudioChallenge = ({
+  words,
+  offLoader,
+  handleOnlyLearnedWords,
+  handleLevel,
+  level,
+  handleRound,
+  round,
+  numberWord,
+  changeNumberWord,
+  settings,
+}) => {
   const [listSimilarWords, setListSimilarWords] = useState();
   const [correctWord, setCorrectWord] = useState();
   const [inCorrectWord, setInCorrectWord] = useState();
@@ -21,6 +30,7 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
   const [showStatistic, setShowStatistic] = useState(false);
   const [arrCorrectAnswers, setArrCorrectAnswers] = useState([]);
   const [arrErrorAnswers, setArrErrorAnswer] = useState([]);
+
   const partsSpeech = {
     n: 'noun',
     v: 'verb',
@@ -39,7 +49,6 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
     ph: 'phrase',
     phi: 'idiom',
   };
-
   // eslint-disable-next-line no-underscore-dangle
   const wordId = words[numberWord].id ? words[numberWord].id : words[numberWord]._id;
   const handleButtonDontKnow = (e) => {
@@ -48,7 +57,7 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
     }
     if (dontKnow || (dontKnow && e.key === 'Enter')) {
       setDontKnow(false);
-      setNumberWord(numberWord < words.length && +numberWord + 1);
+      changeNumberWord();
       setLoader(true);
       setInCorrectWord(false);
     } else {
@@ -77,7 +86,6 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
       setCorrectWord(wordId);
       handleButtonDontKnow();
       setArrCorrectAnswers([...arrCorrectAnswers, words[numberWord]]);
-
     } else {
       setInCorrectWord(e.target.id);
       setCorrectWord(wordId);
@@ -145,7 +153,6 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
     }
   }, [words[numberWord]]);
 
-
   return (
     <>
       {loader && <Loader />}
@@ -155,25 +162,26 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
           arrErrorAnswers={arrErrorAnswers}
         />
       )}
+      <ProgressRound current={numberWord} size={words.length}/>
       <div className="game-mode">
         <OnlyLearnedWords handleOnlyLearnedWords={handleOnlyLearnedWords} />
         <ButtonLevel handleLevel={handleLevel} level={level} />
-        <ButtonRound handleRound={handleRound} round={round}/>
+        <ButtonRound handleRound={handleRound} round={round} />
       </div>
       <div className="picture__wrapper">
-        {dontKnow && <Picture img={words[numberWord].image} />}
+        {(dontKnow || settings.showAssociationPicture) && <Picture img={words[numberWord].image} />}
       </div>
       <div className="wrapper_audio" onClick={handleAudio} role="presentation">
         <i className="fas fa-volume-up fa-7x" />
-        <p>{dontKnow && words[numberWord].word}</p>  
+        <p>{dontKnow && words[numberWord].word}</p>
+      {(settings.showTranscription && dontKnow) && <p>{words[numberWord].transcription}</p>}
       </div>
       <ul className="list__word">
         {listSimilarWords &&
           listSimilarWords.map((element, index) => (
-            // eslint-disable-next-line react/void-dom-elements-no-children
             <li
               type="button"
-              role='tab'
+              role="tab"
               aria-controls="t1-panel"
               className={
                 correctWord === element.id ? 'guessed_word' : 'init_word'
@@ -193,7 +201,6 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
               </span>
               <span
                 className={
-                  // eslint-disable-next-line no-underscore-dangle
                   +inCorrectWord === element.id && inCorrectWord && dontKnow
                     ? 'unknown_word'
                     : ''
