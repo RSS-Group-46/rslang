@@ -30,7 +30,6 @@ import useAuth from '../../hooks/auth.hook';
 import Team from '../Team/Team';
 import Header from '../Header/Header';
 import Settings from '../Settings/Settings';
-import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
@@ -68,7 +67,7 @@ const App = () => {
                   <div>deleted</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL}>
-                  <MiniGames />
+                  <div><StartPageAudioChallenge/></div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
                   <SpeakItWelcome />

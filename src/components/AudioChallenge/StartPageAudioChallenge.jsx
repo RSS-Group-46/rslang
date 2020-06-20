@@ -128,7 +128,9 @@ const StartPageAudioChallenge = ({ settings }) => {
     </div>
   );
 };
+
 const mapStateToProps = ({ settings }) => ({
   settings,
 });
 export default connect(mapStateToProps)(StartPageAudioChallenge);
+
