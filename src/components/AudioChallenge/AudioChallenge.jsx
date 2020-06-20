@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
-/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react';
 import Loader from '../Loader/Loader';
 import ButtonNextWords from './ButtonDontKnowWords';
@@ -40,9 +38,8 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
     phi: 'idiom',
   };
 
-  const wordId = words[numberWord].id
-    ? words[numberWord].id
-    : words[numberWord]._id;
+  // eslint-disable-next-line no-underscore-dangle
+  const wordId = words[numberWord].id ? words[numberWord].id : words[numberWord]._id;
   const handleButtonDontKnow = (e) => {
     if (numberWord === words.length - 1) {
       setShowStatistic(true);
@@ -159,14 +156,12 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
         <ButtonLevel handleLevel={handleLevel} level={level} />
         <ButtonRound handleRound={handleRound} round={round}/>
       </div>
-
       <div className="picture__wrapper">
         {dontKnow && <Picture img={words[numberWord].image} />}
       </div>
-
       <div className="wrapper_audio" onClick={handleAudio} role="presentation">
         <i className="fas fa-volume-up fa-7x" />
-        <p>{dontKnow && words[numberWord].word}</p>
+        <p>{dontKnow && words[numberWord].word}</p>  
       </div>
       <ul className="list__word">
         {listSimilarWords &&
@@ -183,7 +178,6 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
               id={element.id}
               onClick={handleWord}
               onKeyPress={handleKeyPress}
-              
             >
               <span>
                 {correctWord === element.id ? (
@@ -214,5 +208,4 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
     </>
   );
 };
-
 export default AudioChallenge;
