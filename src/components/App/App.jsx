@@ -33,6 +33,7 @@ import Settings from '../Settings/Settings';
 import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
+import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
 
 import './App.scss';
 
@@ -76,7 +77,7 @@ const App = () => {
                   <div>savannah</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
-                  <div>audiocall</div>
+                  <StartPageAudioChallenge />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPRINT_URL}>
                   <div>sprint</div>
