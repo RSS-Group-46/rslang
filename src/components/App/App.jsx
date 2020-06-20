@@ -33,6 +33,8 @@ import Settings from '../Settings/Settings';
 
 import './App.scss';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
+import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
+
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
@@ -62,7 +64,7 @@ const App = () => {
                   <div>deleted</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL}>
-                  <div>mini-games</div>
+                  <div><StartPageAudioChallenge/></div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
                   <div>speakit</div>
