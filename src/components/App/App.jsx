@@ -29,6 +29,7 @@ import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
 import useAuth from '../../hooks/auth.hook';
 import Header from '../Header/Header';
+import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
@@ -55,7 +56,7 @@ const App = () => {
               <div>deleted</div>
             </Route>
             <Route exact path={MINI_GAMES_URL}>
-              <div>mini-games</div>
+              <div><StartPageAudioChallenge/></div>
             </Route>
             <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
               <div>speakit</div>
