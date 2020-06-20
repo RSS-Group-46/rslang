@@ -6,8 +6,9 @@ import useWords from '../../hooks/words.hook';
 
 import './Sprint.scss';
 import { selectShowAssociationPicture, selectShowTranscription, selectShowAnswerButton, selectShowDeleteButton, selectShowMoveToComplicatedButton } from '../../redux/selectors/settings.selectors';
+import Stats from './Stats';
 
-const roundTime = 60;
+const roundTime = 5;
 const scoreStep = 10;
 const consecutiveAnswersToBonus = 4;
 const randomFromArray = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -17,6 +18,8 @@ export default () => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [consecutiveAnswers, setConsecutiveAnswers] = useState(0);
   const [roundEnd, setRoundEnd] = useState(false);
+  const [knownWords, setKnownWords] = useState([]);
+  const [unknownWords, setUnknownWords] = useState([]);
   const showAssociationPicture = useSelector(selectShowAssociationPicture);
   const showWordTranscription = useSelector(selectShowTranscription);
   const showAnswerButton = useSelector(selectShowAnswerButton);
@@ -49,8 +52,10 @@ export default () => {
       setScore((score) => score + scoreStep);
       setCorrectAnswers((c) => c + 1);
       setConsecutiveAnswers((c) => c + 1);
+      setKnownWords((xs) => [...xs, word]);
     } else {
       setConsecutiveAnswers(0);
+      setUnknownWords((xs) => [...xs, word]);
     }
     nextWords();
   }
@@ -91,6 +96,7 @@ export default () => {
           <Countdown duration={roundTime} startImmediately onTimeout={onTimeout} />
         </div>
       </div>}
+      {roundEnd && <Stats knownWords={knownWords} unknownWords={unknownWords} />}
     </div>
   )
 }

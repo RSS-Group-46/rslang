@@ -1,0 +1,55 @@
+@import '../../styles/variables';
+
+.stats-modal {
+  position: fixed;
+  z-index: 1030;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.1);
+
+  .stats-modal__content {
+    background-color: $light;
+    width: 50%;
+    margin: 15% auto;
+    padding: 10px;
+  }
+
+  .known-words, unknown-words {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .unknown-words {
+    border-top: 1px dotted $primary;
+  }
+
+  .word-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .play-word-icon {
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      &:hover {
+        filter: invert(58%) sepia(73%) saturate(7356%) hue-rotate(199deg) brightness(100%) contrast(103%);
+      }
+    }
+
+    .word {
+      color: $primary;
+      margin-left: 10px;
+    }
+
+    .translation {
+      color: $secondary;
+      margin-left: 10px;
+    }
+  }
+
+
+}
