@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/no-onchange */
-  
+/* eslint-disable jsx-a11y/no-onchange */ 
 import React from 'react';
 
 const ButtonRound = ({ handleRound, round }) => {

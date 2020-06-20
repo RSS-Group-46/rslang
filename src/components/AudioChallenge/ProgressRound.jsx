@@ -1,9 +1,10 @@
+  
 import React from 'react';
 
 const ProgressRound = ({current, size}) => {
   
   return (
-    <div className="progress" style={{width: '90%'}}>
+    <div className="progress" >
       <div
         className="progress-bar bg-warning"
         role="progressbar"

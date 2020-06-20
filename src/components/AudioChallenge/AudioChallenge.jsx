@@ -6,6 +6,7 @@ import StatisticAudioChallenge from './statistic';
 import OnlyLearnedWords from './OnlyLearnedWords';
 import ButtonLevel from './ButtonLevel';
 import ButtonRound from './ButtonRound';
+import StatisticDetaile from './StatisticDetaile';
 import { API_SIMILAR_WORDS } from '../../constants/audioChallenge';
 import Picture from './picture';
 import ProgressRound from './ProgressRound';
@@ -22,6 +23,9 @@ const AudioChallenge = ({
   numberWord,
   changeNumberWord,
   settings,
+  knowWords,
+  token,
+  userId,
 }) => {
   const [listSimilarWords, setListSimilarWords] = useState();
   const [correctWord, setCorrectWord] = useState();
@@ -31,6 +35,7 @@ const AudioChallenge = ({
   const [showStatistic, setShowStatistic] = useState(false);
   const [arrCorrectAnswers, setArrCorrectAnswers] = useState([]);
   const [arrErrorAnswers, setArrErrorAnswer] = useState([]);
+  const [showStatisticDetaile, setShowStatisticDetaile] = useState(false);
 
   const partsSpeech = {
     n: 'noun',
@@ -104,6 +109,9 @@ const AudioChallenge = ({
     audio.play();
   };
 
+  const handleStatisticDetaile = () =>
+    setShowStatisticDetaile(!showStatisticDetaile);
+
   // Get part speech
   useEffect(() => {
     if (words[numberWord]) {
@@ -161,21 +169,37 @@ const AudioChallenge = ({
         <StatisticAudioChallenge
           arrCorrectAnswers={arrCorrectAnswers}
           arrErrorAnswers={arrErrorAnswers}
+          size={words.length}
+          round={round}
+          level={level}
+          knowWords={knowWords}
+          token={token}
+          userId={userId}
         />
       )}
-      <ProgressRound current={numberWord} size={words.length}/>
       <div className="game-mode">
+      <ProgressRound current={numberWord} size={words.length} />
         <OnlyLearnedWords handleOnlyLearnedWords={handleOnlyLearnedWords} />
         <ButtonLevel handleLevel={handleLevel} level={level} />
         <ButtonRound handleRound={handleRound} round={round} />
+        <StatisticDetaile
+          token={token}
+          userId={userId}
+          showStatisticDetaile={showStatisticDetaile}
+          handleStatisticDetaile={handleStatisticDetaile}
+        />
       </div>
       <div className="picture__wrapper">
-        {(dontKnow || settings.showAssociationPicture) && <Picture img={words[numberWord].image} />}
+        {(dontKnow || settings.showAssociationPicture) && (
+          <Picture img={words[numberWord].image} />
+        )}
       </div>
       <div className="wrapper_audio" onClick={handleAudio} role="presentation">
         <i className="fas fa-volume-up fa-7x" />
         <p>{dontKnow && words[numberWord].word}</p>
-      {(settings.showTranscription && dontKnow) && <p>{words[numberWord].transcription}</p>}
+        {settings.showTranscription && dontKnow && (
+          <p>{words[numberWord].transcription}</p>
+        )}
       </div>
       <div className="list__word">
         {listSimilarWords &&
@@ -222,7 +246,7 @@ const AudioChallenge = ({
     </>
   );
 };
-const mapStateToProps = ({settings}) => ({
+const mapStateToProps = ({ settings }) => ({
   settings,
-} )
+});
 export default connect(mapStateToProps)(AudioChallenge);

@@ -12,8 +12,7 @@ header {
   background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   &::before {
     content: '';
     display: block;
@@ -29,6 +28,7 @@ header {
   p {
     z-index: 2;
     color: white;
+    text-align: center;
   }
   p {
     margin-top: 50px;
@@ -62,6 +62,15 @@ header {
       cursor: pointer;
     }
   }
+}
+.wrapper__audio-challenge {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 2;
 }
 .list__word {
   display: flex;
@@ -109,13 +118,15 @@ header {
   color: rgb(0, 250, 42);
 }
 .picture__wrapper {
-  width: 120px;
+  width: 100%;
   height: 120px;
-  margin-bottom: 20px;
+  margin: 30px 0;
   z-index: 2;
+  display: flex;
+  justify-content: center;
 }
 .picture {
-  width: 100%;
+  width: 120px;
   height: 100%;
   border-radius: 50%;
   border: 1px solid;
@@ -203,12 +214,16 @@ header {
 }
 .game-mode {
   display: flex;
-  position: absolute;
-  top: 100px;
-  left: 120px;
-  z-index: 2;
+  margin: 20px 0 20px 80px;
+  z-index: 3;
+  width: 90%;
+  flex-wrap: wrap;
+  .lds-ellipsis {
+    width: 90%;
+  }
 }
-.knowing-words {
+.knowing-words,
+.btn__statistic {
   padding: 5px;
   border: none;
   font-size: 1.5rem;
@@ -224,10 +239,158 @@ header {
     opacity: 0.7;
   }
 }
-.progress{
-  position: absolute;
-  top: 70px;
+.btn__statistic {
+  margin: 0;
+}
+.wrapper__btn-next {
+  width: 100%;
   z-index: 2;
+  display: flex;
+  justify-content: center;
+}
+.statistic__detaile {
+  position: absolute;
+  width: 90%;
+  min-height: 100vh;
+  background-color: $progress-bar-bg;
+  backdrop-filter: blur(50px);
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 25px 5px;
+  flex-wrap: wrap;
+  div {
+    width: 100%;
+    margin-top: 20px;
+    span {
+      position: absolute;
+      right: 12px;
+      top: 5px;
+      color: red;
+      font-size: 2rem;
+      transition: all 0.5s;
+      padding: 0 5px;
+      &:hover {
+        cursor: pointer;
+        font-weight: 900;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
+          -23px 0 20px -23px rgba(0, 0, 0, 0.8),
+          23px 0 20px -23px rgba(0, 0, 0, 0.8),
+          0 0 40px rgba(0, 0, 0, 0.1) inset;
+      }
+    }
+  }
+  ul {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    li {
+      width: 25%;
+      border: 1px solid;
+      padding: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: $teal;
+      &:nth-child(1) {
+        background-color: $cyan;
+      }
+    }
+    &:nth-child(2) {
+      font-weight: 600;
+    }
+  }
+}
+.progress {
+  width: 100%;
+  margin: 10px 0;
+}
+.wrapper__test {
+  min-height: 100vh;
+  padding-left: 80px;
+  z-index: 2;
+  background: linear-gradient(
+    45deg,
+    rgba(103, 0, 31, 0.8),
+    rgba(34, 101, 163, 0.5)
+  );
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 5px;
+    li {
+      width: 25%;
+      label {
+        color: $white;
+      }
+      input {
+        margin-right: 5px;
+        &::before {
+          border-color: $teal;
+        }
+        &:checked:before {
+          background-color: $green;
+        }
+      }
+    }
+    p {
+      margin: 10px;
+      width: 100%;
+      text-align: left;
+    }
+  }
+}
+.result__test {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  top: 0;
+  left: 0;
+  button {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+  }
+  .alert-secondary {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    p{
+      color: $black;
+      margin-top: 5px;
+    }
+  }
+}
+.wrapper__btn-result{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  button{
+    margin: 5px;
+  }
+}
+.error-result{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 191px;
+  height: 50px;
+  background-color: rgba(241, 241, 241, 0.76);
 }
 @media screen and (max-width: 1280px) {
   .list__word .init_word,
@@ -254,6 +417,27 @@ header {
     margin-bottom: 0;
     font-size: 2rem;
   }
+  .game-mode {
+    width: 85%;
+    h3 {
+      font-size: 1.5rem;
+    }
+    .lds-ellipsis {
+      width: 85%;
+    }
+  }
+  .knowing-words,
+  .btn__statistic {
+    font-size: 1rem;
+  }
+  .level__audio-call select,
+  .round__audio-call select {
+    font-size: 1rem;
+    padding: 5px 9px;
+  }
+  .statistic__detaile {
+    width: 85%;
+  }
 }
 @media screen and (max-width: 780px) {
   .list__word .init_word,
@@ -263,6 +447,18 @@ header {
   }
   .start-page__audio-challenge button {
     width: 191px;
+  }
+  .wrapper__test {
+    ul{
+      flex-direction: column;
+      p{
+        width: 90%;
+      }
+      li{
+        width: 90%;
+      }
+    }
+
   }
 }
 @media screen and (max-width: 700px) {
@@ -276,11 +472,25 @@ header {
     width: 60px;
     height: 60px;
   }
+  .game-mode {
+    h3 {
+      font-size: 1rem;
+    }
+  }
+  .knowing-words,
+  .btn__statistic {
+    font-size: 0.9rem;
+  }
+  .level__audio-call select,
+  .round__audio-call select {
+    font-size: 0.9rem;
+    padding: 5px 7px;
+  }
 }
 @media screen and (max-width: 576px) {
   .list__word {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
   .list__word .init_word,
   .list__word .unknown_word,
@@ -301,5 +511,61 @@ header {
   }
   .statistic__audio-challenge .alert > div {
     width: 100%;
+  }
+  .level__audio-call,
+  .round__audio-call {
+    margin-left: 5px;
+  }
+  .level__audio-call h3,
+  .round__audio-call h3 {
+    margin: 0 7px 0 0;
+  }
+  .game-mode {
+    width: 80%;
+    .lds-ellipsis {
+      width: 80%;
+    }
+  }
+  .knowing-words,
+  .btn__statistic {
+    margin-bottom: 5px;
+    width: 100%;
+  }
+  .level__audio-call,
+  .round__audio-call {
+    margin-bottom: 5px;
+    width: 48%;
+  }
+  .statistic__detaile {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 430px) {
+  .game-mode {
+    width: 70%;
+  }
+  .level__audio-call,
+  .round__audio-call {
+    width: 47%;
+  }
+  .game-mode {
+    .lds-ellipsis {
+      width: 75%;
+    }
+  }
+  .statistic__detaile {
+    width: 75%;
+    font-size: 0.7rem;
+  }
+}
+@media screen and (max-width: 350px) {
+  .game-mode {
+    .lds-ellipsis {
+      width: 72%;
+    }
+  }
+  .statistic__detaile {
+    width: 72%;
+    font-size: 0.6rem;
   }
 }
