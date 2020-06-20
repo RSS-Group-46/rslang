@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+
 header {
   .navbar {
     z-index: 2;
@@ -274,6 +275,7 @@ header {
   .wrapper_audio .fa-volume-up {
     width: 60px;
     height: 60px;
+  }
 }
 @media screen and (max-width: 576px) {
   .list__word {
