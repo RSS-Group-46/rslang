@@ -1,25 +1,26 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/js/all';
+import { MINI_GAMES_URL } from '../../constants/urlConstants';
 
 const StatisticAudioChallenge = ({ arrCorrectAnswers, arrErrorAnswers }) => {
   const arrCorrectFilter = new Set(arrCorrectAnswers);
   const arrErrorsFilter = new Set(arrErrorAnswers);
-  console.log(arrCorrectFilter);
-  
   const handleAudio = (audios) => {
     const audio = new Audio(
       `https://raw.githubusercontent.com/irinainina/rslang-data/master/${audios}`,
     );
     audio.play();
   };
+
   return (
     <div className="statistic__audio-challenge">
       <div className="col-lg-4">
         <div className="bs-component">
           <div className="alert alert-dismissible alert-success">
-            <button type="button" className="close" data-dismiss="alert">
+            <NavLink type="button" className="close" data-dismiss="alert" to={MINI_GAMES_URL}>
               ×
-            </button>
+            </NavLink>
             <div>
               <h4>
                 Errors: <span>{[...arrErrorsFilter].length}</span>

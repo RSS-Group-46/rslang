@@ -1,17 +1,43 @@
 @import '../../styles/variables';
-
+header{
+  .navbar {
+    z-index: 2;
+  }
+}
 .start-page__audio-challenge {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(to top, $purple 20%, $teal 50%, $light 80%);
+  background: url(../../assets/images/back-audiocall.jpg) 100% 100% no-repeat;
+  background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  &::before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+  }
+  h2, p{
+    z-index: 2;
+    color: white;
+  }
+  p{
+    margin-top: 50px;
+    font-size: 1.5rem;
+  }
   button {
     width: 300px;
     height: 100px;
     font-size: 2rem;
+    z-index: 2;
+    margin-top: 50px;
     .fa-long-arrow-alt-right {
       color: rgba(255, 255, 255, 0.75);
     }
@@ -27,6 +53,7 @@
     padding: 10px;
     border-radius: 50%;
     transition: all 0.5s;
+    z-index: 2;
     &:hover {
       border: 1px solid;
       background-color: rgba(182, 179, 179, 0.7);
@@ -39,6 +66,8 @@
   justify-content: center;
   align-items: center;
   padding: 20px 10px;
+  color: $list-group-active-color;
+  z-index: 2;
   .init_word {
     font-size: 2rem;
     padding: 10px 10px;
@@ -85,6 +114,7 @@
   border: 1px solid;
   background-size: cover;
   object-fit: cover;
+  z-index: 2;
 }
 .wrapper_audio {
   display: flex;
@@ -113,6 +143,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
   }
   .table-danger,
   .table-success {
