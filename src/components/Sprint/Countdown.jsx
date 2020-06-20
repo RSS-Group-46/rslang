@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import './Countdown.scss';
 
-const Countdown = ({ timeout, startImmediately }) => {
-  const [current, setCurrent] = useState(timeout);
+const Countdown = ({ duration, startImmediately, onTimeout }) => {
+  const [current, setCurrent] = useState(duration);
   const [isActive, setIsActive] = useState(startImmediately);
 
   useEffect(() => {
@@ -25,6 +25,10 @@ const Countdown = ({ timeout, startImmediately }) => {
     return () => clearInterval(interval);
   }, [current, isActive]);
 
+  useEffect(() => {
+    if(current <= 0) onTimeout();
+  }, [current, onTimeout])
+
   return (
     <div className="countdown m-1">
       <div className="countdown__visual">
@@ -35,7 +39,7 @@ const Countdown = ({ timeout, startImmediately }) => {
               cx="26"
               cy="26"
               style={{
-                animation: `countdown-animation ${timeout}s linear`,
+                animation: `countdown-animation ${duration}s linear`,
               }}
             />
           </svg>

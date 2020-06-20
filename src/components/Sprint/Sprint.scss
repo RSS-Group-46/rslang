@@ -1,7 +1,43 @@
 @import '../../styles/variables';
 
-.score {
+.game__score {
+  grid-area: score;
+  justify-self: center;
   color: $success;
   font-size: 42px;
   font-weight: 500;
+}
+
+.loader {
+  background-color: $gray-400;
+  opacity: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-sprint {
+  min-width: 500px !important;
+  max-width: 800px !important;
+}
+
+.word-image {
+  height: 260px !important;
+}
+
+.game {
+  display: grid;
+  grid-template-areas: 
+    ". score ."
+    ". main countdown";
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 50px auto;
+}
+
+.game__main {
+  grid-area: main;
+}
+
+.game__countdown {
+  grid-area: countdown;
 }
