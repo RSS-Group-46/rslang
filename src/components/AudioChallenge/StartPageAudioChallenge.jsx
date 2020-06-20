@@ -120,6 +120,7 @@ const StartPageAudioChallenge = ({ settings }) => {
           changeNumberWord={changeNumberWord}
           numberWord={numberWord}
           settings={settings}
+          
         />
       )}
       {loader && <Loader />}
