@@ -33,6 +33,7 @@ import Settings from '../Settings/Settings';
 
 import './App.scss';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
+import Savannah from '../Savannah/Savannah';
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
@@ -71,7 +72,7 @@ const App = () => {
                   <div>puzzle</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SAVANNAH_URL}>
-                  <div>savannah</div>
+                  <Savannah />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
                   <div>audiocall</div>
