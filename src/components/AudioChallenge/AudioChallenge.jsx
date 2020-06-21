@@ -1,3 +1,5 @@
+/* eslint-disable react/void-dom-elements-no-children */
+/* eslint-disable jsx-a11y/tabindex-no-positive */
 import React, { useState, useEffect } from 'react';
 import Loader from '../Loader/Loader';
 import ButtonNextWords from './ButtonDontKnowWords';
@@ -10,37 +12,48 @@ import '@fortawesome/fontawesome-free/js/all';
 
 const AudioChallenge = ({ words, offLoader }) => {
   const [numberWord, setNumberWord] = useState(1);
-  const [partSpeech, setPartSpeech] = useState();
   const [listSimilarWords, setListSimilarWords] = useState();
   const [correctWord, setCorrectWord] = useState();
   const [inCorrectWord, setInCorrectWord] = useState();
   const [loader, setLoader] = useState(false);
   const [dontKnow, setDontKnow] = useState(false);
-  
-  const handleButtonDontKnow = () => {
-    if (dontKnow) {
-      setDontKnow(false)
+
+  const handleButtonDontKnow = (e) => {
+    if ((dontKnow ) || (dontKnow && e.key === 'Enter')) {
+      setDontKnow(false);
       setNumberWord(+numberWord + 1);
       setLoader(true);
       setInCorrectWord('1232');
-      
     } else {
       setDontKnow(true);
       setCorrectWord(words[numberWord].id);
     }
   };
-  const handleWord = (e) => {
+
+  const handleWord = (e) => {  
     if (e.target.parentNode.id === words[numberWord].id) {
       setCorrectWord(e.target.parentNode.id);
-      handleButtonDontKnow()
-    } else {
+      handleButtonDontKnow();
+    }
+    if (e.target.parentNode.id !== words[numberWord].id) {
       setInCorrectWord(e.target.parentNode.id);
       setTimeout(() => setCorrectWord(words[numberWord].id), 500);
-      setDontKnow(true)
+      setDontKnow(true);
     }
   };
-
-
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && (e.target.id === words[numberWord].id)) {
+      setCorrectWord(words[numberWord].id);
+      handleButtonDontKnow();
+    } else {
+      setInCorrectWord(e.target.id);
+      setTimeout(() => setCorrectWord(words[numberWord].id), 500);
+      setDontKnow(true);
+      handleButtonDontKnow();
+    }
+    
+  }
+  // Audio
   const handleAudio = () => {
     const audio = new Audio(
       `https://raw.githubusercontent.com/irinainina/rslang-data/master/${words[numberWord].audio}`,
@@ -50,60 +63,60 @@ const AudioChallenge = ({ words, offLoader }) => {
 
   // Get part speech
   useEffect(() => {
-    if (words) {
+    if (words[numberWord].word) {
       fetch(
-        `https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${API_PART_SPEECH}&lang=en-ru&text=${words[numberWord].word}`,
+        `https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${API_PART_SPEECH}&lang=en-en&text=${words[numberWord].word}`,
       )
         .then((response) => response.json())
         .then(({ def }) => {
-          setPartSpeech(def[0].pos);
-        });
+          fetch(
+            `https://api.wordassociations.net/associations/v1.0/json/search?apikey=${API_SIMILAR_WORDS}&text=${words[numberWord].wordTranslate}&lang=ru&limit=4&pos=${def[0].pos}`,
+          )
+            .then((response) => response.json())
+            .then(({ response }) => {   
+              const arrWords = [
+                ...response[0].items,
+                { item: words[numberWord].wordTranslate, id: words[numberWord].id },
+              ];
+              const listWords = arrWords.reduce((acc, el, index) => {
+                return [...acc, { text: el.item, id: el.id ? el.id : index }];
+              }, []);
+              const shuffledArr = listWords.sort(() => {
+                return Math.random() - 0.5;
+              });
+              setLoader(false);
+              setListSimilarWords(shuffledArr);
+              offLoader();
+              handleAudio();
+            });
+        })
     }
-  }, [words]);
-  // get similar words
-  useEffect(() => {
-    if (partSpeech) {
-      fetch(
-        `https://api.wordassociations.net/associations/v1.0/json/search?apikey=${API_SIMILAR_WORDS}&text=${words[numberWord].wordTranslate}&lang=ru&limit=4&pos=${partSpeech}`,
-      )
-        .then((response) => response.json())
-        .then(({ response }) => {
-          const arrWords = [
-            ...response[0].items,
-            { item: words[numberWord].wordTranslate, id: words[numberWord].id },
-          ];
-          const listWords = arrWords.reduce((acc, el, index) => {
-            return [...acc, { text: el.item, id: el.id ? el.id : index }];
-          }, []);
-          const shuffledArr = listWords.sort(() => {
-            return Math.random() - 0.5;
-          });
-          setLoader(false);
-          setListSimilarWords(shuffledArr);
-          offLoader();
-          setTimeout(() => handleAudio(), 500);
-        });
-    }
-  }, [partSpeech, numberWord]);
+  }, [words[numberWord].word]);
 
   return (
     <>
       {loader && <Loader />}
       {dontKnow && <Picture img={words[numberWord].image} />}
-      <div className='wrapper_audio' onClick={handleAudio} role="presentation">
+      <div className="wrapper_audio" onClick={handleAudio} role="presentation">
         <i className="fas fa-volume-up fa-7x" />
         <p>{dontKnow && words[numberWord].word}</p>
       </div>
-      <ul className="list__word">
+      <div className="list__word">
         {listSimilarWords &&
           listSimilarWords.map((element, index) => (
+            // eslint-disable-next-line react/void-dom-elements-no-children
             <li
+            type='button'
               className={
                 correctWord === element.id ? 'guessed_word' : 'init_word'
               }
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              tabIndex='0'
               key={element.id}
               id={element.id}
               onClick={handleWord}
+              onKeyPress={handleKeyPress}
+              // eslint-disable-next-line jsx-a11y/no-interactive-element-to-noninteractive-role
               role="presentation"
             >
               <span>
@@ -120,7 +133,7 @@ const AudioChallenge = ({ words, offLoader }) => {
               </span>
             </li>
           ))}
-      </ul>
+      </div>
       <ButtonNextWords
         handleButtonDontKnow={handleButtonDontKnow}
         state={dontKnow}

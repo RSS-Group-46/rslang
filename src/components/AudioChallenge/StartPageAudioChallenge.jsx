@@ -24,9 +24,12 @@ const StartPageAudioChallenge = () => {
   }, [start]);
   
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className="start-page__audio-challenge">
       {!words ? (
         <button
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus
           type="button"
           className="badge badge-success"
           onClick={handleStartBtn}
