@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import test from './test.json';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
+import test from './test.json';
 
 const TestEnglish = () => {
   const [numberCorrectAnswers, setNumberCorrectAnswers] = useState(0);
