@@ -1,3 +1,5 @@
+/* eslint-disable react/void-dom-elements-no-children */
+/* eslint-disable jsx-a11y/tabindex-no-positive */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Loader from '../Loader/Loader';
@@ -92,6 +94,7 @@ const AudioChallenge = ({
       setCorrectWord(wordId);
       handleButtonDontKnow();
       setArrCorrectAnswers([...arrCorrectAnswers, words[numberWord]]);
+
     } else {
       setInCorrectWord(e.target.id);
       setCorrectWord(wordId);
@@ -161,6 +164,7 @@ const AudioChallenge = ({
       setLoader(false);
     }
   }, [words[numberWord]]);
+
 
   return (
     <>
