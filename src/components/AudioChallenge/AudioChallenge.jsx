@@ -1,3 +1,5 @@
+/* eslint-disable react/void-dom-elements-no-children */
+/* eslint-disable jsx-a11y/tabindex-no-positive */
 import React, { useState, useEffect } from 'react';
 import Loader from '../Loader/Loader';
 import ButtonNextWords from './ButtonDontKnowWords';
@@ -75,6 +77,7 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
       setCorrectWord(wordId);
       handleButtonDontKnow();
       setArrCorrectAnswers([...arrCorrectAnswers, words[numberWord]]);
+
     } else {
       setInCorrectWord(e.target.id);
       setCorrectWord(wordId);
@@ -142,6 +145,7 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
     }
   }, [words[numberWord]]);
 
+
   return (
     <>
       {loader && <Loader />}
@@ -166,6 +170,7 @@ const AudioChallenge = ({ words, offLoader, handleOnlyLearnedWords, handleLevel,
       <ul className="list__word">
         {listSimilarWords &&
           listSimilarWords.map((element, index) => (
+            // eslint-disable-next-line react/void-dom-elements-no-children
             <li
               type="button"
               role='tab'
