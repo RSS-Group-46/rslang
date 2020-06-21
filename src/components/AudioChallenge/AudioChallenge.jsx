@@ -1,3 +1,5 @@
+/* eslint-disable react/void-dom-elements-no-children */
+/* eslint-disable jsx-a11y/tabindex-no-positive */
 import React, { useState, useEffect } from 'react';
 import Loader from '../Loader/Loader';
 import ButtonNextWords from './ButtonDontKnowWords';
@@ -30,7 +32,6 @@ const AudioChallenge = ({ words, offLoader }) => {
       setDontKnow(false);
       setNumberWord(+numberWord + 1);
       setLoader(true);
-      setInCorrectWord(false)
     } else {
       setDontKnow(true);
       setCorrectWord(words[numberWord].id); 
@@ -56,6 +57,7 @@ const AudioChallenge = ({ words, offLoader }) => {
       setCorrectWord(words[numberWord].id);
       handleButtonDontKnow();
       setArrCorrectAnswers([...arrCorrectAnswers, words[numberWord]]);
+
     } else {
       setInCorrectWord(e.target.id);
       setTimeout(() => setCorrectWord(words[numberWord].id), 500);
@@ -64,6 +66,7 @@ const AudioChallenge = ({ words, offLoader }) => {
       setArrErrorAnswer([...arrErrorAnswers, words[numberWord]])  
     }
   };
+
   // Audio
   const handleAudio = () => {
     const audio = new Audio(
@@ -115,6 +118,7 @@ const AudioChallenge = ({ words, offLoader }) => {
     }
   }, [words[numberWord]]);
 
+
   return (
     <>
       {loader && <Loader />}
@@ -127,6 +131,7 @@ const AudioChallenge = ({ words, offLoader }) => {
       <div className="list__word">
         {listSimilarWords &&
           listSimilarWords.map((element, index) => (
+            // eslint-disable-next-line react/void-dom-elements-no-children
             <li
               type="button"
               className={
