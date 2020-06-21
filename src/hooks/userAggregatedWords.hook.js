@@ -1,42 +1,39 @@
 import { useState, useEffect } from 'react';
-import useAuth from './auth.hook';
 import useHttp from './http.hook';
 
 
 const useUserAggregatedWords = (params) => {
-  const { userId, token } = useAuth();
-  const { group, wordsPerPage, filter, onlyUserWords } = params;
-  const [groupState] = useState(group);
-  const [wordsPerPageState] = useState(wordsPerPage);
-  const [filterState] = useState(filter);
-  const [onlyUserWordsState] = useState(onlyUserWords);
+  const { userId, token, group, wordsPerPage, filter, onlyUserWords } = params;
+
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
-
   const { loading, request } = useHttp();
 
-  const filterEncoded = encodeURIComponent(JSON.stringify(filterState));
-  const paramsStr = `group=${groupState}&wordsPerPage=${wordsPerPageState}&filter=${filterEncoded}&onlyUserWords=${onlyUserWordsState}`;
+  const filterEncoded = encodeURIComponent(JSON.stringify(filter));
+  const paramsStr = `group=${group}&wordsPerPage=${wordsPerPage}&filter=${filterEncoded}&onlyUserWords=${onlyUserWords}`;
   const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?${paramsStr}`;
-
-  const headers = {
-    Authorization: `Bearer ${token}`,
-    Accept: 'application/json',
-  };
 
   useEffect(() => {
     const fetchWords = async () => {
-      try {
-        const res = await request(url, 'GET', null, headers);
-        setData(res);
-        setError(null);
-      } catch (err) {
-        setError(err.message || 'Error get words from API');
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      };
+      if (token) {
+        try {
+          const res = await request(url, 'GET', null, headers);
+          setData(res);
+          setError(null);
+        } catch (err) {
+          setError(err.message || 'Error get words from API');
+        }
+      } else {
+        setError('Error: Unauthorized');
       }
-    };
+    }
 
     fetchWords();
-  }, [url, headers, request]);
+  }, [url, token, request]);
 
 
   return { loading, data, error };
