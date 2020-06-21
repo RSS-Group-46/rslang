@@ -15,10 +15,6 @@ class Queue {
     return this.items.shift();
   }
 
-  getItem(index = 0) {
-    return this.items[index];
-  }
-
   get() {
     return this.items;
   }
