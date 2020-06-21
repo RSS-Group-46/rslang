@@ -15,3 +15,21 @@ body {
 .btn {
   margin: 0.25rem !important;
 }
+
+.drop {
+  z-index: 0;
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: drop 10s ease-in-out infinite;
+}
+
+@keyframes drop {
+  from {
+    top: -10%;
+  }
+  to {
+    top: 90%;
+  }
+}
