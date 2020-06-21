@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import Countdown from './Countdown';
 import useWords from '../../hooks/words.hook';
@@ -7,6 +7,8 @@ import useWords from '../../hooks/words.hook';
 import './Sprint.scss';
 import { selectShowAssociationPicture, selectShowTranscription, selectShowAnswerButton, selectShowDeleteButton, selectShowMoveToComplicatedButton } from '../../redux/selectors/settings.selectors';
 import Stats from './Stats';
+import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
+import AuthContext from '../../contexts/auth.context';
 
 const roundTime = 5;
 const scoreStep = 10;
@@ -26,6 +28,7 @@ export default () => {
   const showDeleteButton = useSelector(selectShowDeleteButton);
   const showMoveToComplicatedButton = useSelector(selectShowMoveToComplicatedButton);
   const { wordsLoading, words, word, nextWords } = useWords();
+  const { userId, token } = useContext(AuthContext);
 
   const onTimeout = useCallback(() => setRoundEnd(true), []);
 
