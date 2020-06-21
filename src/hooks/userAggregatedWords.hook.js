@@ -17,7 +17,7 @@ const useUserAggregatedWords = (params) => {
 
   const filterEncoded = encodeURIComponent(JSON.stringify(filterState));
   const paramsStr = `group=${groupState}&wordsPerPage=${wordsPerPageState}&filter=${filterEncoded}&onlyUserWords=${onlyUserWordsState}`;
-  const url = `https://afternoon-falls-25894.herokuapp.com/Users/${userId}/aggregatedWords?${paramsStr}`;
+  const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?${paramsStr}`;
 
   const headers = {
     Authorization: `Bearer ${token}`,
