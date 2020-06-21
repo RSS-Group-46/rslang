@@ -3,22 +3,21 @@ import useHttp from './http.hook';
 
 /**
  * 
- * @param { userId } authorized user id
- * @param { token } logged in user token  
- * @param { group } words group from 0 to 5 inclusive
- * @param { wordsPerPage } aggregated result pagination, how many words per page
- * @param { filter } filter - object corresponding MongoDB document queries
- * @param { onlyUserWords } select only user words flag
+ * @param userId authorized user id
+ * @param token logged in user token  
+ * @param group words difficulty group from 0 to 5 inclusive
+ * @param wordsPerPage aggregated result pagination, how many words per page
+ * @param filter filter - object corresponding MongoDB document queries
  */
 const useUserAggregatedWords = (params) => {
-  const { userId, token, group, wordsPerPage, filter, onlyUserWords } = params;
+  const { userId, token, group, wordsPerPage, filter } = params;
 
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const { loading, request } = useHttp();
 
   const filterEncoded = encodeURIComponent(JSON.stringify(filter));
-  const paramsStr = `group=${group}&wordsPerPage=${wordsPerPage}&filter=${filterEncoded}&onlyUserWords=${onlyUserWords}`;
+  const paramsStr = `group=${group}&wordsPerPage=${wordsPerPage}&filter=${filterEncoded}`;
   const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?${paramsStr}`;
 
   useEffect(() => {

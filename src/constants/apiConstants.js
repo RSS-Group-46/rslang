@@ -5,14 +5,15 @@ export const WORDS_PER_PAGE = 20;
 
 // api userAggregatedWords query filters
 export const filterByDifficulty = (difficulty) => ({
-  "userWord.difficulty": difficulty
+  "$or": [{ "userWord.difficulty": difficulty }, { "userWord": null }]
 });
 
 export const excludeByDifficulty = (difficulty) => ({
-  "userWord.difficulty": { $ne: difficulty }
+  "$or": [{ "userWord.difficulty": { "$ne": difficulty } }, { "userWord": null }]
 });
 
-export const easyWords = filterByDifficulty('easy');
-export const hardWords = filterByDifficulty('hard');
-export const notEasyWords = excludeByDifficulty('easy');
-export const notHardWords = excludeByDifficulty('hard');
+export const ONLY_USER_WORDS = { "userWord": { "$ne": null } }
+export const EASY_WORDS = filterByDifficulty('easy');
+export const HARD_WORDS = filterByDifficulty('hard');
+export const NOT_EASY_WORDS = excludeByDifficulty('easy');
+export const NOT_HARD_WORDS = excludeByDifficulty('hard');
