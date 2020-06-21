@@ -1,3 +1,5 @@
+/* eslint-disable react/void-dom-elements-no-children */
+/* eslint-disable jsx-a11y/tabindex-no-positive */
 import React, { useState, useEffect } from 'react';
 import Loader from '../Loader/Loader';
 import ButtonNextWords from './ButtonDontKnowWords';
@@ -176,9 +178,10 @@ const AudioChallenge = ({
         <p>{dontKnow && words[numberWord].word}</p>
       {(settings.showTranscription && dontKnow) && <p>{words[numberWord].transcription}</p>}
       </div>
-      <ul className="list__word">
+      <div className="list__word">
         {listSimilarWords &&
           listSimilarWords.map((element, index) => (
+            // eslint-disable-next-line react/void-dom-elements-no-children
             <li
               type="button"
               role="tab"
@@ -210,7 +213,7 @@ const AudioChallenge = ({
               </span>
             </li>
           ))}
-      </ul>
+      </div>
       <ButtonNextWords
         arrCorrectAnswers={arrCorrectAnswers}
         arrErrorAnswers={arrErrorAnswers}
