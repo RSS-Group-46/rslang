@@ -25,7 +25,7 @@ const useUserAggregatedWords = (params) => {
           setData(res);
           setError(null);
         } catch (err) {
-          setError(err.message || 'Error get words from API');
+          setError(err.message || 'Failed to fetch aggregated words from API');
         }
       } else {
         setError('Error: Unauthorized');
