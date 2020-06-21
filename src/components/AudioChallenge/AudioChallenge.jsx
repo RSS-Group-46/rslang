@@ -1,3 +1,5 @@
+/* eslint-disable react/void-dom-elements-no-children */
+/* eslint-disable jsx-a11y/tabindex-no-positive */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Loader from '../Loader/Loader';
