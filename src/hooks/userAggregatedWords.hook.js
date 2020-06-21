@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
 import useHttp from './http.hook';
 
-
+/**
+ * 
+ * @param { userId } authorized user id
+ * @param { token } logged in user token  
+ * @param { group } words group from 0 to 5 inclusive
+ * @param { wordsPerPage } aggregated result pagination, how many words per page
+ * @param { filter } filter - object corresponding MongoDB document queries
+ * @param { onlyUserWords } select only user words flag
+ */
 const useUserAggregatedWords = (params) => {
   const { userId, token, group, wordsPerPage, filter, onlyUserWords } = params;
 
