@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import useHttp from './http.hook';
 import { METHODS } from '../constants/apiConstants';
+import errors from '../constants/errorConstants';
 
 /**
  * 
@@ -33,10 +34,10 @@ const useUserAggregatedWords = (params) => {
           setData(res);
           setError(null);
         } catch (err) {
-          setError(err.message || 'Failed to fetch aggregated words from API');
+          setError(err.message || errors.api.default);
         }
       } else {
-        setError('Error: Unauthorized');
+        setError(errors.api.unauthorized);
       }
     }
 
