@@ -7,7 +7,22 @@ import './Savannah.scss';
 import Queue from '../../utils/Queue';
 
 const lifes = new Queue(['*', '*', '*', '*', '*']);
-const words = new Queue(['hello', 'world', 'this', 'is']);
+const words = new Queue([]);
+
+const getWords = async () => {
+  try {
+    const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/words?page=${Math.round(Math.random() * 29)}&group=${Math.round(Math.random() * 5)}`)
+    const data = await response.json();
+
+    data.forEach((el) => {
+      words.add(el.word)
+    })
+  } catch (e) {
+    // TODO: add notification with error
+  }
+}
+
+getWords();
 
 class Savannah extends Component {
   constructor(props) {
