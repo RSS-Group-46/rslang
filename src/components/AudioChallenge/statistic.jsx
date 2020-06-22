@@ -6,6 +6,8 @@ import { MINI_GAMES_URL } from '../../constants/urlConstants';
 const StatisticAudioChallenge = ({ arrCorrectAnswers, arrErrorAnswers }) => {
   const arrCorrectFilter = new Set(arrCorrectAnswers);
   const arrErrorsFilter = new Set(arrErrorAnswers);
+  console.log(arrCorrectFilter);
+  
   const handleAudio = (audios) => {
     const audio = new Audio(
       `https://raw.githubusercontent.com/irinainina/rslang-data/master/${audios}`,
