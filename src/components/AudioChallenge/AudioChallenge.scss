@@ -146,10 +146,6 @@
   .list__word .guessed_word {
     font-size: 1.7rem;
   }
-  .start-page__audio-challenge .fa-volume-up {
-    width: 100px;
-    height: 100px;
-}
 }
 @media screen and (max-width: 1060px) {
   .list__word .init_word,
@@ -157,10 +153,6 @@
   .list__word .guessed_word {
     font-size: 1.5rem;
   }
-  .start-page__audio-challenge .fa-volume-up {
-    width: 80px;
-    height: 80px;
-}
 }
 @media screen and (max-width: 950px) {
   .list__word .init_word,
@@ -169,20 +161,19 @@
     font-size: 1.2rem;
     padding: 10px 5px;
   }
-  .start-page__audio-challenge .fa-volume-up {
-    width: 70px;
-    height: 70px;
-}
-.wrapper_audio p {
-  margin-bottom: 0;
-  font-size: 2rem;
-}
+  .wrapper_audio p {
+    margin-bottom: 0;
+    font-size: 2rem;
+  }
 }
 @media screen and (max-width: 780px) {
   .list__word .init_word,
   .list__word .unknown_word,
   .list__word .guessed_word {
     font-size: 1rem;
+  }
+  .start-page__audio-challenge button {
+    width: 191px;
   }
 }
 @media screen and (max-width: 700px) {
@@ -192,16 +183,16 @@
     font-size: 0.8rem;
     padding: 10px 2px;
   }
+  .wrapper_audio .fa-volume-up {
+    width: 60px;
+    height: 60px;
+}
 }
 @media screen and (max-width: 576px) {
   .list__word {
     flex-direction: column;
     align-items: flex-start;
   }
-  .start-page__audio-challenge .fa-volume-up {
-    width: 50px;
-    height: 50px;
-}
   .list__word .init_word,
   .list__word .unknown_word,
   .list__word .guessed_word {
@@ -212,4 +203,15 @@
     height: 75px;
     font-size: 1.5rem;
   }
+  .statistic__audio-challenge .col-lg-4 {
+    width: 80%;
+
+  }
+  .statistic__audio-challenge .alert {
+    flex-direction: column;
+    align-items: center;
+}
+.statistic__audio-challenge .alert > div {
+  width: 100%;
+}
 }

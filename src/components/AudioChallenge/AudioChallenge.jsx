@@ -1,6 +1,5 @@
-/* eslint-disable react/void-dom-elements-no-children */
-/* eslint-disable jsx-a11y/tabindex-no-positive */
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import Loader from '../Loader/Loader';
 import ButtonNextWords from './ButtonDontKnowWords';
 import StatisticAudioChallenge from './statistic';
@@ -12,7 +11,7 @@ import {
 import Picture from './picture';
 import '@fortawesome/fontawesome-free/js/all';
 
-const AudioChallenge = ({ words, offLoader }) => {
+const AudioChallenge = ({ words, offLoader, settings }) => {
   const [numberWord, setNumberWord] = useState(1);
   const [listSimilarWords, setListSimilarWords] = useState();
   const [correctWord, setCorrectWord] = useState();
@@ -22,7 +21,8 @@ const AudioChallenge = ({ words, offLoader }) => {
   const [showStatistic, setShowStatistic] = useState(false);
   const [arrCorrectAnswers, setArrCorrectAnswers] = useState([]);
   const [arrErrorAnswers, setArrErrorAnswer] = useState([]);
-
+  console.log(settings.wordsPerDay);
+  
 
   const handleButtonDontKnow = (e) => {
     if (numberWord === words.length -1) {
@@ -32,9 +32,12 @@ const AudioChallenge = ({ words, offLoader }) => {
       setDontKnow(false);
       setNumberWord(+numberWord + 1);
       setLoader(true);
+      setInCorrectWord(false)
     } else {
       setDontKnow(true);
-      setCorrectWord(words[numberWord].id); 
+      setCorrectWord(words[numberWord].id);
+      console.log('dont know');
+      
     }
   };
 
@@ -138,7 +141,6 @@ const AudioChallenge = ({ words, offLoader }) => {
                 correctWord === element.id ? 'guessed_word' : 'init_word'
               }
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-
               tabIndex="0"
               key={element.id}
               id={element.id}
@@ -154,7 +156,7 @@ const AudioChallenge = ({ words, offLoader }) => {
                 )}
               </span>
               <span
-                className={(+inCorrectWord === element.id && inCorrectWord)? 'unknown_word' : 'init_word'}
+                className={(+inCorrectWord === element.id && inCorrectWord && dontKnow) ? 'unknown_word' : ''}
               >
                 {element.text.toLowerCase()}
               </span>
@@ -169,4 +171,7 @@ const AudioChallenge = ({ words, offLoader }) => {
     </>
   );
 };
-export default AudioChallenge;
+const mapStateToProps = ({settings}) => ({
+  settings,
+} )
+export default connect(mapStateToProps)(AudioChallenge);
