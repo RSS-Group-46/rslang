@@ -57,7 +57,6 @@ const AudioChallenge = ({ words, offLoader }) => {
       setCorrectWord(words[numberWord].id);
       handleButtonDontKnow();
       setArrCorrectAnswers([...arrCorrectAnswers, words[numberWord]]);
-
     } else {
       setInCorrectWord(e.target.id);
       setTimeout(() => setCorrectWord(words[numberWord].id), 500);
@@ -66,7 +65,6 @@ const AudioChallenge = ({ words, offLoader }) => {
       setArrErrorAnswer([...arrErrorAnswers, words[numberWord]])  
     }
   };
-
   // Audio
   const handleAudio = () => {
     const audio = new Audio(
@@ -94,6 +92,7 @@ const AudioChallenge = ({ words, offLoader }) => {
                   item: words[numberWord].wordTranslate,
                   id: words[numberWord].id,
                 },
+
               ];
               const listWords = arrWords.reduce((acc, el, index) => {
                 return [...acc, { text: el.item, id: el.id ? el.id : index }];
@@ -105,6 +104,7 @@ const AudioChallenge = ({ words, offLoader }) => {
               setListSimilarWords(shuffledArr);
               offLoader();
               handleAudio();
+
             })
             .catch(() => {
               setLoader(false);
@@ -138,6 +138,7 @@ const AudioChallenge = ({ words, offLoader }) => {
                 correctWord === element.id ? 'guessed_word' : 'init_word'
               }
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+
               tabIndex="0"
               key={element.id}
               id={element.id}
