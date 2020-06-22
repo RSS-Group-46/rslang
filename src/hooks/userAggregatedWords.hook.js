@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import useHttp from './http.hook';
+import { GET } from '../constants/apiConstants';
 
 /**
  * 
@@ -28,7 +29,7 @@ const useUserAggregatedWords = (params) => {
       };
       if (token) {
         try {
-          const res = await request(url, 'GET', null, headers);
+          const res = await request(url, GET, null, headers);
           setData(res);
           setError(null);
         } catch (err) {
