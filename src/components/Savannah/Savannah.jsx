@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/no-did-update-set-state */
 import React, { Component } from 'react';
@@ -9,9 +8,10 @@ import Queue from '../../utils/Queue';
 
 const lifes = new Queue(['*', '*', '*', '*', '*']);
 const words = new Queue(['hello', 'world', 'this', 'is']);
+
 class Savannah extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       word: words.next(),
       lifes: lifes.get(),
@@ -30,6 +30,7 @@ class Savannah extends Component {
         key: e.key,
       });
     });
+
     document.querySelectorAll('.btn').forEach((el) => {
       el.addEventListener('click', (e) => {
         this.setState({
@@ -37,6 +38,7 @@ class Savannah extends Component {
         });
       });
     });
+
     this.setTimer();
   }
 
@@ -69,6 +71,7 @@ class Savannah extends Component {
         key: e.key,
       });
     });
+
     document.querySelectorAll('.btn').forEach((el) => {
       el.removeEventListener('click', (e) => {
         this.setState({
@@ -76,6 +79,7 @@ class Savannah extends Component {
         });
       });
     });
+
     this.resetTimer();
   }
 
@@ -108,15 +112,20 @@ class Savannah extends Component {
 
   resetTimer() {
     clearInterval(this.timer);
+
     document.querySelector('.drop').style.webkitAnimation = 'none';
+
     this.timer = setInterval(() => {
       this.setState({
         word: words.next(),
       });
     }, 10000);
-    if (document.querySelector('.drop')) {
+
+    if (this.state.word) {
       setTimeout(() => {
-        document.querySelector('.drop').style.webkitAnimation = '';
+        if (document.querySelector('.drop')) {
+          document.querySelector('.drop').style.webkitAnimation = '';
+        }
       }, 1000);
     }
   }
@@ -143,7 +152,9 @@ class Savannah extends Component {
         keyValue === this.state.word.toLowerCase())
     ) {
       this.resetTimer();
+
       const newCorrect = this.state.correct + 1;
+
       this.setState({
         prevWord: this.state.word,
         word: words.next(),
@@ -152,14 +163,16 @@ class Savannah extends Component {
         innerValue: '',
       });
     } else if (
-      keyValue !== this.state.word &&
+      (keyValue !== this.state.word &&
       this.state.word !== this.state.prevWord &&
-      typeof keyValue !== 'undefined'
+      typeof keyValue !== 'undefined') ||
+      !!keyValue
     ) {
       this.resetTimer();
-      console.log(123);
-      const newWrong = this.state.wrong + 1;
       lifes.remove();
+
+      const newWrong = this.state.wrong + 1;
+
       this.setState({
         lifes: lifes.get(),
         wrong: newWrong,
@@ -179,7 +192,7 @@ class Savannah extends Component {
               {Math.floor(
                 (this.state.correct / (this.state.wrong + this.state.correct)) *
                   100,
-              )}
+              ) || 0}
               %)
             </h3>
             <h3>
@@ -187,7 +200,7 @@ class Savannah extends Component {
               {Math.floor(
                 (this.state.wrong / (this.state.wrong + this.state.correct)) *
                   100,
-              )}
+              ) || 0}
               %)
             </h3>
           </div>
