@@ -4,7 +4,7 @@ function Notification({ title, message, delay }) {
   const toastRef = useRef();
 
   useEffect(() => {
-    if (delay) {
+    if (delay instanceof Number) {
       setTimeout(() => toastRef.current && toastRef.current.remove(), delay);
     }
   }, [delay]);
