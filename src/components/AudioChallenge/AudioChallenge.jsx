@@ -1,6 +1,5 @@
-/* eslint-disable react/void-dom-elements-no-children */
-/* eslint-disable jsx-a11y/tabindex-no-positive */
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import Loader from '../Loader/Loader';
 import ButtonNextWords from './ButtonDontKnowWords';
 import StatisticAudioChallenge from './statistic';
@@ -223,4 +222,7 @@ const AudioChallenge = ({
     </>
   );
 };
-export default AudioChallenge;
+const mapStateToProps = ({settings}) => ({
+  settings,
+} )
+export default connect(mapStateToProps)(AudioChallenge);
