@@ -12,7 +12,6 @@ const StatisticAudioChallenge = ({ arrCorrectAnswers, arrErrorAnswers }) => {
     );
     audio.play();
   };
-
   return (
     <div className="statistic__audio-challenge">
       <div className="col-lg-4">
