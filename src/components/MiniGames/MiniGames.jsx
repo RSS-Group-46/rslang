@@ -13,7 +13,7 @@ const icons = {
   4: speakItImg,
   5: speakItImg,
   6: speakItImg,
-}
+};
 
 const MiniGames = () => {
   return (
@@ -38,10 +38,10 @@ const MiniGames = () => {
               key={info.id}
             >
               <div className="games__image">
-                <img src={`${icons[info.id]}`} alt="icon" />
+                <img src={icons[info.id]} alt="icon" />
               </div>
               <div className="games-item__skills">
-                <h5>{`${info.title}`}</h5>
+                <h5>{info.title}</h5>
                 <p>{info.description}</p>
               </div>
             </Link>
