@@ -33,6 +33,7 @@ import Settings from '../Settings/Settings';
 import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
+import Footer from '../Footer/Footer';
 
 import './App.scss';
 
@@ -94,7 +95,7 @@ const App = () => {
               </Switch>
             </>
           )}
-          <div>footer</div>
+          <Footer />
           {!isAuth && (
             <Switch>
               <Route exact path={AUTH_URL}>
