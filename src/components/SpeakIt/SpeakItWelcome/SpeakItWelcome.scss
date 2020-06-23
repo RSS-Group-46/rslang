@@ -21,20 +21,15 @@
     height: 500px;
     margin-top: 7%;
 
-    background-color: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-
     h1 {
       font-size: 60px;
       letter-spacing: 13px;
-      font-weight: 300;
       font-weight: 700;
       text-transform: uppercase;
       color: $purple;
     }
 
     p {
-      margin: 0;
       margin: 10px 0;
 
       font-size: 20px;

@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import Button from '../UI/Button/Button';
 import { MINI_GAMES_URL, SPEAKIT_URL } from '../../../constants/urlConstants';
 
-import './Welcome.scss';
+import './SpeakItWelcome.scss';
 
-const Welcome = () => {
+const SpeakItWelcome = () => {
   const history = useHistory();
 
   const startHandler = () => {
@@ -24,4 +24,4 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default SpeakItWelcome;
