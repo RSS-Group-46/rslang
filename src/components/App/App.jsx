@@ -30,7 +30,7 @@ import useAuth from '../../hooks/auth.hook';
 import Team from '../Team/Team';
 import Header from '../Header/Header';
 import Settings from '../Settings/Settings';
-import Welcome from '../SpeakIt/Welcome/Welcome';
+import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 
 import './App.scss';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
@@ -66,7 +66,7 @@ const App = () => {
                   <div>mini-games</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
-                  <Welcome />
+                  <SpeakItWelcome />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
                   <div>puzzle</div>
@@ -89,7 +89,7 @@ const App = () => {
                 <Route path={ERROR}>
                   <ErrorIndicator />
                 </Route>
-               <Redirect to={BASE_URL} />
+                <Redirect to={BASE_URL} />
               </Switch>
             </>
           )}
@@ -99,7 +99,7 @@ const App = () => {
               <Route exact path={AUTH_URL}>
                 <Authorization />
               </Route>
-            <Redirect to={AUTH_URL} />
+              <Redirect to={AUTH_URL} />
             </Switch>
           )}
         </AuthContext.Provider>
