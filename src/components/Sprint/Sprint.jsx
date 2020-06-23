@@ -5,15 +5,31 @@ import Countdown from './Countdown';
 import useWords from '../../hooks/words.hook';
 
 import './Sprint.scss';
-import { selectShowAssociationPicture, selectShowTranscription, selectShowAnswerButton, selectShowDeleteButton, selectShowMoveToComplicatedButton } from '../../redux/selectors/settings.selectors';
+import {
+  selectShowAssociationPicture,
+  selectShowTranscription,
+  selectShowAnswerButton,
+  selectShowDeleteButton,
+  selectShowMoveToComplicatedButton,
+} from '../../redux/selectors/settings.selectors';
 import Stats from './Stats';
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import AuthContext from '../../contexts/auth.context';
 
-const roundTime = 5;
+const roundTime = 60;
+const wordsPerRound = Math.floor(roundTime / 2);
 const scoreStep = 10;
 const consecutiveAnswersToBonus = 4;
 const randomFromArray = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const getDataUrl = (item) => `https://raw.githubusercontent.com/shevv920/rslang-data/master/${item}`;
+const correctWordUrls = (obj) => (
+  {
+    ...obj,
+    image: getDataUrl(obj.image),
+    audio: getDataUrl(obj.audio),
+    audioMeaning: getDataUrl(obj.audioMeaning),
+    audioExample: getDataUrl(obj.audioExample),
+  });
 
 export default () => {
   const [currentScore, setScore] = useState(0);
@@ -22,14 +38,18 @@ export default () => {
   const [roundEnd, setRoundEnd] = useState(false);
   const [knownWords, setKnownWords] = useState([]);
   const [unknownWords, setUnknownWords] = useState([]);
+  const [currentWord, setCurrentWord] = useState(0);
   const showAssociationPicture = useSelector(selectShowAssociationPicture);
   const showWordTranscription = useSelector(selectShowTranscription);
   const showAnswerButton = useSelector(selectShowAnswerButton);
   const showDeleteButton = useSelector(selectShowDeleteButton);
   const showMoveToComplicatedButton = useSelector(selectShowMoveToComplicatedButton);
-  const { wordsLoading, words, word, nextWords } = useWords();
   const { userId, token } = useContext(AuthContext);
-
+  const wordsConfig = { userId, token, group: 0, wordsPerPage: wordsPerRound, filter: {} };
+  const { data, error, loading: wordsLoading } = useUserAggregatedWords(wordsConfig);
+  const wordsRaw = data && data[0].paginatedResults || [];
+  const words = wordsRaw.map(correctWordUrls);
+  const word = words[currentWord];
   const onTimeout = useCallback(() => setRoundEnd(true), []);
 
   const getPlayData = useCallback(() => {
@@ -50,8 +70,8 @@ export default () => {
 
   const bonus = scoreStep * Math.floor(consecutiveAnswers / consecutiveAnswersToBonus);
 
-  const handleAnswer = (correct) => {
-    if (correct === playData.correct) {
+  const handleAnswer = (answer) => {
+    if (answer === playData.correct) {
       setScore((score) => score + scoreStep);
       setCorrectAnswers((c) => c + 1);
       setConsecutiveAnswers((c) => c + 1);
@@ -60,7 +80,7 @@ export default () => {
       setConsecutiveAnswers(0);
       setUnknownWords((xs) => [...xs, word]);
     }
-    nextWords();
+    setCurrentWord((c) => c + 1);
   }
 
 
