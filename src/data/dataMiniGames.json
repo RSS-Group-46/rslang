@@ -25,14 +25,14 @@
     "title": "Audiocall",
     "description": "The game improves the perception of English speech by ear.",
     "icon": "",
-    "link": "mini-games/speakit"
+    "link": "mini-games/audiocall"
   },
   {
     "id": 5,
     "title": "Sprint",
     "description": "Teaches you to quickly translate from English.",
     "icon": "",
-    "link": "mini-games/audiocall"
+    "link": "mini-games/sprint"
   },
   {
     "id": 6,
