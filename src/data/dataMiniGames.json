@@ -3,7 +3,7 @@
     "id": 1,
     "title": "SpeakIt",
     "description": "A game in which you can listen to and check the pronunciation of English words.",
-    "icon": "",
+    "icon": "../assets/icons/speakit.png",
     "link": "mini-games/speakit"
   },
   {
@@ -11,28 +11,28 @@
     "title": "English puzzle",
     "description": "A game whose purpose is to collect sentences from randomly placed English words.",
     "icon": "",
-    "link": ""
+    "link": "mini-games/puzzle"
   },
   {
     "id": 3,
     "title": "Savannah",
     "description": "Coaching Savannah develops vocabulary. The more words you know, the more experience points you get.",
     "icon": "",
-    "link": ""
+    "link": "mini-games/savannah"
   },
   {
     "id": 4,
     "title": "Audiocall",
     "description": "The game improves the perception of English speech by ear.",
     "icon": "",
-    "link": ""
+    "link": "mini-games/speakit"
   },
   {
     "id": 5,
     "title": "Sprint",
     "description": "Teaches you to quickly translate from English.",
     "icon": "",
-    "link": ""
+    "link": "mini-games/audiocall"
   },
   {
     "id": 6,

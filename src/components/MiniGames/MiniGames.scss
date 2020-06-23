@@ -40,19 +40,16 @@
 
     border: 1.5px solid #dee2e6;
     border-radius: 5px 5px 5px 5px/25px 25px 25px 5px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    
+    &:hover {
+      text-decoration: none;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
   }
 
-  &__image {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
+  &__image img {
     margin-right: 20px;
-
-    img {
-      width: 100px;
-      height: 100px;
-    }
+    width: 100px;
+    height: 100px;
   }
 }

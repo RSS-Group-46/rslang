@@ -1,9 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import speakItImg from '../../assets/icons/speakit.png';
 
 import './MiniGames.scss';
 
 const dataMiniGames = require('../../data/dataMiniGames.json');
+
+const icons = {
+  1: speakItImg,
+  2: speakItImg,
+  3: speakItImg,
+  4: speakItImg,
+  5: speakItImg,
+  6: speakItImg,
+}
 
 const MiniGames = () => {
   return (
@@ -22,9 +32,13 @@ const MiniGames = () => {
       <section className="games__list">
         {dataMiniGames.map((info) => {
           return (
-            <Link to={info.link} className="games__item border-primary" key={info.id}>
+            <Link
+              to={info.link}
+              className="games__item border-primary"
+              key={info.id}
+            >
               <div className="games__image">
-                <img src={info.icon} alt="icon" />
+                <img src={`${icons[info.id]}`} alt="icon" />
               </div>
               <div className="games-item__skills">
                 <h5>{`${info.title}`}</h5>
