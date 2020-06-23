@@ -30,6 +30,7 @@ import useAuth from '../../hooks/auth.hook';
 import Team from '../Team/Team';
 import Header from '../Header/Header';
 import Settings from '../Settings/Settings';
+import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 
 import './App.scss';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
@@ -65,7 +66,7 @@ const App = () => {
                   <div>mini-games</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
-                  <div>speakit</div>
+                  <SpeakItWelcome />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
                   <div>puzzle</div>
