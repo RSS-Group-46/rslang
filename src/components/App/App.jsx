@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
+  // Redirect,
 } from 'react-router-dom';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
 import {
@@ -30,9 +30,10 @@ import useAuth from '../../hooks/auth.hook';
 import Team from '../Team/Team';
 import Header from '../Header/Header';
 import Settings from '../Settings/Settings';
+import MiniGames from '../MiniGames/MiniGames';
+import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 
 import './App.scss';
-import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
@@ -62,7 +63,7 @@ const App = () => {
                   <div>deleted</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL}>
-                  <div>mini-games</div>
+                  <MiniGames />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
                   <div>speakit</div>
@@ -88,7 +89,7 @@ const App = () => {
                 <Route path={ERROR}>
                   <ErrorIndicator />
                 </Route>
-                <Redirect to={BASE_URL} />
+               {/* <Redirect to={BASE_URL} /> */}
               </Switch>
             </>
           )}
@@ -98,7 +99,7 @@ const App = () => {
               <Route exact path={AUTH_URL}>
                 <Authorization />
               </Route>
-              <Redirect to={AUTH_URL} />
+             {/* <Redirect to={AUTH_URL} /> */}
             </Switch>
           )}
         </AuthContext.Provider>
