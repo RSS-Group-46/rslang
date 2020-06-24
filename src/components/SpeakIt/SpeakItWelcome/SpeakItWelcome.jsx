@@ -14,7 +14,7 @@ const SpeakItWelcome = () => {
 
   return (
     <div className="welcome">
-      <div className='welcome__modal'>
+      <div className="welcome__modal">
         <h1>Speakit</h1>
         <p>Click on the words to hear them sound.</p>
         <p>Click on the button and speak the words into the microphone.</p>

@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
+  // Redirect,
 } from 'react-router-dom';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
 import {
@@ -34,6 +34,7 @@ import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
+import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
 
 import './App.scss';
 
@@ -70,6 +71,9 @@ const App = () => {
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
                   <SpeakItWelcome />
                 </Route>
+                <Route exact path={MINI_GAMES_URL + SPEAKIT_URL + '/train'}>
+                  <SpeakItTrain />
+                </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
                   <div>puzzle</div>
                 </Route>
@@ -91,7 +95,7 @@ const App = () => {
                 <Route path={ERROR}>
                   <ErrorIndicator />
                 </Route>
-               <Redirect to={BASE_URL} />
+              { /* <Redirect to={BASE_URL} /> */}
               </Switch>
             </>
           )}
@@ -101,7 +105,7 @@ const App = () => {
               <Route exact path={AUTH_URL}>
                 <Authorization />
               </Route>
-             <Redirect to={AUTH_URL} />
+             {/* <Redirect to={AUTH_URL} /> */}
             </Switch>
           )}
         </AuthContext.Provider>
