@@ -4,12 +4,16 @@
   bottom: 0;
   width: 100%;
 
-  border-width: 2px;
-  border-style: solid;
+  display: flex;
+  justify-content: flex-end;
+
+  border: 2px solid;
   border-radius: 25px 25px 55px 5px/5px 55px 25px 25px;
 
   &__text {
-    padding: 10px;
+    margin: 0;
+    padding: 18px;
+
     font-size: 15px;
   }
 }
