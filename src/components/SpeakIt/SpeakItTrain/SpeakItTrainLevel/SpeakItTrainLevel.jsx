@@ -1,4 +1,5 @@
 import React from 'react';
+import SpeakItTrainBlock from '../SpeakItTrainBlock/SpeakItTrainBlock';
 
 import './SpeakItTrainLevel.scss';
 
@@ -57,6 +58,7 @@ const SpeakItTrainLevel = () => {
   return (
     <div className="train-page  container">
       <ul className="train-levels">{createItem()}</ul>
+      <SpeakItTrainBlock />
     </div>
   );
 };
