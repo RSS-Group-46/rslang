@@ -1,10 +1,7 @@
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect, useCallback, useContext } from 'react';
+import React, { useState, useCallback, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import Countdown from './Countdown';
-import useWords from '../../hooks/words.hook';
-
-import './Sprint.scss';
 import {
   selectShowAssociationPicture,
   selectShowTranscription,
@@ -13,67 +10,43 @@ import {
   selectShowMoveToComplicatedButton,
 } from '../../redux/selectors/settings.selectors';
 import Stats from './Stats';
+import ConsecutiveAnswers from './ConsecutiveAnswers';
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import AuthContext from '../../contexts/auth.context';
+import { getPlayData, correctWordUrls } from './Utils';
+import { roundTime, wordsPerRound, scoreStep, consecutiveAnswersToBonus } from './Constants';
 
-const roundTime = 60;
-const wordsPerRound = Math.floor(roundTime / 2);
-const scoreStep = 10;
-const consecutiveAnswersToBonus = 4;
-const randomFromArray = (arr) => arr[Math.floor(Math.random() * arr.length)];
-const getDataUrl = (item) => `https://raw.githubusercontent.com/shevv920/rslang-data/master/${item}`;
-const correctWordUrls = (obj) => (
-  {
-    ...obj,
-    image: getDataUrl(obj.image),
-    audio: getDataUrl(obj.audio),
-    audioMeaning: getDataUrl(obj.audioMeaning),
-    audioExample: getDataUrl(obj.audioExample),
-  });
+import './Sprint.scss';
+
 
 export default () => {
   const [currentScore, setScore] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0);
   const [consecutiveAnswers, setConsecutiveAnswers] = useState(0);
-  const [roundEnd, setRoundEnd] = useState(false);
   const [knownWords, setKnownWords] = useState([]);
   const [unknownWords, setUnknownWords] = useState([]);
   const [currentWord, setCurrentWord] = useState(0);
+  const [roundEnd, setRoundEnd] = useState(false);
+  const [showStats, setShowStats] = useState(false);
   const showAssociationPicture = useSelector(selectShowAssociationPicture);
   const showWordTranscription = useSelector(selectShowTranscription);
   const showAnswerButton = useSelector(selectShowAnswerButton);
   const showDeleteButton = useSelector(selectShowDeleteButton);
   const showMoveToComplicatedButton = useSelector(selectShowMoveToComplicatedButton);
   const { userId, token } = useContext(AuthContext);
+  
   const wordsConfig = { userId, token, group: 0, wordsPerPage: wordsPerRound, filter: {} };
   const { data, error, loading: wordsLoading } = useUserAggregatedWords(wordsConfig);
   const wordsRaw = data && data[0].paginatedResults || [];
   const words = wordsRaw.map(correctWordUrls);
   const word = words[currentWord];
   const onTimeout = useCallback(() => setRoundEnd(true), []);
-
-  const getPlayData = useCallback(() => {
-    if (words.length === 0) return { word: null, wordTranslate: null, image: null };
-    const correct = Math.random() >= 0.5;
-    const { image } = word;
-    let { wordTranslate } = word;
-
-    if (!correct) {
-      const currentExcluded = words.filter((w) => w.word !== word);
-      wordTranslate = randomFromArray(currentExcluded).wordTranslate;
-    }
-
-    return { word: word.word, wordTranslate, image, correct };
-  }, [words, word]);
-
-  const playData = getPlayData(words, word);
+  const playData = getPlayData(word, words);
 
   const bonus = scoreStep * Math.floor(consecutiveAnswers / consecutiveAnswersToBonus);
 
   const handleAnswer = (answer) => {
     if (answer === playData.correct) {
-      setScore((score) => score + scoreStep);
-      setCorrectAnswers((c) => c + 1);
+      setScore((score) => score + scoreStep + bonus);
       setConsecutiveAnswers((c) => c + 1);
       setKnownWords((xs) => [...xs, word]);
     } else {
@@ -86,8 +59,9 @@ export default () => {
 
   return (
     <div className="container p-1">
-      {word && <div className="game">
-        <div className="game__score">{`Score: ${currentScore + bonus}`}</div>
+      {!roundEnd && word && <div className="game">
+        <div className="game__score">{`${currentScore}`}</div>
+        <ConsecutiveAnswers current={consecutiveAnswers} total={consecutiveAnswersToBonus} />
         <div className="game__main card card-sprint border-primary mb-3">
           {showAssociationPicture && <img className="card-img-top word-image" src={playData.image} alt={playData.word} />}
           <div className="card-body">
@@ -119,7 +93,7 @@ export default () => {
           <Countdown duration={roundTime} startImmediately onTimeout={onTimeout} />
         </div>
       </div>}
-      {roundEnd && <Stats knownWords={knownWords} unknownWords={unknownWords} />}
+      {showStats && <Stats knownWords={knownWords} unknownWords={unknownWords} close={() => setShowStats(false)} />}
     </div>
   )
 }
