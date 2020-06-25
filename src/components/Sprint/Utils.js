@@ -9,20 +9,20 @@ const correctWordUrls = (obj) => (
     audioExample: getDataUrl(obj.audioExample),
   });
 
-  const getPlayData = (word, words) => {
-    if (!word) return { word: null, wordTranslate: null, image: null}
+const getPlayData = (word, words) => {
+  if (!word) return { word: null, wordTranslate: null, image: null }
 
-    const correct = Math.random() >= 0.5;
-    const { image } = word;
-    let { wordTranslate } = word;
+  const correct = Math.random() >= 0.5;
+  const { image } = word;
+  let { wordTranslate } = word;
 
-    if (!correct) {
-      const currentExcluded = words.filter((w) => w.word !== word);
-      wordTranslate = randomFromArray(currentExcluded).wordTranslate;
-    }
+  if (!correct) {
+    const currentExcluded = words.filter((w) => w.word !== word);
+    wordTranslate = randomFromArray(currentExcluded).wordTranslate;
+  }
 
-    return { word: word.word, wordTranslate, image, correct };
-  };
+  return { raw: word, word: word.word, wordTranslate, image, correct };
+};
 
 export {
   randomFromArray,

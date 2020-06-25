@@ -12,12 +12,12 @@ const wordObjToElement = (obj) => (
   </div>
 );
 
-export default ({ knownWords, unknownWords, close }) => {
+export default ({ score, knownWords, unknownWords, close }) => {
 
   return (
     <div className="stats-modal">
       <div className="stats-modal__content shadow border-primary">
-        <button type="button" onClick={close}>CLOSE</button>
+        <span>Очков: {score}</span>
         <div className="known-words">
           <h4>{`Знаю: ${knownWords.length}`}</h4>
           {knownWords && knownWords.map(wordObjToElement)}
@@ -25,6 +25,9 @@ export default ({ knownWords, unknownWords, close }) => {
         <div className="unknown-words">
           <h4>{`Не знаю: ${unknownWords.length}`}</h4>
           {unknownWords && unknownWords.map(wordObjToElement)}
+        </div>
+        <div className="d-flex flex-row justify-content-end">
+          <button className="btn btn-primary" type="button" onClick={close}>CLOSE</button>
         </div>
       </div>
     </div>
