@@ -18,11 +18,7 @@ const SpeakItTrainLevel = () => {
   const handleCheck = (event) => {
     const clickedElement = event.target;
 
-    if (currentTrainLevel === event.target.id) {
-      return;
-    }
-
-    if (event.target.tagName === 'LI') {
+    if (currentTrainLevel !== event.target.id) {
       const trainLevelElements = [
         ...document.querySelectorAll('.train-levels__level'),
       ];
@@ -34,7 +30,6 @@ const SpeakItTrainLevel = () => {
   
       currentTrainLevel = event.target.id;
     }
-    console.log('currentTrainLevel ', currentTrainLevel);
   };
 
   const createItem = () => {

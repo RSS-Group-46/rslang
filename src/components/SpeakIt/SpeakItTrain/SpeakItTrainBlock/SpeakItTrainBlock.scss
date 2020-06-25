@@ -1,4 +1,12 @@
-@import '../../../../styles//variables';
+@import '../../../../styles/variables';
+
+:root {
+  --blue-color: #048bc2;
+  --white-color: #ffffff;
+  --gray-color: grey;
+  --lightyellow-color: #fbe898;
+  --lightgreen-color: #ccf4d3;
+}
 
 .train {
   width: 100vw;
@@ -38,8 +46,8 @@
     margin: 30px 10px;
 
     font-size: 18px;
-    background-color: #048bc2;
-    color: white;
+    background-color: var(--blue-color);
+    color: var(--white-color);
 
     &:hover,
     &:hover,
@@ -72,7 +80,7 @@
     flex-direction: column;
     justify-content: space-around;
 
-    border: 2px solid gray;
+    border: 2px solid var(--gray-color);
     border-radius: 10px;
     cursor: pointer;
 
@@ -90,27 +98,27 @@
 
       background-image: url('../../assets/icons/sound.png');
       background-repeat: no-repeat;
-      background-color: white;
+      background-color: var(--white-color);
       background-size: cover;
     }
 
     &:hover {
-      box-shadow: 1px 1px 3px 3px gray;
+      box-shadow: 1px 1px 3px 3px var(--gray-color);
     }
 
     &--active {
-      background-color: #fbe898;
+      background-color: var(--lightyellow-color);
 
       &:before {
-        background-color: #fbe898;
+        background-color: var(--lightyellow-color);
       }
     }
 
     &--guessed {
-      background-color: #ccf4d3;
+      background-color: --lightgreen-color;
 
       &:before {
-        background-color: #ccf4d3;
+        background-color: --lightgreen-color;
       }
     }
 
@@ -122,6 +130,6 @@
     }
   }
   &__transcription {
-    color: gray;
+    color: --gray-color;
   }
 }

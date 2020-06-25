@@ -1,11 +1,17 @@
+
+:root {
+  --gray-color: grey;
+  --black-color: #000000;
+}
+
 .button {
   display: inline-block;
   padding: 10px 20px;
   margin-right: 15px;
 
   border-radius: 10px;
-  border: 1px solid #ccc;
-  color: black;
+  border: 1px solid var(--gray-color);
+  color: var(--black-color);
   font-weight: bold;
   font-size: 12px;
   box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.4), inset -2px -2px 3px rgba(0, 0, 0, 0.4);
@@ -20,8 +26,8 @@
   }
 
   &:disabled {
-    color: black;
-    background-color: #ccc;
+    color: var(--black-color);
+    background-color: var(--gray-color);
     cursor: not-allowed;
   }
 }

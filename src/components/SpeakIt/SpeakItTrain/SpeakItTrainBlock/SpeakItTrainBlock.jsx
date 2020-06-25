@@ -36,6 +36,7 @@ const SpeakItTrainBlock = () => {
   const classesRestart = 'train-buttons__restart';
   const classesSpeak = 'train-buttons__speak';
   const classesResult = 'train-buttons__results';
+
   return (
     <div className="train  container">
       <img className="train__img" src={`${defaultTrainImg}`} alt="train" />

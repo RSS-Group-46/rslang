@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '../UI/Button/Button';
 import { MINI_GAMES_URL, SPEAKIT_URL } from '../../../constants/urlConstants';
+import { PATH_SPEAKIT_TRAIN } from '../SpeakItTrain/constants/speakItConstants';
 
 import './SpeakItWelcome.scss';
 
@@ -9,7 +10,7 @@ const SpeakItWelcome = () => {
   const history = useHistory();
 
   const startHandler = () => {
-    history.push(`${MINI_GAMES_URL}${SPEAKIT_URL}/train`);
+    history.push(`${MINI_GAMES_URL}${SPEAKIT_URL}${PATH_SPEAKIT_TRAIN}`);
   };
 
   return (
