@@ -4,6 +4,7 @@ import Countdown from './Countdown';
 
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import AuthContext from '../../contexts/auth.context';
+import {withPage} from '../../constants/apiConstants';
 
 import ConsecutiveAnswers from './ConsecutiveAnswers';
 import Stats from './Stats';
@@ -21,23 +22,48 @@ export default () => {
   const [knownWords, setKnownWords] = useState([]);
   const [unknownWords, setUnknownWords] = useState([]);
   const [currentWord, setCurrentWord] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [currentGroup, setCurrentGroup] = useState(0);
   const [roundEnd, setRoundEnd] = useState(false);
-  const [showStats, setShowStats] = useState(false);
 
   const { userId, token } = useContext(AuthContext);
 
-  const onTimeout = useCallback(() => {setRoundEnd(true);setShowStats(true);}, []);
-  const closeStats = useCallback(() => setShowStats(false), []);
+  const onTimeout = useCallback(() => setRoundEnd(true), []);
+
+  const resetStates = () => {
+    setScore(0);
+    setConsecutiveAnswers(0);
+    setKnownWords([]);
+    setUnknownWords([]);
+    setCurrentWord(0);
+    setRoundEnd(false);
+  };
+
+  const restart = useCallback(() => {
+    resetStates();
+  }, []);
+
+  const nextPage = useCallback(() => {
+    resetStates();
+    setCurrentPage((c) => c + 1);
+  }, []);
 
   const bonus = scoreStep * Math.floor(consecutiveAnswers / consecutiveAnswersToBonus);
 
-  const wordsConfig = { userId, token, group: 0, wordsPerPage: wordsPerRound, filter: {} };
+  const wordsConfig = {
+    userId,
+    token,
+    group: currentGroup,
+    page: currentPage,
+    wordsPerPage: wordsPerRound,
+    filter: { ...withPage(currentPage) }
+  };
+  
   const { data, error: wordsLoadError, loading: wordsLoading } = useUserAggregatedWords(wordsConfig);
 
   const wordsRaw = data && data[0].paginatedResults || [];
   const words = wordsRaw.map(correctWordUrls);
   const playData = getPlayData(words[currentWord], words);
-
 
   const handleAnswer = useCallback((answer) => {
     if (answer === playData.correct) {
@@ -51,7 +77,6 @@ export default () => {
     setCurrentWord((c) => c + 1);
     if (currentWord + 1 === words.length) {
       setRoundEnd(true);
-      setShowStats(true);
     }
   }, [playData, bonus, currentWord, words]);
 
@@ -62,14 +87,19 @@ export default () => {
         <div className="game__score">{`${currentScore}`}</div>
         <ConsecutiveAnswers current={consecutiveAnswers} total={consecutiveAnswersToBonus} />
         {!wordsLoading && playData && !roundEnd &&
-        <PlayCard wordsLoading={wordsLoading} playData={playData} handleAnswer={handleAnswer} />}
-        <div className="game__countdown d-flex flex-column">
-          {!roundEnd && !wordsLoadError && !wordsLoading && 
-          <Countdown duration={roundTime} startImmediately onTimeout={onTimeout} />}
-        </div>
+          <PlayCard wordsLoading={wordsLoading} playData={playData} handleAnswer={handleAnswer} />}
+        {!roundEnd && !wordsLoadError && !wordsLoading &&
+          <div className="game__countdown d-flex flex-column">
+            <Countdown duration={roundTime} startImmediately onTimeout={onTimeout} />
+          </div>}
+        {roundEnd &&
+          <Stats score={currentScore} knownWords={knownWords} unknownWords={unknownWords} />}
+        {roundEnd &&
+          <div className="game__footer d-flex flex-row justify-content-between">
+            <button className="btn btn-info" type="button" onClick={restart}>Replay</button>
+            <button className="btn btn-success" type="button" onClick={nextPage}>Next</button>
+          </div>}
       </div>
-      {showStats && 
-      <Stats score={currentScore} knownWords={knownWords} unknownWords={unknownWords} close={closeStats} />}
     </div>
   )
 }

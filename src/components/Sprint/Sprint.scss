@@ -31,9 +31,10 @@
   grid-template-areas: 
     ". score ."
     ". stars ."
-    ". main countdown";
+    ". main countdown"
+    ". footer .";
   grid-template-columns: 1fr auto 1fr;
-  grid-template-rows: 50px 64px auto;
+  grid-template-rows: 50px 64px auto 64px;
 }
 
 .game__stars {
@@ -47,4 +48,8 @@
 
 .game__countdown {
   grid-area: countdown;
+}
+
+.game__footer {
+  grid-area: footer;
 }

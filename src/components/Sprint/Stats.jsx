@@ -1,33 +1,32 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 
 import audioIcon from '../../assets/icons/audio.svg';
 
 import './Stats.scss';
 
-const wordObjToElement = (obj) => (
-  <div className="word-container" key={obj.id}>
+const wordObjToElement = (keyPrefix, obj) => (
+  <div className="word-container" key={`${keyPrefix}-${obj._id}`}>
     <img className="play-word-icon" src={audioIcon} alt="play audio for the word" />
     <span className="word">{obj.word}</span>
     <span className="translation">{obj.wordTranslate}</span>
+    <span>{obj.id}</span>
   </div>
 );
 
-export default ({ score, knownWords, unknownWords, close }) => {
+export default ({ score, knownWords, unknownWords }) => {
 
   return (
-    <div className="stats-modal">
-      <div className="stats-modal__content shadow border-primary">
-        <span>Очков: {score}</span>
-        <div className="known-words">
+    <div className="game__main card card-sprint border-primary mb-3">
+      <div className="card-body">
+        <div className="card-title">Очков: {score}</div>
+        <div className="card-footer known-words">
           <h4>{`Знаю: ${knownWords.length}`}</h4>
-          {knownWords && knownWords.map(wordObjToElement)}
+          {knownWords && knownWords.map((w) => wordObjToElement('known', w))}
         </div>
-        <div className="unknown-words">
+        <div className="card-footer unknown-words">
           <h4>{`Не знаю: ${unknownWords.length}`}</h4>
-          {unknownWords && unknownWords.map(wordObjToElement)}
-        </div>
-        <div className="d-flex flex-row justify-content-end">
-          <button className="btn btn-primary" type="button" onClick={close}>CLOSE</button>
+          {unknownWords && unknownWords.map((w) => wordObjToElement('unknown', w))}
         </div>
       </div>
     </div>
