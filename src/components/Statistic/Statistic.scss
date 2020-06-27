@@ -1,5 +1,9 @@
 @import '../../styles/variables';
 
+.none {
+  display: none;
+}
+
 .statistic {
     padding: 10px;
   
@@ -15,8 +19,9 @@
       }
 
     &__button {
-        display: inline;
+        display: block;
+        position: relative;
         text-align: center;
-        margin: 15px;
+        margin: 15px auto;
     }
 }
