@@ -170,3 +170,10 @@
   font-size: 2rem !important;
   margin-right: 1rem;
 }
+
+// image container
+.puzzle__image-container {
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+}

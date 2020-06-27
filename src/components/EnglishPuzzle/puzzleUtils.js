@@ -1,9 +1,12 @@
 import { GALLERY, GALLERY_FOLDER_NAME, START, END, MIDDLE, CONTENT_WIDTH, PIMP_WIDTH_PERCENT } from './puzzleConstants';
 
-export const getRandomImageUrl = () => {
-  // return `${process.env.PUBLIC_URL}/${GALLERY_FOLDER_NAME}/${GALLERY[3]}.jpg`;
+export const getRandomImage = () => {
   const index = Math.floor(Math.random() * GALLERY.length);
-  return `${process.env.PUBLIC_URL}/${GALLERY_FOLDER_NAME}/${GALLERY[index]}.jpg`;
+  const choosedPicture = GALLERY[index];
+  return {
+    url: `${process.env.PUBLIC_URL}/${GALLERY_FOLDER_NAME}/${choosedPicture.fileName}.jpg`,
+    ...choosedPicture
+  };
 }
 
 export const getPuzzleTopSize = (rowNum, puzzleHeight) => {
@@ -74,5 +77,4 @@ export const getPuzzleWidthWithVariant = (width, variant, pimpWidth) => {
 // export const getPimpWidth = (puzzleWidth) => Math.floor((puzzleWidth / 100) * PIMP_WIDTH_PERCENT);
 
 export const getPuzzleWidth = (puzzleAmount, pimpWidth) => Math.floor(CONTENT_WIDTH / puzzleAmount) + pimpWidth;
-
 export const getPimpWidth = (puzzleAmount) => Math.floor((CONTENT_WIDTH / puzzleAmount / 100) * PIMP_WIDTH_PERCENT);

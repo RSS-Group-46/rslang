@@ -40,7 +40,7 @@ const PuzzleElement = (props) => {
       className={puzzleClasses}
       style={{
         backgroundPosition,
-        backgroundImage: showImage ? `url('${useContext(BackgroundContext)}')` : null,
+        backgroundImage: showImage ? `url('${useContext(BackgroundContext).url}')` : null,
         width: `${getPuzzleWidthWithVariant(puzzleWidth, variant, pimpWidth)}px`,
         height: `${puzzleHeight}px`,
         left: `-${pimpWidth * index}px`,

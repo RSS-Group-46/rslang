@@ -3,11 +3,11 @@ export const PAGE_KEY = 'page';
 export const GALLERY_FOLDER_NAME = 'gallery';
 
 export const GALLERY = [
-  'breigel-peizazh s drovosekami',
-  'brullov-poslednii den pompei',
-  'shishkin-bor',
-  'shishkin-utro',
-  'van-gogh-peizash s lodkami'
+  { fileName: 'breigel-peizazh s drovosekami', puctureName: '"Речной пейзаж с дровосеками", Ян Брейгель Старший' },
+  { fileName: 'brullov-poslednii den pompei', pictureName: '"Последний день Помпеи", Карл Брюллов' },
+  { fileName: 'shishkin-bor', pictureName: '"Сосновый бор", Иван Шишкин' },
+  { fileName: 'shishkin-utro', pictureName: '"Утро в сосновом бору", Иван Шишкин' },
+  { fileName: 'van-gogh-peizash s lodkami', pictureName: '"Речной пейзаж с гребными лодками", Винсент Ван Гог' }
 ]
 
 // puzzle constants
@@ -30,3 +30,7 @@ export const WORD_ID_DELIMETER = '_';
 // droppable id constants
 export const STORE_DROPPABLE_ID = 'store-droppable';
 export const PICTURE_ROW_DROPPABLE_ID = 'pictue-row-droppable';
+
+// sentence words amount constants
+export const MAX_WORDS = 10;
+export const MAX_SENTENCES = 10;
