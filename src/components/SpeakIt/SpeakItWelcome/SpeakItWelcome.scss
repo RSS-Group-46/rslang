@@ -1,5 +1,10 @@
 @import '../../../styles/variables';
 
+:root {
+  --lightyellow-color: #fbe898;
+}
+
+
 .welcome {
   display: flex;
   flex-direction: column;
@@ -40,7 +45,7 @@
       margin-top: 30px;
 
       font-size: 18px;
-      background-color: #ffd885;
+      background-color: var(--lightyellow-color);
     }
   }
 }
