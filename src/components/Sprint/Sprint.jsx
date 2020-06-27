@@ -4,7 +4,7 @@ import Countdown from './Countdown';
 
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import AuthContext from '../../contexts/auth.context';
-import {withPage} from '../../constants/apiConstants';
+import { withPage } from '../../constants/apiConstants';
 
 import ConsecutiveAnswers from './ConsecutiveAnswers';
 import Stats from './Stats';
@@ -58,7 +58,7 @@ export default () => {
     wordsPerPage: wordsPerRound,
     filter: { ...withPage(currentPage) }
   };
-  
+
   const { data, error: wordsLoadError, loading: wordsLoading } = useUserAggregatedWords(wordsConfig);
 
   const wordsRaw = data && data[0].paginatedResults || [];
@@ -84,8 +84,10 @@ export default () => {
   return (
     <div className="container p-1">
       <div className="game">
-        <div className="game__score">{`${currentScore}`}</div>
-        <ConsecutiveAnswers current={consecutiveAnswers} total={consecutiveAnswersToBonus} />
+        {!roundEnd &&
+          <div className="game__score">{`${currentScore}`}</div>}
+        {!roundEnd &&
+          <ConsecutiveAnswers current={consecutiveAnswers} total={consecutiveAnswersToBonus} />}
         {!wordsLoading && playData && !roundEnd &&
           <PlayCard wordsLoading={wordsLoading} playData={playData} handleAnswer={handleAnswer} />}
         {!roundEnd && !wordsLoadError && !wordsLoading &&

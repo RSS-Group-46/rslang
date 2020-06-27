@@ -1,4 +1,4 @@
-export const roundTime = 15;
-export const wordsPerRound = Math.floor(roundTime / 2);
+export const roundTime = 60;
+export const wordsPerRound = 1 + Math.floor(roundTime / 2);
 export const scoreStep = 10;
 export const consecutiveAnswersToBonus = 4;
