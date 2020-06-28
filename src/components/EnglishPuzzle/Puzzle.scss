@@ -151,12 +151,24 @@
   text-align: center;
 }
 
-.puzzle__picture-row {
+.puzzle__picture-row-placeholder {
   border: 1px dashed black;
   border-radius: 5px;
+  position: absolute;
+}
+
+.puzzle__picture-row {
+  // border: 1px dashed black;
+  // border-radius: 5px;
   display: flex;
   flex-direction: row;
   margin-bottom: 1rem;
+
+  &.round-end {
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+  }
 }
 
 .freezed_row {
@@ -164,11 +176,18 @@
   flex-direction: row;
 }
 
-.button {
-  width: 200px;
-  height: 50px;
-  font-size: 2rem !important;
-  margin-right: 1rem;
+// buttons
+.puzzle__button-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  // button {
+  //   width: 200px;
+  //   height: 50px;
+  //   font-size: 2rem !important;
+  //   margin-right: 1rem;
+  // }
 }
 
 // image container

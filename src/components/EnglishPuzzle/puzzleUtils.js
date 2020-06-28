@@ -1,4 +1,16 @@
-import { GALLERY, GALLERY_FOLDER_NAME, START, END, MIDDLE, CONTENT_WIDTH, PIMP_WIDTH_PERCENT } from './puzzleConstants';
+import {
+  GALLERY,
+  GALLERY_FOLDER_NAME,
+  START,
+  END,
+  MIDDLE,
+  CONTENT_WIDTH,
+  PIMP_WIDTH_PERCENT,
+  START_LEVEL,
+  START_PAGE,
+  BORDER_LEVEL,
+  BORDER_PAGE
+} from './puzzleConstants';
 
 export const getRandomImage = () => {
   const index = Math.floor(Math.random() * GALLERY.length);
@@ -78,3 +90,33 @@ export const getPuzzleWidthWithVariant = (width, variant, pimpWidth) => {
 
 export const getPuzzleWidth = (puzzleAmount, pimpWidth) => Math.floor(CONTENT_WIDTH / puzzleAmount) + pimpWidth;
 export const getPimpWidth = (puzzleAmount) => Math.floor((CONTENT_WIDTH / puzzleAmount / 100) * PIMP_WIDTH_PERCENT);
+
+export const getNextLevelPageOptions = (level, page) => {
+  if ((level === BORDER_LEVEL) && (page === BORDER_PAGE)) {
+    console.log('here')
+    return {
+      nextLevel: START_LEVEL,
+      nextPage: START_PAGE
+    }
+  }
+  if (page === BORDER_PAGE) {
+    console.log('here2')
+    return {
+      nextLevel: level + 1,
+      nextPage: START_PAGE
+    }
+  }
+  console.log('here3')
+  return {
+    nextLevel: level,
+    nextPage: page + 1
+  }
+}
+
+export const shuffle = (arr) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}

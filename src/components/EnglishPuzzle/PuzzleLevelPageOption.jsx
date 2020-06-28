@@ -1,7 +1,8 @@
 import React from 'react';
+import { BORDER_LEVEL, BORDER_PAGE } from './puzzleConstants';
 
-const levels = [...Array(6).keys()];
-const pages = [...Array(30).keys()];
+const levels = [...Array(BORDER_LEVEL + 1).keys()];
+const pages = [...Array(BORDER_PAGE + 1).keys()];
 
 const PuzzleLevelPageOption = (props) => {
   const { level, page, useUserWords, doChangeLevel, doChangePage, doCheckUseUserWords } = props;

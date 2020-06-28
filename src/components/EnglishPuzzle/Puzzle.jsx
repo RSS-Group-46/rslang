@@ -7,11 +7,11 @@ import PuzzleSentenceToCompile from './PuzzleSentenceToCompile';
 import PuzzleButtonToolbar from './PuzzleButtonToolbar';
 import PuzzlePromptShow from './PuzzlePromptShow';
 import PuzzleImageContainer from './PuzzleImageContainer';
-import sentencesJson from './sentences.json';
-import { getRandomImage, mapSentenceToWordWithId, removeHtml, move, reorder } from './puzzleUtils';
-import { CONTENT_WIDTH, STORE_DROPPABLE_ID, PICTURE_ROW_DROPPABLE_ID, MAX_WORDS, MAX_SENTENCES } from './puzzleConstants';
+import ResultsModal from './ResultsModal';
+import { getRandomImage, mapSentenceToWordWithId, removeHtml, move, reorder, getNextLevelPageOptions, shuffle } from './puzzleUtils';
+import { CONTENT_WIDTH, STORE_DROPPABLE_ID, PICTURE_ROW_DROPPABLE_ID, MAX_WORDS, MAX_SENTENCES, START_PAGE, START_LEVEL } from './puzzleConstants';
 import { ONLY_USER_WORDS } from '../../constants/apiConstants';
-import { getUserAggregateWords, getWords } from '../../services/common.service';
+import { getWords } from '../../services/common.service';
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import useAuth from '../../hooks/auth.hook';
 import './Puzzle.scss';
@@ -27,25 +27,27 @@ const promptsInitialState = {
 }
 
 const optionsInitialState = {
-  page: 0,
-  level: 0,
+  page: START_PAGE,
+  level: START_LEVEL,
   useUserWords: true
 }
 
 const normalizeSentences = (sentences) => {
-  const mapped = sentences.map((s) => {
-    return {
-      sentence: removeHtml(s.textExample),
-      translate: s.textExampleTranslate,
-    }
-  });
+  const mapped = sentences
+    .map((w) => {
+      return {
+        sentence: removeHtml(w.textExample),
+        translate: w.textExampleTranslate,
+      }
+    })
+    .filter((s) => s.sentence.split(' ').length <= MAX_WORDS);
 
   return mapped;
 }
 
 const Puzzle = () => {
   const [sentences, setSentences] = useState([]);
-  const [freezedSentences] = useState([]);
+  const [freezedSentences, setFreezedSentences] = useState([]);
   const [compilledSentence, setCompilledSentence] = useState([]);
   const [sentenceToCompile, setSentenceToCompille] = useState([]);
   const [sentenceInRightOrder, setSentenceInRightOrder] = useState([]);
@@ -57,7 +59,6 @@ const Puzzle = () => {
   const [prompts, setPrompts] = useState(promptsInitialState);
   const [options, setOptions] = useState(optionsInitialState);
   const [puzzleIsCompilled, setPuzzleIsCompilled] = useState(false);
-  const [imageWidth] = useState(CONTENT_WIDTH);
 
   const { token, userId } = useAuth();
   const wordsConfig = { userId, token, group: options.level, wordsPerPage: MAX_WORDS, filter: ONLY_USER_WORDS };
@@ -76,7 +77,11 @@ const Puzzle = () => {
       return;
     }
     prepareNextSentence();
-  }, [sentences])
+  }, [sentences]);
+
+  useEffect(() => {
+    restartGame();
+  }, [options]);
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
@@ -93,14 +98,18 @@ const Puzzle = () => {
     }
     const { page, level } = options;
     getWords(level, page, MAX_WORDS).then(newSentences => {
-      const merged = mergeSentences(userSentences, normalizeSentences(newSentences));
+      const normalized = normalizeSentences(newSentences);
+      const merged = options.useUserWords ? mergeSentences(userSentences, normalized) : normalized;
       setSentences(merged);
     });
   }
 
-  const mergeSentences = (sentences1, sentences2) => [...new Set([...sentences1, ...sentences2])].slice(0, MAX_SENTENCES);
+  const mergeSentences = (sentences1, sentences2) => shuffle([...new Set([...sentences1, ...sentences2])]).slice(0, MAX_SENTENCES);
 
   const doReorder = (source, destination) => {
+    if (needToCheck) {
+      setNeedToCheck(false);
+    }
     const isSentenceToCompile = source.droppableId === STORE_DROPPABLE_ID;
     const recompilled = reorder(
       isSentenceToCompile ? sentenceToCompile : compilledSentence,
@@ -144,10 +153,9 @@ const Puzzle = () => {
     if (!sentences.length) {
       return;
     }
-    console.log('preparing next sentence...');
     const next = sentences.shift();
     const sentenceInRightOrder = next.sentence.split(' ');
-    const sentenceToCompile = mapSentenceToWordWithId(sentenceInRightOrder);
+    const sentenceToCompile = shuffle(mapSentenceToWordWithId(sentenceInRightOrder));
 
     setSentenceToCompille(sentenceToCompile);
     setSentenceInRightOrder(sentenceInRightOrder);
@@ -174,19 +182,47 @@ const Puzzle = () => {
   }
 
   const doContinue = () => {
-    freezedSentences.push(compilledSentence);
-    clearWorkzone();
-    if (!sentences.length) {
-      finishGame();
+    if (puzzleIsCompilled) {
+      upgradeLevel();
     } else {
-      prepareNextSentence();
+      freezedSentences.push(compilledSentence);
+      clearWorkzone();
+      if (!sentences.length) {
+        finishGame();
+      } else {
+        prepareNextSentence();
+      }
     }
+  }
+
+  const upgradeLevel = () => {
+    const { level, page } = options;
+    const { nextLevel, nextPage } = getNextLevelPageOptions(level, page);
+    setOptions({
+      ...options,
+      level: nextLevel,
+      page: nextPage
+    })
+  }
+
+  const showResults = () => {
+    
+  }
+
+  const restartGame = () => {
+    clearWorkzone();
+    setSentences([]);
+    setSentenceToCompille([]);
+    setFreezedSentences([]);
+    setPuzzleIsCompilled(false);
+    setBackgroundImage(null);
   }
 
   const clearWorkzone = () => {
     setCompilledSentence([]);
     setNeedToCheck(false);
     setIsChecked(false);
+    setPrompts(promptsInitialState);
   }
 
   const doTranslate = () => {
@@ -210,7 +246,7 @@ const Puzzle = () => {
   }
 
   const doChangeLevel = (e) => {
-    const level = e.target.value;
+    const level = Number(e.target.value);
     setOptions({
       ...options,
       level
@@ -218,7 +254,7 @@ const Puzzle = () => {
   }
 
   const doChangePage = (e) => {
-    const page = e.target.value;
+    const page = Number(e.target.value);
     setOptions({
       ...options,
       page
@@ -270,7 +306,7 @@ const Puzzle = () => {
               />
             }
             {puzzleIsCompilled &&
-              <div className="puzzle__picture-row"
+              <div className="puzzle__picture-row round-end"
                 style={{ height: puzzleHeight }}
               >
                 <p>{backgroundImage.pictureName}</p>
@@ -285,11 +321,15 @@ const Puzzle = () => {
             />
           </DragDropContext>
           <PuzzleButtonToolbar
-            isCompilled={!sentenceToCompile.length}
+            puzzleIsCompilled={puzzleIsCompilled}
+            sentenceIsCompilled={!sentenceToCompile.length}
             isChecked={isChecked}
             dontKnow={dontKnow}
             checkCompilledSentence={checkCompilledSentence}
             doContinue={doContinue}
+          />
+          <ResultsModal 
+            
           />
         </BackgroundContext.Provider>
       </div>

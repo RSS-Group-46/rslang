@@ -10,6 +10,7 @@ const PuzzleFreezedSentences = (props) => {
           sentence={freezedSentence}
           puzzleHeight={puzzleHeight}
           rowNum={i}
+          key={i}
         />
       )}
     </div>
