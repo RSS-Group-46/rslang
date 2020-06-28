@@ -6,6 +6,8 @@
 import React, { Component } from 'react';
 import getWords from './words';
 import Loader from '../Loader/Loader';
+import GameOver from './GameOver';
+import './Savannah.scss';
 
 class Savannah extends Component {
   constructor() {
@@ -18,7 +20,7 @@ class Savannah extends Component {
       translatedWords: [],
       translatedButtons: [],
       isMounted: false,
-      isGameOver: false,
+      isGameOver: true,
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
@@ -134,7 +136,7 @@ class Savannah extends Component {
     } else if (isMounted && !isGameOver) {
       return (
         <div className="container">
-          <span>{word}</span>
+          <h1 className="drop">{word}</h1>
           <button className="btn btn-outline-danger" type="button">
             1 - <span className="btn-first__value">{translatedButtons[0]}</span>
           </button>
@@ -152,11 +154,7 @@ class Savannah extends Component {
         </div>
       );
     } else {
-      return (
-        <div className="container">
-          <h1>Game over</h1>
-        </div>
-      );
+      return <GameOver />;
     }
   }
 }
