@@ -1,5 +1,5 @@
 @import '../../styles/variables';
-@import '../../styles/_body';
+@import '../../styles/body';
 
 .game__score {
   grid-area: score;
@@ -34,12 +34,13 @@
     ". main countdown"
     ". footer .";
   grid-template-columns: 1fr auto 1fr;
-  grid-template-rows: 50px 64px auto 64px;
+  grid-template-rows: 50px 70px auto 64px;
 }
 
 .game__stars {
   grid-area: stars;
   justify-self: center;
+  align-self: center;
 }
 
 .game__main {

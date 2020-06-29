@@ -30,14 +30,14 @@ export default () => {
 
   const onTimeout = useCallback(() => setRoundEnd(true), []);
 
-  const resetStates = () => {
+  const resetStates = useCallback(() => {
     setScore(0);
     setConsecutiveAnswers(0);
     setKnownWords([]);
     setUnknownWords([]);
     setCurrentWord(0);
     setRoundEnd(false);
-  };
+  }, []);
 
   const bonus = scoreStep * Math.floor(consecutiveAnswers / consecutiveAnswersToBonus);
 
@@ -73,12 +73,12 @@ export default () => {
 
   const restart = useCallback(() => {
     resetStates();
-  }, []);
+  }, [resetStates]);
 
   const nextPage = useCallback(() => {
     resetStates();
     setCurrentPage((c) => c + 1);
-  }, []);
+  }, [resetStates]);
 
 
   return (

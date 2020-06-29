@@ -23,6 +23,7 @@ export default ({ playData, wordsLoading, handleAnswer }) => {
     audio.play();
   }, [playData]);
 
+
   return (
     <div className="game__main card card-sprint border-primary mb-3">
       {showAssociationPicture &&

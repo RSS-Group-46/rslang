@@ -19,7 +19,7 @@ export default ({ score, knownWords, unknownWords }) => {
   return (
     <div className="game__main card card-sprint border-primary mb-3">
       <div className="card-body">
-        <div className="card-title">Очков: {score}</div>
+        <h2 className="card-title">Очков: {score}</h2>
         <div className="card-footer known-words">
           <h4>{`Знаю: ${knownWords.length}`}</h4>
           {knownWords && knownWords.map((w) => wordObjToElement('known', w))}
