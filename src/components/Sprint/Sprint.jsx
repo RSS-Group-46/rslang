@@ -6,11 +6,11 @@ import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import AuthContext from '../../contexts/auth.context';
 import { withPage } from '../../constants/apiConstants';
 
-import ConsecutiveAnswers from './ConsecutiveAnswers';
+import Streak from './Streak';
 import Stats from './Stats';
 import PlayCard from './PlayCard';
 import { getPlayData, correctWordUrls } from './Utils';
-import { roundTime, wordsPerRound, scoreStep, consecutiveAnswersToBonus } from './Constants';
+import { roundTime, wordsPerRound, scoreStep, streakToBonus } from './Constants';
 
 
 import './Sprint.scss';
@@ -18,7 +18,7 @@ import './Sprint.scss';
 
 export default () => {
   const [currentScore, setScore] = useState(0);
-  const [consecutiveAnswers, setConsecutiveAnswers] = useState(0);
+  const [streak, setStreak] = useState(0);
   const [knownWords, setKnownWords] = useState([]);
   const [unknownWords, setUnknownWords] = useState([]);
   const [currentWord, setCurrentWord] = useState(0);
@@ -32,14 +32,14 @@ export default () => {
 
   const resetStates = useCallback(() => {
     setScore(0);
-    setConsecutiveAnswers(0);
+    setStreak(0);
     setKnownWords([]);
     setUnknownWords([]);
     setCurrentWord(0);
     setRoundEnd(false);
   }, []);
 
-  const bonus = scoreStep * Math.floor(consecutiveAnswers / consecutiveAnswersToBonus);
+  const bonus = scoreStep * Math.floor(streak / streakToBonus);
 
   const wordsConfig = {
     userId,
@@ -59,10 +59,10 @@ export default () => {
   const handleAnswer = useCallback((answer) => {
     if (answer === playData.correct) {
       setScore((score) => score + scoreStep + bonus);
-      setConsecutiveAnswers((c) => c + 1);
+      setStreak((c) => c + 1);
       setKnownWords((xs) => [...xs, playData.raw]);
     } else {
-      setConsecutiveAnswers(0);
+      setStreak(0);
       setUnknownWords((xs) => [...xs, playData.raw]);
     }
     setCurrentWord((c) => c + 1);
@@ -87,7 +87,7 @@ export default () => {
         {!roundEnd &&
           <div className="game__score">{`${currentScore}`}</div>}
         {!roundEnd &&
-          <ConsecutiveAnswers current={consecutiveAnswers} total={consecutiveAnswersToBonus} />}
+          <Streak current={streak} max={streakToBonus} />}
         {!wordsLoading && playData && !roundEnd &&
           <PlayCard wordsLoading={wordsLoading} playData={playData} handleAnswer={handleAnswer} />}
         {!roundEnd && !wordsLoadError && !wordsLoading &&
