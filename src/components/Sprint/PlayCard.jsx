@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import {
   selectShowAssociationPicture,
@@ -15,6 +15,13 @@ export default ({ playData, wordsLoading, handleAnswer }) => {
   const showAnswerButton = useSelector(selectShowAnswerButton);
   const showDeleteButton = useSelector(selectShowDeleteButton);
   const showMoveToComplicatedButton = useSelector(selectShowMoveToComplicatedButton);
+
+
+  const playCurrent = useCallback(() => {
+    const audio = new Audio();
+    audio.src = playData.raw.audio;
+    audio.play();
+  }, [playData]);
 
   return (
     <div className="game__main card card-sprint border-primary mb-3">
@@ -32,6 +39,7 @@ export default ({ playData, wordsLoading, handleAnswer }) => {
       <div className="card-footer">
         <div className="d-flex flex-row justify-content-between">
           <button className="btn btn-danger" type="button" onClick={() => handleAnswer(false)}>Не верно</button>
+          <button className="btn btn-info" type="button" onClick={playCurrent}>Play</button>
           <button className="btn btn-success" type="button" onClick={() => handleAnswer(true)}>Верно</button>
         </div>
       </div>

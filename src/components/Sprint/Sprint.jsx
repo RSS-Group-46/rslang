@@ -39,15 +39,6 @@ export default () => {
     setRoundEnd(false);
   };
 
-  const restart = useCallback(() => {
-    resetStates();
-  }, []);
-
-  const nextPage = useCallback(() => {
-    resetStates();
-    setCurrentPage((c) => c + 1);
-  }, []);
-
   const bonus = scoreStep * Math.floor(consecutiveAnswers / consecutiveAnswersToBonus);
 
   const wordsConfig = {
@@ -79,6 +70,15 @@ export default () => {
       setRoundEnd(true);
     }
   }, [playData, bonus, currentWord, words]);
+
+  const restart = useCallback(() => {
+    resetStates();
+  }, []);
+
+  const nextPage = useCallback(() => {
+    resetStates();
+    setCurrentPage((c) => c + 1);
+  }, []);
 
 
   return (
