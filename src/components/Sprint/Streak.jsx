@@ -4,7 +4,6 @@ import React from 'react';
 import starWin from '../../assets/icons/star-win.svg';
 import star from '../../assets/icons/star.svg';
 
-import './Sprint.scss';
 
 export default ({ max, current }) => {
   const totalWinStars = Math.min(current, max);

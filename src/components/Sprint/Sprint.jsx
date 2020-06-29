@@ -83,9 +83,8 @@ export default () => {
 
   return (
     <div className="container p-1">
-      <div className="game">
-        {!roundEnd &&
-          <div className="game__score">{`${currentScore}`}</div>}
+      <div className="game">       
+          <div className="game__score">{`${currentScore}`}</div>
         {!roundEnd &&
           <Streak current={streak} max={streakToBonus} />}
         {!wordsLoading && playData && !roundEnd &&

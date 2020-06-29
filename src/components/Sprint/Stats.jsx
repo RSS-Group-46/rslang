@@ -14,12 +14,11 @@ const wordObjToElement = (keyPrefix, obj) => (
   </div>
 );
 
-export default ({ score, knownWords, unknownWords }) => {
+export default ({ knownWords, unknownWords }) => {
 
   return (
     <div className="game__main card card-sprint border-primary mb-3">
       <div className="card-body">
-        <h2 className="card-title">Очков: {score}</h2>
         <div className="card-footer known-words">
           <h4>{`Знаю: ${knownWords.length}`}</h4>
           {knownWords && knownWords.map((w) => wordObjToElement('known', w))}
