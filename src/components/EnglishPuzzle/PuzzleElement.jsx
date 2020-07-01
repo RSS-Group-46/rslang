@@ -21,6 +21,7 @@ const PuzzleElement = (props) => {
     needToCheck = false,
     isCorrect,
     showImage = true,
+    handleClick,
     index,
     draggableProvided = {},
     children: word,
@@ -38,6 +39,7 @@ const PuzzleElement = (props) => {
       {...draggableProps}
       {...dragHandleProps}
       className={puzzleClasses}
+      onClick={handleClick}
       style={{
         backgroundPosition,
         backgroundImage: showImage ? `url('${useContext(BackgroundContext).url}')` : null,

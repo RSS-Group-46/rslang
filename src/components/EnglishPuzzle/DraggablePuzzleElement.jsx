@@ -16,6 +16,7 @@ const DraggablePuzzleElement = (props) => {
     isCorrect,
     showImage,
     id,
+    handleClick,
     children: word,
   } = props;
   return (
@@ -31,6 +32,7 @@ const DraggablePuzzleElement = (props) => {
           needToCheck={needToCheck}
           isCorrect={isCorrect}
           showImage={showImage}
+          handleClick={handleClick}
           index={index}
           draggableProvided={provided}
         >

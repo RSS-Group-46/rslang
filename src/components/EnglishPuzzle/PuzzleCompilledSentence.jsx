@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import { getPuzzleElementVariant, getPuzzleWidth, getPimpWidth } from './puzzleUtils';
 import DraggablePuzzleElement from './DraggablePuzzleElement';
 import { CONTENT_WIDTH, WORD_ID_DELIMETER, PICTURE_ROW_DROPPABLE_ID } from './puzzleConstants';
+import { ScreenWidthContext } from './Puzzle';
 
 const PuzzleCompilledSentence = (props) => {
   const { puzzleHeight, compilledSentence, freezedLength, needToCheck, puzzleAmount, showImage } = props;
+  const screenWidth = useContext(ScreenWidthContext);
 
-  const pimpWidth = getPimpWidth(puzzleAmount);
-  const puzzleWidth = getPuzzleWidth(puzzleAmount, pimpWidth);
+  const pimpWidth = getPimpWidth(puzzleAmount, screenWidth);
+  const puzzleWidth = getPuzzleWidth(puzzleAmount, pimpWidth, screenWidth);
   return (
     <Droppable droppableId={PICTURE_ROW_DROPPABLE_ID} direction="horizontal">
       {(provided, snapshot) => (
@@ -19,7 +21,9 @@ const PuzzleCompilledSentence = (props) => {
               width: CONTENT_WIDTH,
               height: puzzleHeight
             }}
-          />
+          >
+            <div className="row-number active">{freezedLength + 1}</div>
+          </div>
           <div
             className="puzzle__picture-row"
             style={{

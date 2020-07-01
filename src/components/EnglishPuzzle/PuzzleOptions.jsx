@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PuzzleLevelPageOption from './PuzzleLevelPageOption';
 import PuzzlePrompts from './PuzzlePrompts';
-import { CONTENT_WIDTH } from './puzzleConstants';
+import { getContentWidth } from './puzzleUtils';
+import { ScreenWidthContext } from './Puzzle';
 
 const PuzzleOptions = (props) => {
-  const { doTranslate, doShowImage, doChangeLevel, doChangePage, doCheckUseUserWords, prompts, options } = props;
-  const { hasTranslate, hasImageShown } = prompts;
+  const { doTranslate, doShowImage, doChangeLevel, doChangePage, doCheckUseUserWords, doVoice, prompts, options } = props;
+  const { hasTranslate, hasImageShown, hasVoice } = prompts;
   const { page, level, useUserWords } = options;
   return (
     <div
       className="puzzle-options_container"
-      style={{ width: CONTENT_WIDTH }}
+      style={{ width: getContentWidth(useContext(ScreenWidthContext)) }}
     >
       <PuzzleLevelPageOption
         page={page}
@@ -23,8 +24,10 @@ const PuzzleOptions = (props) => {
       <PuzzlePrompts
         translateEnabled={hasTranslate}
         imageEnabled={hasImageShown}
+        voiceEnabled={hasVoice}
         doTranslate={doTranslate}
         doShowImage={doShowImage}
+        doVoice={doVoice}
       />
     </div>
   );

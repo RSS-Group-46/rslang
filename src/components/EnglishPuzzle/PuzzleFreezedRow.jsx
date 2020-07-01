@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PuzzleElement from './PuzzleElement';
 import { getPuzzleWidth, getPimpWidth, getPuzzleElementVariant } from './puzzleUtils';
+import { ScreenWidthContext } from './Puzzle';
 
 const PuzzleFreezedRow = (props) => {
   const { sentence, rowNum, puzzleHeight } = props;
   const puzzleAmount = sentence.length;
-  const pimpWidth = getPimpWidth(puzzleAmount);
-  const puzzleWidth = getPuzzleWidth(puzzleAmount, pimpWidth);
+  const screenWidth = useContext(ScreenWidthContext);
+
+  const pimpWidth = getPimpWidth(puzzleAmount, screenWidth);
+  const puzzleWidth = getPuzzleWidth(puzzleAmount, pimpWidth, screenWidth);
   return (
     <div className="freezed_row">
+      <div className="row-number">{rowNum + 1}</div>
       {
         sentence.map((w, i) =>
           <PuzzleElement

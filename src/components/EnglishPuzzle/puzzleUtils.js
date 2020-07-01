@@ -65,7 +65,6 @@ export const reorder = (list, startIndex, endIndex) => {
 export const move = (source, destination, droppableSource, droppableDestination) => {
   const sourceClone = Array.from(source);
   const destClone = Array.from(destination);
-  console.log(droppableSource.index)
   const [removed] = sourceClone.splice(droppableSource.index, 1);
 
   destClone.splice(droppableDestination.index, 0, removed);
@@ -84,29 +83,22 @@ export const getPuzzleWidthWithVariant = (width, variant, pimpWidth) => {
   return width;
 }
 
-// export const getPuzzleWidth = (puzzleAmount) => Math.floor(CONTENT_WIDTH / puzzleAmount);
-
-// export const getPimpWidth = (puzzleWidth) => Math.floor((puzzleWidth / 100) * PIMP_WIDTH_PERCENT);
-
-export const getPuzzleWidth = (puzzleAmount, pimpWidth) => Math.floor(CONTENT_WIDTH / puzzleAmount) + pimpWidth;
-export const getPimpWidth = (puzzleAmount) => Math.floor((CONTENT_WIDTH / puzzleAmount / 100) * PIMP_WIDTH_PERCENT);
+export const getPuzzleWidth = (puzzleAmount, pimpWidth, screenWidth) => Math.floor(getContentWidth(screenWidth) / puzzleAmount) + pimpWidth;
+export const getPimpWidth = (puzzleAmount, screenWidth) => Math.floor((getContentWidth(screenWidth) / puzzleAmount / 100) * PIMP_WIDTH_PERCENT);
 
 export const getNextLevelPageOptions = (level, page) => {
   if ((level === BORDER_LEVEL) && (page === BORDER_PAGE)) {
-    console.log('here')
     return {
       nextLevel: START_LEVEL,
       nextPage: START_PAGE
     }
   }
   if (page === BORDER_PAGE) {
-    console.log('here2')
     return {
       nextLevel: level + 1,
       nextPage: START_PAGE
     }
   }
-  console.log('here3')
   return {
     nextLevel: level,
     nextPage: page + 1
@@ -119,4 +111,12 @@ export const shuffle = (arr) => {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+export const getContentWidth = (screenWidth) => {
+  if (screenWidth > 1400) return 1400;
+  if (screenWidth > 992) return 992;
+  if (screenWidth > 768) return 768;
+  if (screenWidth > 480) return 480;
+  return 320;
 }

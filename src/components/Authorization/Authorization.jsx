@@ -27,7 +27,7 @@ const Authorization = () => {
 
       if (VALID) {
         await request(
-          'https://afternoon-falls-25894.herokuapp.com/users',
+          'https://pacific-castle-12388.herokuapp.com/users',
           'POST',
           { ...form },
         );
@@ -48,7 +48,7 @@ const Authorization = () => {
 
       if (VALID) {
         const data = await request(
-          'https://afternoon-falls-25894.herokuapp.com/signin',
+          'https://pacific-castle-12388.herokuapp.com/signin',
           'POST',
           { ...form },
         );
@@ -67,15 +67,15 @@ const Authorization = () => {
           {error}
         </div>
       ) : (
-        ''
-      )}
+          ''
+        )}
       {message.length > 0 ? (
         <div className="alert alert-dark" role="alert">
           {message}
         </div>
       ) : (
-        ''
-      )}
+          ''
+        )}
       <form
         className="card"
         onSubmit={(e) => {

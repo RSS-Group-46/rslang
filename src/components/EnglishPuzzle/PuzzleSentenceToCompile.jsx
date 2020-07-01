@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import DraggablePuzzleElement from './DraggablePuzzleElement';
 import { getPuzzleElementVariant, getPuzzleWidth, getPimpWidth } from './puzzleUtils';
 import { WORD_ID_DELIMETER } from './puzzleConstants';
+import { ScreenWidthContext } from './Puzzle';
 
 const STORE_DROPPABLE_ID = 'store-droppable';
 
 const PuzzleSentenceToCompile = (props) => {
-  const { sentenceToCompile, puzzleHeight, freezedLength, puzzleAmount, showImage } = props;
+  const { sentenceToCompile, puzzleHeight, freezedLength, puzzleAmount, showImage, moveToCompilled } = props;
+  const screenWidth = useContext(ScreenWidthContext);
 
-  const pimpWidth = getPimpWidth(puzzleAmount);
-  const puzzleWidth = getPuzzleWidth(puzzleAmount, pimpWidth);
+  const pimpWidth = getPimpWidth(puzzleAmount, screenWidth);
+  const puzzleWidth = getPuzzleWidth(puzzleAmount, pimpWidth, screenWidth);
   return (
     <Droppable droppableId={STORE_DROPPABLE_ID} direction="horizontal">
       {(provided, snapshot) => (
@@ -27,6 +29,7 @@ const PuzzleSentenceToCompile = (props) => {
               puzzleHeight={puzzleHeight}
               rowNum={freezedLength}
               puzzleNum={Number(w.id.split(WORD_ID_DELIMETER)[1])}
+              handleClick={() => moveToCompilled(w)}
               index={i}
               id={w.id}
               showImage={showImage}

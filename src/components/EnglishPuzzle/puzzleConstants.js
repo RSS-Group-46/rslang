@@ -23,6 +23,7 @@ export const CLASS_NAMES = {
 }
 
 export const CONTENT_WIDTH = 1400;
+
 export const PIMP_WIDTH_PERCENT = 9;
 
 export const WORD_ID_DELIMETER = '_';

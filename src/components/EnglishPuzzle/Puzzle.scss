@@ -2,6 +2,28 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 60px;
+}
+
+.puzzle_container {
+  .row-number {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 0 1rem;
+    font-size: 2rem;
+    height: 100%;
+    background-color: black;
+    position: absolute;
+    opacity: 0.5;
+    left: 0;
+    top: 0;
+    z-index: 10;
+
+    &.active {
+      background-color: #0310ff;
+    }
+  }
 }
 
 // welcome page
@@ -86,15 +108,17 @@
   height: 40px;
   width: 40px;
   background-position: center;
+  background-repeat: no-repeat;
   background-size: contain;
   margin-right: 1rem;
-  &:hover {
+  transition: transform 0.3s ease-in-out;
+  &:hover:not(.disable) {
       cursor: pointer;
       transform: scale(1.2);
   }
 
   &.disable {
-      opacity: 0.2;
+      opacity: 0.1;
   }
 }
 
@@ -106,11 +130,25 @@
   background-image: url('/icons/image.png');
 }
 
-.puzzle-prompt-show__translation {
-  font-size: 2.5rem;
+.prompt_voice {
+  background-image: url('/icons/voice.png');
+}
+
+.prompt_speaker {
+  background-image: url('/icons/speaker.png');
+}
+
+.puzzle-prompt-show__prompts {
+  font-size: 2rem;
   font-style: italic;
-  height: 5rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .prompts_element {
+    height: 3rem;
+  }
 }
 
 // puzzle
@@ -174,6 +212,7 @@
 .freezed_row {
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 // buttons
@@ -195,4 +234,30 @@
   background-size: contain;
   background-repeat: no-repeat;
   width: 100%;
+}
+
+// results modal
+.puzzle-results-modal__picture-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  .puzzle-results-modal__picture {
+    height: 150px;
+    width: 200px;
+    border-radius: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .puzzle-results-modal__picture-name {
+    font-style: italic;
+    font-weight: bold;
+  }
+}
+
+// common
+.hide {
+  visibility: hidden;
 }
