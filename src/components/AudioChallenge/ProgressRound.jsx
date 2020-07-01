@@ -1,8 +1,6 @@
-  
 import React from 'react';
 
 const ProgressRound = ({current, size}) => {
-  
   return (
     <div className="progress" >
       <div
