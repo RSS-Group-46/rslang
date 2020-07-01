@@ -9,5 +9,4 @@ const ButtonNextWords = ({handleButtonDontKnow, state }) => {
     </button>
   );
 };
-
 export default ButtonNextWords;
