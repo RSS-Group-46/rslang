@@ -1,19 +1,20 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useCallback, useContext, useEffect } from 'react';
-import Countdown from './Countdown';
+import { Switch, Route, Link, useHistory, Redirect } from 'react-router-dom';
 
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import AuthContext from '../../contexts/auth.context';
 import { withPage } from '../../constants/apiConstants';
 
-import Streak from './Streak';
+import Countdown from './Countdown';
 import Stats from './Stats';
 import PlayCard from './PlayCard';
 import { getPlayData, correctWordUrls } from './Utils';
-import { roundTime, wordsPerRound, scoreStep, streakToBonus } from './Constants';
+import { roundTime, wordsPerRound, scoreStep, streakToBonus, PLAY_PATH, ROUND_END_PATH, ROOT_PATH } from './Constants';
 
 
 import './Sprint.scss';
+import StartPage from './StartPage';
 
 
 export default () => {
@@ -26,9 +27,15 @@ export default () => {
   const [currentGroup, setCurrentGroup] = useState(0);
   const [roundEnd, setRoundEnd] = useState(false);
 
+  const history = useHistory();
+
   const { userId, token } = useContext(AuthContext);
 
-  const onTimeout = useCallback(() => setRoundEnd(true), []);
+  const endRound = useCallback(() => {
+    setRoundEnd(true);
+    history.push(ROUND_END_PATH);
+  }, [history]);
+
 
   const resetStates = useCallback(() => {
     setScore(0);
@@ -67,9 +74,9 @@ export default () => {
     }
     setCurrentWord((c) => c + 1);
     if (currentWord + 1 === words.length) {
-      setRoundEnd(true);
+      endRound();
     }
-  }, [playData, bonus, currentWord, words]);
+  }, [playData, bonus, currentWord, words, endRound]);
 
   const restart = useCallback(() => {
     resetStates();
@@ -83,24 +90,35 @@ export default () => {
 
   return (
     <div className="container p-1">
-      <div className="game">       
-          <div className="game__score">{`${currentScore}`}</div>
-        {!roundEnd &&
-          <Streak current={streak} max={streakToBonus} />}
-        {!wordsLoading && playData && !roundEnd &&
-          <PlayCard wordsLoading={wordsLoading} playData={playData} handleAnswer={handleAnswer} />}
-        {!roundEnd && !wordsLoadError && !wordsLoading &&
-          <div className="game__countdown d-flex flex-column">
-            <Countdown duration={roundTime} startImmediately onTimeout={onTimeout} />
-          </div>}
-        {roundEnd &&
-          <Stats score={currentScore} knownWords={knownWords} unknownWords={unknownWords} />}
-        {roundEnd &&
-          <div className="game__footer d-flex flex-row justify-content-between">
-            <button className="btn btn-info" type="button" onClick={restart}>Replay</button>
-            <button className="btn btn-success" type="button" onClick={nextPage}>Next</button>
-          </div>}
+      <div className="game">
+        <Switch>
+          <Route path={PLAY_PATH}>
+            <div className="game__title">{`${currentScore}`}</div>
+            {playData && !roundEnd &&
+              <PlayCard
+                wordsLoading={wordsLoading}
+                playData={playData}
+                handleAnswer={handleAnswer}
+                streak={streak} maxStreak={streakToBonus}
+              />}
+            {!roundEnd && !wordsLoadError && !wordsLoading &&
+              <div className="game__countdown d-flex flex-column">
+                <Countdown duration={roundTime} startImmediately onTimeout={endRound} />
+              </div>}
+          </Route>
+          <Route path={ROUND_END_PATH}>
+            <Stats score={currentScore} knownWords={knownWords} unknownWords={unknownWords} />
+            <div className="game__footer d-flex flex-row justify-content-between">
+              <button className="btn btn-info" type="button" onClick={restart}>Replay</button>
+              <button className="btn btn-success" type="button" onClick={nextPage}>Next</button>
+            </div>
+            {!roundEnd && <Redirect to={ROOT_PATH} />}
+          </Route>
+          <Route>
+            <StartPage />
+          </Route>
+        </Switch>
       </div>
-    </div>
+    </div >
   )
 }

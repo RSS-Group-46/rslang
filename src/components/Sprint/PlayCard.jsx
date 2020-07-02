@@ -8,8 +8,10 @@ import {
   selectShowDeleteButton,
   selectShowMoveToComplicatedButton,
 } from '../../redux/selectors/settings.selectors';
+import Streak from './Streak';
 
-export default ({ playData, wordsLoading, handleAnswer }) => {
+
+export default ({ playData, wordsLoading, handleAnswer, streak, maxStreak }) => {
   const showAssociationPicture = useSelector(selectShowAssociationPicture);
   const showWordTranscription = useSelector(selectShowTranscription);
   const showAnswerButton = useSelector(selectShowAnswerButton);
@@ -28,14 +30,15 @@ export default ({ playData, wordsLoading, handleAnswer }) => {
     <div className="game__main card card-sprint border-primary mb-3">
       {showAssociationPicture &&
         <img className="card-img-top word-image" src={playData.image} alt={playData.word} />}
-      <div className="card-body">
+      <div className="card-body d-flex flex-column justify-content-between">
         {playData.raw &&
-          <div className="card-title d-flex justify-content-between">
+          <div className="card-title d-flex justify-content-between align-self-center">
             <h4>{playData.word}</h4>
             {showWordTranscription &&
               <h3>{playData.raw.transcription}</h3>}
           </div>}
-        <h4 className="card-subtitle text-muted">{playData.wordTranslate}</h4>
+          <Streak current={streak} max={maxStreak} />
+        <h4 className="card-subtitle text-muted align-self-center">{playData.wordTranslate}</h4>
       </div>
       <div className="card-footer">
         <div className="d-flex flex-row justify-content-between">
