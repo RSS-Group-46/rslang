@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-vars */
-import React, { useState, useCallback, useContext, useEffect } from 'react';
-import { Switch, Route, Link, useHistory, Redirect } from 'react-router-dom';
+import React, { useState, useCallback, useContext } from 'react';
+import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import AuthContext from '../../contexts/auth.context';
@@ -24,7 +23,7 @@ export default () => {
   const [unknownWords, setUnknownWords] = useState([]);
   const [currentWord, setCurrentWord] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  const [currentGroup, setCurrentGroup] = useState(0);
+  const [currentGroup] = useState(0);
   const [roundEnd, setRoundEnd] = useState(false);
 
   const history = useHistory();

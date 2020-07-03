@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { MINI_GAMES_URL } from '../../constants/urlConstants';
 
 
 export default () => {
@@ -7,9 +8,16 @@ export default () => {
   return (
     <div className="game__main">
       <p>
-        Blue shark eagle ray menhaden, mora bat ray. Straptail sandbar shark barbeled houndshark paradise fish, white shark goosefish sargassum fish, spearfish. Sabertooth fish velvet catfish sillago whiptail gulper tube-eye molly flagblenny flabby whalefish oldwife ribbon sawtail fish longfin smelt sábalo rock beauty.
+        <strong>Ход игры:</strong> Вы видите слово на английском языке и перевод слова, нужно указать принадлежит ли данный перевод этому слову.
+      Продолжительность раунда 1 минута.<br />
+      В начале игры за каждое угаданное слово начисляется 10 баллов.<br />
+      Каждые четыре правильных ответа подряд увеличивают количество баллов за каждое угаданное слово вдвое.<br />
+      При ошибке за угаданное слово снова начисляется только 10 баллов.
       </p>
-      <Link className="btn btn-primary" to="sprint/play">play</Link>
+      <div className="d-flex flex-row justify-content-around">
+        <Link className="btn btn-success" to="sprint/play">Играть</Link>
+        <Link className="btn btn-info" to={MINI_GAMES_URL}>Другие игры</Link>
+      </div>
     </div>
   );
 };
