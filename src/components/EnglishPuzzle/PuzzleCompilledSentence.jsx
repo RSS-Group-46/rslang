@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import { getPuzzleElementVariant, getPuzzleWidth, getPimpWidth } from './puzzleUtils';
+import { getPuzzleElementVariant, getPuzzleWidth, getPimpWidth, getContentWidth } from './puzzleUtils';
 import DraggablePuzzleElement from './DraggablePuzzleElement';
-import { CONTENT_WIDTH, WORD_ID_DELIMETER, PICTURE_ROW_DROPPABLE_ID } from './puzzleConstants';
+import { WORD_ID_DELIMETER, PICTURE_ROW_DROPPABLE_ID } from './puzzleConstants';
 import { ScreenWidthContext } from './Puzzle';
 
 const PuzzleCompilledSentence = (props) => {
@@ -18,7 +18,7 @@ const PuzzleCompilledSentence = (props) => {
           <div
             className="puzzle__picture-row-placeholder"
             style={{
-              width: CONTENT_WIDTH,
+              width: getContentWidth(screenWidth),
               height: puzzleHeight
             }}
           >

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { CONTENT_WIDTH } from './puzzleConstants';
+import React, { useState, useContext } from 'react';
+import { getContentWidth } from './puzzleUtils';
+import { ScreenWidthContext } from './Puzzle';
 
 const ENDED_EVENT_NAME = 'ended';
 
@@ -20,7 +21,7 @@ const PuzzlePromptShow = (props) => {
   return (
     <div
       className="puzzle-prompt-show__prompts"
-      style={{ width: CONTENT_WIDTH }}
+      style={{ width: getContentWidth(useContext(ScreenWidthContext)) }}
     >
       <div className={showVoiceClasses} onClick={doPlayVoice} />
       <div className={showTranslateClasses}>{translate}</div>

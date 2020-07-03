@@ -7,9 +7,9 @@ const PuzzlePrompts = (props) => {
   const voiceClasses = `puzzle-prompt prompt_voice ${voiceEnabled ? '' : 'disable'}`;
   return (
     <div className="puzzle-prompt_container">
-      <div className={translateClasses} onClick={doTranslate} />
-      <div className={imageClasses} onClick={doShowImage} />
-      <div className={voiceClasses} onClick={doVoice} />
+      <div className={translateClasses} onClick={doTranslate} onKeyDown={doTranslate} role="button" tabIndex={0} />
+      <div className={imageClasses} onClick={doShowImage} onKeyDown={doShowImage} role="button" tabIndex={0} />
+      <div className={voiceClasses} onClick={doVoice} onKeyDown={doVoice} role="button" tabIndex={0} />
     </div>
   );
 }

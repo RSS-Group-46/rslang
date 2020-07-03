@@ -8,17 +8,19 @@ const PuzzleLevelPageOption = (props) => {
   const { level, page, useUserWords, doChangeLevel, doChangePage, doCheckUseUserWords } = props;
   return (
     <form>
-      <div className="form-group puzzle-options__element">
-        <label htmlFor="puzzle-level element_label">level</label>
-        <select className="form-control" id="puzzle-level" value={level} onChange={doChangeLevel}>
-          {levels.map((n) => <option key={n} value={n}>{n}</option>)}
-        </select>
-      </div>
-      <div className="form-group puzzle-options__element">
-        <label htmlFor="puzzle-page element_label">page</label>
-        <select className="form-control" id="puzzle-page" value={page} onChange={doChangePage}>
-          {pages.map((n) => <option key={n} value={n}>{n}</option>)}
-        </select>
+      <div className="puzzle-options__level-page-dropdowns">
+        <div className="form-group puzzle-options__element">
+          <label htmlFor="puzzle-level element_label">level</label>
+          <select className="form-control" id="puzzle-level" value={level} onChange={doChangeLevel}>
+            {levels.map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </div>
+        <div className="form-group puzzle-options__element">
+          <label htmlFor="puzzle-page element_label">page</label>
+          <select className="form-control" id="puzzle-page" value={page} onChange={doChangePage}>
+            {pages.map((n) => <option key={n} value={n}>{n}</option>)}
+          </select>
+        </div>
       </div>
       <div className="form-group puzzle-options__element">
         <div className="custom-control custom-checkbox element_label">

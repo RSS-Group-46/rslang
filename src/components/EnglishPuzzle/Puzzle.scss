@@ -74,13 +74,18 @@
   align-items: center;
 
   form {
+    display: flex;
+    flex-direction: row;
+
+    .puzzle-options__level-page-dropdowns {
       display: flex;
       flex-direction: row;
-      font-size: 1.2rem;
-
-      & > * {
-        margin-right: 2rem;
-      }
+      // margin-right: 2rem;
+      
+      // & > * {
+      //   margin-right: 2rem;
+      // }
+    }
   }
 }
 
@@ -260,4 +265,68 @@
 // common
 .hide {
   visibility: hidden;
+}
+
+@media screen and (max-width: 1400px) {
+  .puzzle-element {
+    font-size: 2rem;
+  }
+  
+  .puzzle_container {
+    .row-number {
+      font-size: 1.5rem;
+    }
+  }
+
+  .puzzle-options__element {
+    label, .element_label {
+      font-size: 1.2rem;
+    }
+  }
+
+  .puzzle-prompt-show__prompts {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .puzzle-element {
+    font-size: 1.5rem;
+  }
+
+  .puzzle_container {
+    .row-number {
+      font-size: 1.2rem;
+      padding: 0 0.5rem;
+    }
+  }
+
+  .puzzle-prompt-show__prompts {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .puzzle-element {
+    font-size: 1rem;
+  }
+
+  .puzzle_container {
+    .row-number {
+      font-size: 1rem;
+      padding: 0 0.3rem;
+    }
+  }
+
+  .puzzle-options__element {
+    label, .element_label {
+      font-size: 0.9rem;
+    }
+  }
+
+  .puzzle-options_container {
+    form {
+      flex-direction: column;
+    }
+  }
 }

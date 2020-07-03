@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { getContentWidth } from './puzzleUtils';
-import ScreenWidthContext from './Puzzle';
+import { ScreenWidthContext } from './Puzzle';
 
 const PuzzleButtonToolbar = (props) => {
   const { puzzleIsCompilled, sentenceIsCompilled, isChecked, dontKnow, checkCompilledSentence, doContinue, showResults } = props;
