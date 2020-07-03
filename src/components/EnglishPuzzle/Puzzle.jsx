@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import PuzzleOptions from './PuzzleOptions';
 import PuzzleFreezedRow from './PuzzleFreezedRow';
@@ -81,29 +81,29 @@ const Puzzle = () => {
 
   const { width: screenWidth } = useWindowDimensions();
 
-  const getAndSetWords = () => {
-    if (sentences.length) {
-      return;
-    }
-    const { page, level } = options;
-    getWords(level, page, MAX_WORDS).then(newSentences => {
-      if (sentences.length) {
-        return;
-      }
-      const normalized = normalizeSentences(newSentences);
-      const merged = options.useUserWords ? mergeSentences(userSentences, normalized) : normalized;
-      setSentences(merged);
-    });
-  }
-
-  const loadBackground = () => {
+  const loadBackground = useCallback(() => {
     if (backgroundImage) {
       return;
     }
+
+    const getAndSetWords = () => {
+      if (sentences.length) {
+        return;
+      }
+      const { page, level } = options;
+      getWords(level, page, MAX_WORDS).then(newSentences => {
+        if (sentences.length) {
+          return;
+        }
+        const normalized = normalizeSentences(newSentences);
+        const merged = options.useUserWords ? mergeSentences(userSentences, normalized) : normalized;
+        setSentences(merged);
+      });
+    }
+
     const background = getRandomImage();
     const img = new Image();
     img.onload = () => {
-      console.log(backgroundImage)
       setBackgroundImage(background);
       const { width, height } = img;
       setNativeImageDimensions({ width, height });
@@ -111,9 +111,9 @@ const Puzzle = () => {
       getAndSetWords();
     }
     img.src = background.url;
-  }
+  }, [backgroundImage, screenWidth, options, sentences, userSentences]);
 
-  const prepareNextSentence = () => {
+  const prepareNextSentence = useCallback(() => {
     if (!sentences.length) {
       return;
     }
@@ -132,7 +132,7 @@ const Puzzle = () => {
         audioExampleUrl: getDataUrl(next.audioExample)
       });
     }
-  }
+  }, [results, sentences]);
 
   const clearWorkzone = () => {
     setResults(resultsInitialState);
@@ -143,37 +143,30 @@ const Puzzle = () => {
     setPrompts(promptsInitialState);
   }
 
-  const restartGame = () => {
+  const restartGame = useCallback(() => {
     clearWorkzone();
     setSentences([]);
     setSentenceToCompille([]);
     setFreezedSentences([]);
     setPuzzleIsCompilled(false);
     setBackgroundImage(null);
-  }
+  }, []);
 
   useEffect(() => {
     loadBackground();
     if (imageHeight) {
       setPuzzleHeight(imageHeight / MAX_SENTENCES);
     }
-  }, [backgroundImage, imageHeight]);
+  }, [backgroundImage, imageHeight, loadBackground]);
 
-  useEffect(() => {
-    if (sentenceToCompile.length) {
-      return;
-    }
-    prepareNextSentence();
-  }, [sentences]);
+  useEffect(() => prepareNextSentence(), [sentences, prepareNextSentence]);
 
-  useEffect(() => {
-    restartGame();
-  }, [options]);
+  useEffect(() => restartGame(), [options, restartGame]);
 
   useEffect(() => {
     const { width, height } = nativeImageDimensions;
     setImageHeight(Math.floor(((height * getContentWidth(screenWidth)) / width)));
-  }, [screenWidth]);
+  }, [screenWidth, nativeImageDimensions]);
 
   const getListById = (droppableId) => droppableId === STORE_DROPPABLE_ID ? sentenceToCompile : compilledSentence;
 

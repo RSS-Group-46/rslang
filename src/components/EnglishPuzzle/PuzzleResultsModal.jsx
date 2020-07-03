@@ -38,9 +38,9 @@ const PuzzleResultsModal = (props) => {
           <p className="puzzle-results-modal__picture-name">{background.pictureName}</p>
         </div>
         <h4>I don&apos;t know: <span className="badge badge-pill badge-danger">{unguessed.length}</span></h4>
-        {unguessed.map((s) => <p>{s}</p>)}
+        {unguessed.map((s) => <p key={s}>{s}</p>)}
         <h4>I know: <span className="badge badge-pill badge-success">{guessed.length}</span></h4>
-        {guessed.map((s) => <p>{s}</p>)}
+        {guessed.map((s) => <p key={s}>{s}</p>)}
       </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-primary" onClick={doContinue}>Continue</button>
