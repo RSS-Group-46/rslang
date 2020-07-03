@@ -87,9 +87,11 @@ const Puzzle = () => {
     }
     const { page, level } = options;
     getWords(level, page, MAX_WORDS).then(newSentences => {
+      if (sentences.length) {
+        return;
+      }
       const normalized = normalizeSentences(newSentences);
       const merged = options.useUserWords ? mergeSentences(userSentences, normalized) : normalized;
-      console.log('setting sentences')
       setSentences(merged);
     });
   }
@@ -101,6 +103,7 @@ const Puzzle = () => {
     const background = getRandomImage();
     const img = new Image();
     img.onload = () => {
+      console.log(backgroundImage)
       setBackgroundImage(background);
       const { width, height } = img;
       setNativeImageDimensions({ width, height });
@@ -115,16 +118,20 @@ const Puzzle = () => {
       return;
     }
     const next = sentences.shift();
-    const sentenceInRightOrderToSet = next.sentence.split(' ');
-    const sentenceToCompileToSet = shuffle(mapSentenceToWordWithId(sentenceInRightOrderToSet));
+    if (mergeSentences(results.guessed, results.unguessed).includes(next.sentence)) {
+      prepareNextSentence();
+    } else {
+      const sentenceInRightOrderToSet = next.sentence.split(' ');
+      const sentenceToCompileToSet = shuffle(mapSentenceToWordWithId(sentenceInRightOrderToSet));
 
-    setSentenceToCompille(sentenceToCompileToSet);
-    setSentenceInRightOrder(sentenceInRightOrderToSet);
-    setPrompts({
-      ...promptsInitialState,
-      translate: next.translate,
-      audioExampleUrl: getDataUrl(next.audioExample)
-    });
+      setSentenceToCompille(sentenceToCompileToSet);
+      setSentenceInRightOrder(sentenceInRightOrderToSet);
+      setPrompts({
+        ...promptsInitialState,
+        translate: next.translate,
+        audioExampleUrl: getDataUrl(next.audioExample)
+      });
+    }
   }
 
   const clearWorkzone = () => {
@@ -157,7 +164,6 @@ const Puzzle = () => {
       return;
     }
     prepareNextSentence();
-    console.log('after preparing first')
   }, [sentences]);
 
   useEffect(() => {
@@ -348,16 +354,16 @@ const Puzzle = () => {
               <PuzzleImageContainer imageHeight={imageHeight} />
             }
             {!puzzleIsCompilled &&
-                <div className="puzzle__freezed">
-                  {freezedSentences.map((freezedSentence, i) =>
-                    <PuzzleFreezedRow
-                      sentence={freezedSentence}
-                      puzzleHeight={puzzleHeight}
-                      rowNum={i}
-                      key={freezedSentence}
-                    />
-                  )}
-                </div>
+              <div className="puzzle__freezed">
+                {freezedSentences.map((freezedSentence, i) =>
+                  <PuzzleFreezedRow
+                    sentence={freezedSentence}
+                    puzzleHeight={puzzleHeight}
+                    rowNum={i}
+                    key={freezedSentence}
+                  />
+                )}
+              </div>
             }
             <DragDropContext onDragEnd={onDragEnd}>
               {!puzzleIsCompilled &&
