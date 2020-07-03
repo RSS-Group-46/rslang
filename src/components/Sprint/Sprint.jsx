@@ -3,7 +3,6 @@ import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
 
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import AuthContext from '../../contexts/auth.context';
-import { withPage } from '../../constants/apiConstants';
 
 import Countdown from './Countdown';
 import Stats from './Stats';
@@ -21,10 +20,10 @@ export default () => {
   const [knownWords, setKnownWords] = useState([]);
   const [unknownWords, setUnknownWords] = useState([]);
   const [currentWord, setCurrentWord] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(5);
   const [currentGroup] = useState(0);
   const [roundEnd, setRoundEnd] = useState(false);
-
+  
   const history = useHistory();
 
   const { userId, token } = useContext(AuthContext);
@@ -50,8 +49,9 @@ export default () => {
     userId,
     token,
     group: currentGroup,
+    page: currentPage,
     wordsPerPage: wordsPerRound,
-    filter: { ...withPage(currentPage) }
+    filter: { },
   };
 
   const { data, error: wordsLoadError, loading: wordsLoading } = useUserAggregatedWords(wordsConfig);
