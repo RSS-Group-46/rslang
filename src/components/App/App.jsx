@@ -23,6 +23,7 @@ import {
   TEAM_URL,
   AUTH_URL,
   ERROR,
+  PLAY_URL,
 } from '../../constants/urlConstants';
 import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
@@ -31,6 +32,7 @@ import Team from '../Team/Team';
 import Header from '../Header/Header';
 import Settings from '../Settings/Settings';
 import Puzzle from '../EnglishPuzzle/Puzzle';
+import PuzzleWelcomePage from '../EnglishPuzzle/PuzzleWelcomePage';
 import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
@@ -72,6 +74,9 @@ const App = () => {
                   <SpeakItWelcome />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
+                  <PuzzleWelcomePage />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + PUZZLE_URL + PLAY_URL}>
                   <Puzzle />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SAVANNAH_URL}>

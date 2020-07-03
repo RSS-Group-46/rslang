@@ -7,8 +7,13 @@ export const GALLERY = [
   { fileName: 'brullov-poslednii den pompei', pictureName: '"Последний день Помпеи", Карл Брюллов' },
   { fileName: 'shishkin-bor', pictureName: '"Сосновый бор", Иван Шишкин' },
   { fileName: 'shishkin-utro', pictureName: '"Утро в сосновом бору", Иван Шишкин' },
-  { fileName: 'van-gogh-peizash s lodkami', pictureName: '"Речной пейзаж с гребными лодками", Винсент Ван Гог' }
-]
+  { fileName: 'van-gogh-peizash s lodkami', pictureName: '"Речной пейзаж с гребными лодками", Винсент Ван Гог' },
+  { fileName: 'bellini-madonna', pictureName: '"Мадонна с Младенцем, Иоанн Креститель и святая", Джованни Беллини' },
+  { fileName: 'botichelli-venera', pictureName: '"Рождение Венеры", Сандро Боттичелли' },
+  { fileName: 'el greko-ogras', pictureName: '"Погребение графа Ограса", Эль Греко' },
+  { fileName: 'winterhalter-evgenia', pictureName: '"Императрица Евгения с прислуживающими ей дамами", Франц Ксавьер Винтерхальтер' },
+  { fileName: 'breigel-flamandskie', pictureName: '"Фламандские пословицы", Питер Брейгель Старший' },
+];
 
 // puzzle constants
 export const PUZZLE_ELEMENT = 'puzzle-element';
