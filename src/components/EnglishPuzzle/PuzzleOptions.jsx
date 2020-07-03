@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PuzzleLevelPageOption from './PuzzleLevelPageOption';
 import PuzzlePrompts from './PuzzlePrompts';
 import { getContentWidth } from './puzzleUtils';
-import { ScreenWidthContext } from './Puzzle';
+import ScreenWidthContext from '../../contexts/screenWidth.context';
 
 const PuzzleOptions = (props) => {
   const { doTranslate, doShowImage, doChangeLevel, doChangePage, doCheckUseUserWords, doVoice, prompts, options } = props;

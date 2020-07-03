@@ -4,12 +4,12 @@ import {
   START,
   END,
   MIDDLE,
-  CONTENT_WIDTH,
   PIMP_WIDTH_PERCENT,
   START_LEVEL,
   START_PAGE,
   BORDER_LEVEL,
-  BORDER_PAGE
+  BORDER_PAGE,
+  MAX_SENTENCES
 } from './puzzleConstants';
 
 export const getRandomImage = () => {
@@ -83,6 +83,14 @@ export const getPuzzleWidthWithVariant = (width, variant, pimpWidth) => {
   return width;
 }
 
+export const getContentWidth = (screenWidth) => {
+  if (screenWidth > 1400) return 1400;
+  if (screenWidth > 992) return 992;
+  if (screenWidth > 768) return 768;
+  if (screenWidth > 480) return 480;
+  return 320;
+}
+
 export const getPuzzleWidth = (puzzleAmount, pimpWidth, screenWidth) => Math.floor(getContentWidth(screenWidth) / puzzleAmount) + pimpWidth;
 export const getPimpWidth = (puzzleAmount, screenWidth) => Math.floor((getContentWidth(screenWidth) / puzzleAmount / 100) * PIMP_WIDTH_PERCENT);
 
@@ -106,17 +114,11 @@ export const getNextLevelPageOptions = (level, page) => {
 }
 
 export const shuffle = (arr) => {
-  for (let i = arr.length - 1; i > 0; i--) {
+  for (let i = arr.length - 1; i > 0; i-=1) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
 }
 
-export const getContentWidth = (screenWidth) => {
-  if (screenWidth > 1400) return 1400;
-  if (screenWidth > 992) return 992;
-  if (screenWidth > 768) return 768;
-  if (screenWidth > 480) return 480;
-  return 320;
-}
+export const mergeSentences = (sentences1, sentences2) => shuffle([...new Set([...sentences1, ...sentences2])]).slice(0, MAX_SENTENCES);

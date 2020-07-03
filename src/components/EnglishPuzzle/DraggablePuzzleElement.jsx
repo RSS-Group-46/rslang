@@ -21,7 +21,7 @@ const DraggablePuzzleElement = (props) => {
   } = props;
   return (
     <Draggable key={id} draggableId={id} index={index}>
-      {(provided, snapshot) => (
+      {(provided) => (
         <PuzzleElement
           variant={variant}
           puzzleWidth={puzzleWidth}

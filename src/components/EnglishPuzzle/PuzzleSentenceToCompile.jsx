@@ -3,7 +3,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import DraggablePuzzleElement from './DraggablePuzzleElement';
 import { getPuzzleElementVariant, getPuzzleWidth, getPimpWidth } from './puzzleUtils';
 import { WORD_ID_DELIMETER } from './puzzleConstants';
-import { ScreenWidthContext } from './Puzzle';
+import ScreenWidthContext from '../../contexts/screenWidth.context';
 
 const STORE_DROPPABLE_ID = 'store-droppable';
 
@@ -15,14 +15,14 @@ const PuzzleSentenceToCompile = (props) => {
   const puzzleWidth = getPuzzleWidth(puzzleAmount, pimpWidth, screenWidth);
   return (
     <Droppable droppableId={STORE_DROPPABLE_ID} direction="horizontal">
-      {(provided, snapshot) => (
+      {(provided) => (
         <div className="puzzle__unsetted_container"
           ref={provided.innerRef}
           {...provided.droppableProps}
         >
           {sentenceToCompile.map((w, i) =>
             <DraggablePuzzleElement
-              key={i}
+              key={`${w.id}`}
               variant={getPuzzleElementVariant(i, puzzleAmount)}
               puzzleWidth={puzzleWidth}
               pimpWidth={pimpWidth}

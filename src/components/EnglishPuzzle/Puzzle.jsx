@@ -1,14 +1,14 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import PuzzleOptions from './PuzzleOptions';
-import PuzzleFreezedSentences from './PuzzleFreezedSentences';
+import PuzzleFreezedRow from './PuzzleFreezedRow';
 import PuzzleCompilledSentence from './PuzzleCompilledSentence';
 import PuzzleSentenceToCompile from './PuzzleSentenceToCompile';
 import PuzzleButtonToolbar from './PuzzleButtonToolbar';
 import PuzzlePromptShow from './PuzzlePromptShow';
 import PuzzleImageContainer from './PuzzleImageContainer';
 import PuzzleResultsModal from './PuzzleResultsModal';
-import { getRandomImage, mapSentenceToWordWithId, removeHtml, move, reorder, getNextLevelPageOptions, shuffle, getContentWidth } from './puzzleUtils';
+import { getRandomImage, mapSentenceToWordWithId, removeHtml, move, reorder, getNextLevelPageOptions, shuffle, getContentWidth, mergeSentences } from './puzzleUtils';
 import { STORE_DROPPABLE_ID, PICTURE_ROW_DROPPABLE_ID, MAX_WORDS, MAX_SENTENCES, START_PAGE, START_LEVEL } from './puzzleConstants';
 import { ONLY_USER_WORDS } from '../../constants/apiConstants';
 import { getWords } from '../../services/common.service';
@@ -16,10 +16,9 @@ import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import useWindowDimensions from '../../hooks/useWindowDimensions.hook';
 import useAuth from '../../hooks/auth.hook';
 import { getDataUrl } from '../../hooks/words.hook';
+import BackgroundContext from '../../contexts/puzzleBackground.context';
+import ScreenWidthContext from '../../contexts/screenWidth.context';
 import './Puzzle.scss';
-
-export const BackgroundContext = createContext({ url: '', pictureName: '' });
-export const ScreenWidthContext = createContext(0);
 
 const promptsInitialState = {
   translate: '',
@@ -77,10 +76,74 @@ const Puzzle = () => {
 
   const { token, userId } = useAuth();
   const wordsConfig = { userId, token, group: options.level, wordsPerPage: MAX_WORDS, filter: ONLY_USER_WORDS };
-  const { data, error, loading } = useUserAggregatedWords(wordsConfig);
+  const { data } = useUserAggregatedWords(wordsConfig);
   const userSentences = normalizeSentences(data && data[0].paginatedResults || []);
 
   const { width: screenWidth } = useWindowDimensions();
+
+  const getAndSetWords = () => {
+    if (sentences.length) {
+      return;
+    }
+    const { page, level } = options;
+    getWords(level, page, MAX_WORDS).then(newSentences => {
+      const normalized = normalizeSentences(newSentences);
+      const merged = options.useUserWords ? mergeSentences(userSentences, normalized) : normalized;
+      console.log('setting sentences')
+      setSentences(merged);
+    });
+  }
+
+  const loadBackground = () => {
+    if (backgroundImage) {
+      return;
+    }
+    const background = getRandomImage();
+    const img = new Image();
+    img.onload = () => {
+      setBackgroundImage(background);
+      const { width, height } = img;
+      setNativeImageDimensions({ width, height });
+      setImageHeight(Math.floor(((height * getContentWidth(screenWidth)) / width)));
+      getAndSetWords();
+    }
+    img.src = background.url;
+  }
+
+  const prepareNextSentence = () => {
+    if (!sentences.length) {
+      return;
+    }
+    const next = sentences.shift();
+    const sentenceInRightOrderToSet = next.sentence.split(' ');
+    const sentenceToCompileToSet = shuffle(mapSentenceToWordWithId(sentenceInRightOrderToSet));
+
+    setSentenceToCompille(sentenceToCompileToSet);
+    setSentenceInRightOrder(sentenceInRightOrderToSet);
+    setPrompts({
+      ...promptsInitialState,
+      translate: next.translate,
+      audioExampleUrl: getDataUrl(next.audioExample)
+    });
+  }
+
+  const clearWorkzone = () => {
+    setResults(resultsInitialState);
+    setNeedToShowResults(false);
+    setCompilledSentence([]);
+    setNeedToCheck(false);
+    setIsChecked(false);
+    setPrompts(promptsInitialState);
+  }
+
+  const restartGame = () => {
+    clearWorkzone();
+    setSentences([]);
+    setSentenceToCompille([]);
+    setFreezedSentences([]);
+    setPuzzleIsCompilled(false);
+    setBackgroundImage(null);
+  }
 
   useEffect(() => {
     loadBackground();
@@ -94,6 +157,7 @@ const Puzzle = () => {
       return;
     }
     prepareNextSentence();
+    console.log('after preparing first')
   }, [sentences]);
 
   useEffect(() => {
@@ -105,28 +169,7 @@ const Puzzle = () => {
     setImageHeight(Math.floor(((height * getContentWidth(screenWidth)) / width)));
   }, [screenWidth]);
 
-  const onDragEnd = (result) => {
-    const { source, destination } = result;
-    if (!destination) {
-      return;
-    }
-
-    source.droppableId === destination.droppableId ? doReorder(source, destination) : doMove(source, destination);
-  }
-
-  const getAndSetWords = () => {
-    if (sentences.length) {
-      return;
-    }
-    const { page, level } = options;
-    getWords(level, page, MAX_WORDS).then(newSentences => {
-      const normalized = normalizeSentences(newSentences);
-      const merged = options.useUserWords ? mergeSentences(userSentences, normalized) : normalized;
-      setSentences(merged);
-    });
-  }
-
-  const mergeSentences = (sentences1, sentences2) => shuffle([...new Set([...sentences1, ...sentences2])]).slice(0, MAX_SENTENCES);
+  const getListById = (droppableId) => droppableId === STORE_DROPPABLE_ID ? sentenceToCompile : compilledSentence;
 
   const doReorder = (source, destination) => {
     if (needToCheck) {
@@ -138,7 +181,11 @@ const Puzzle = () => {
       source.index,
       destination.index
     );
-    isSentenceToCompile ? setSentenceToCompille(recompilled) : setCompilledSentence(recompilled);
+    if (isSentenceToCompile) {
+      setSentenceToCompille(recompilled);
+    } else {
+      setCompilledSentence(recompilled);
+    }
   }
 
   const doMove = (source, destination) => {
@@ -154,45 +201,26 @@ const Puzzle = () => {
     setSentenceToCompille(result[STORE_DROPPABLE_ID]);
   }
 
-  const getListById = (droppableId) => droppableId === STORE_DROPPABLE_ID ? sentenceToCompile : compilledSentence;
-
-  const loadBackground = () => {
-    if (!!backgroundImage) {
+  const onDragEnd = (result) => {
+    const { source, destination } = result;
+    if (!destination) {
       return;
     }
-    console.log('loading background...')
-    const background = getRandomImage();
-    const img = new Image();
-    img.onload = () => {
-      setBackgroundImage(background);
-      const { width, height } = img;
-      setNativeImageDimensions({ width, height })
-      setImageHeight(Math.floor(((height * getContentWidth(screenWidth)) / width)));
-      getAndSetWords();
-    }
-    img.src = background.url;
-  }
 
-  const prepareNextSentence = () => {
-    if (!sentences.length) {
-      return;
+    if (source.droppableId === destination.droppableId) {
+      doReorder(source, destination);
+    } else {
+      doMove(source, destination);
     }
-    const next = sentences.shift();
-    const sentenceInRightOrder = next.sentence.split(' ');
-    const sentenceToCompile = shuffle(mapSentenceToWordWithId(sentenceInRightOrder));
-
-    setSentenceToCompille(sentenceToCompile);
-    setSentenceInRightOrder(sentenceInRightOrder);
-    setPrompts({
-      ...promptsInitialState,
-      translate: next.translate,
-      audioExampleUrl: getDataUrl(next.audioExample)
-    })
   }
 
   const finishGame = () => {
     setPuzzleIsCompilled(true);
   }
+
+  const addUnguessed = (unguessed) => results.unguessed.push(unguessed);
+
+  const addGuessed = (guessed) => results.guessed.push(guessed);
 
   const dontKnow = () => {
     setSentenceToCompille([]);
@@ -200,15 +228,21 @@ const Puzzle = () => {
     addUnguessed(sentenceInRightOrder.join(' '));
   }
 
-  const addUnguessed = (unguessed) => results.unguessed.push(unguessed);
-
-  const addGuessed = (guessed) => results.guessed.push(guessed);
-
   const checkCompilledSentence = () => {
     setNeedToCheck(true);
     if (JSON.stringify(compilledSentence.map((w) => w.word)) === JSON.stringify(sentenceInRightOrder)) {
       setIsChecked(true);
     }
+  }
+
+  const upgradeLevel = () => {
+    const { level, page } = options;
+    const { nextLevel, nextPage } = getNextLevelPageOptions(level, page);
+    setOptions({
+      ...options,
+      level: nextLevel,
+      page: nextPage
+    })
   }
 
   const doContinue = () => {
@@ -227,34 +261,6 @@ const Puzzle = () => {
         prepareNextSentence();
       }
     }
-  }
-
-  const upgradeLevel = () => {
-    const { level, page } = options;
-    const { nextLevel, nextPage } = getNextLevelPageOptions(level, page);
-    setOptions({
-      ...options,
-      level: nextLevel,
-      page: nextPage
-    })
-  }
-
-  const restartGame = () => {
-    clearWorkzone();
-    setSentences([]);
-    setSentenceToCompille([]);
-    setFreezedSentences([]);
-    setPuzzleIsCompilled(false);
-    setBackgroundImage(null);
-  }
-
-  const clearWorkzone = () => {
-    setResults(resultsInitialState);
-    setNeedToShowResults(false);
-    setCompilledSentence([]);
-    setNeedToCheck(false);
-    setIsChecked(false);
-    setPrompts(promptsInitialState);
   }
 
   const moveToCompilled = (word) => {
@@ -312,7 +318,7 @@ const Puzzle = () => {
     })
   }
 
-  const doCheckUseUserWords = (e) => {
+  const doCheckUseUserWords = () => {
     setOptions({
       ...options,
       useUserWords: !options.useUserWords
@@ -342,10 +348,16 @@ const Puzzle = () => {
               <PuzzleImageContainer imageHeight={imageHeight} />
             }
             {!puzzleIsCompilled &&
-              <PuzzleFreezedSentences
-                freezedSentences={freezedSentences}
-                puzzleHeight={puzzleHeight}
-              />
+                <div className="puzzle__freezed">
+                  {freezedSentences.map((freezedSentence, i) =>
+                    <PuzzleFreezedRow
+                      sentence={freezedSentence}
+                      puzzleHeight={puzzleHeight}
+                      rowNum={i}
+                      key={freezedSentence}
+                    />
+                  )}
+                </div>
             }
             <DragDropContext onDragEnd={onDragEnd}>
               {!puzzleIsCompilled &&

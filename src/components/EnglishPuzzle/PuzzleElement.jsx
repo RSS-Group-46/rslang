@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { PUZZLE_ELEMENT, CLASS_NAMES } from './puzzleConstants';
 import { getPuzzleLeftShift, getPuzzleTopSize, getPuzzleWidthWithVariant } from './puzzleUtils';
-import { BackgroundContext } from './Puzzle';
+import BackgroundContext from '../../contexts/puzzleBackground.context';
 
 const GREEN_COLOR = '#4cbf00';
 const RED_COLOR = '#f50000';
@@ -33,6 +33,7 @@ const PuzzleElement = (props) => {
     draggableProps = {},
     dragHandleProps = { style: {} }
   } = draggableProvided;
+  const backgroundUrl = useContext(BackgroundContext).url;
   return (
     <div
       ref={draggableProvided && draggableProvided.innerRef}
@@ -40,9 +41,12 @@ const PuzzleElement = (props) => {
       {...dragHandleProps}
       className={puzzleClasses}
       onClick={handleClick}
+      onKeyDown={handleClick}
+      role="button"
+      tabIndex={0}
       style={{
         backgroundPosition,
-        backgroundImage: showImage ? `url('${useContext(BackgroundContext).url}')` : null,
+        backgroundImage: showImage ? `url('${backgroundUrl}')` : null,
         width: `${getPuzzleWidthWithVariant(puzzleWidth, variant, pimpWidth)}px`,
         height: `${puzzleHeight}px`,
         left: `-${pimpWidth * index}px`,

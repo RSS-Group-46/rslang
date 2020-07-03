@@ -3,7 +3,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { getPuzzleElementVariant, getPuzzleWidth, getPimpWidth, getContentWidth } from './puzzleUtils';
 import DraggablePuzzleElement from './DraggablePuzzleElement';
 import { WORD_ID_DELIMETER, PICTURE_ROW_DROPPABLE_ID } from './puzzleConstants';
-import { ScreenWidthContext } from './Puzzle';
+import ScreenWidthContext from '../../contexts/screenWidth.context';
 
 const PuzzleCompilledSentence = (props) => {
   const { puzzleHeight, compilledSentence, freezedLength, needToCheck, puzzleAmount, showImage } = props;
@@ -13,7 +13,7 @@ const PuzzleCompilledSentence = (props) => {
   const puzzleWidth = getPuzzleWidth(puzzleAmount, pimpWidth, screenWidth);
   return (
     <Droppable droppableId={PICTURE_ROW_DROPPABLE_ID} direction="horizontal">
-      {(provided, snapshot) => (
+      {(provided) => (
         <>
           <div
             className="puzzle__picture-row-placeholder"
@@ -36,7 +36,7 @@ const PuzzleCompilledSentence = (props) => {
               const puzzleNum = Number(w.id.split(WORD_ID_DELIMETER)[1]);
               return (
                 <DraggablePuzzleElement
-                  key={i}
+                  key={w.id}
                   variant={getPuzzleElementVariant(i, puzzleAmount)}
                   puzzleWidth={puzzleWidth}
                   pimpWidth={pimpWidth}

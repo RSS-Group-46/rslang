@@ -36,7 +36,7 @@ export const PICTURE_ROW_DROPPABLE_ID = 'pictue-row-droppable';
 export const MAX_WORDS = 10;
 export const MAX_SENTENCES = 10;
 
-//level page default options
+// level page default options
 export const START_LEVEL = 1;
 export const START_PAGE = 1;
 export const BORDER_LEVEL = 4;

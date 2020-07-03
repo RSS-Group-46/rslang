@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PuzzleElement from './PuzzleElement';
 import { getPuzzleWidth, getPimpWidth, getPuzzleElementVariant } from './puzzleUtils';
-import { ScreenWidthContext } from './Puzzle';
+import ScreenWidthContext from '../../contexts/screenWidth.context';
 
 const PuzzleFreezedRow = (props) => {
   const { sentence, rowNum, puzzleHeight } = props;
@@ -16,7 +16,7 @@ const PuzzleFreezedRow = (props) => {
       {
         sentence.map((w, i) =>
           <PuzzleElement
-            key={i}
+            key={w.word}
             variant={getPuzzleElementVariant(i, sentence.length)}
             puzzleWidth={puzzleWidth}
             pimpWidth={pimpWidth}

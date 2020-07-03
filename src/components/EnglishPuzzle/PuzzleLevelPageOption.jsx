@@ -11,13 +11,13 @@ const PuzzleLevelPageOption = (props) => {
       <div className="puzzle-options__level-page-dropdowns">
         <div className="form-group puzzle-options__element">
           <label htmlFor="puzzle-level element_label">level</label>
-          <select className="form-control" id="puzzle-level" value={level} onChange={doChangeLevel}>
+          <select className="form-control" id="puzzle-level" value={level} onChange={doChangeLevel} onBlur={doChangeLevel}>
             {levels.map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>
         <div className="form-group puzzle-options__element">
           <label htmlFor="puzzle-page element_label">page</label>
-          <select className="form-control" id="puzzle-page" value={page} onChange={doChangePage}>
+          <select className="form-control" id="puzzle-page" value={page} onChange={doChangePage} onBlur={doChangeLevel}>
             {pages.map((n) => <option key={n} value={n}>{n}</option>)}
           </select>
         </div>

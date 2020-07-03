@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BackgroundContext } from './Puzzle';
+import BackgroundContext from '../../contexts/puzzleBackground.context';
 
 const PuzzleImageContainer = (props) => {
   const { imageHeight } = props;

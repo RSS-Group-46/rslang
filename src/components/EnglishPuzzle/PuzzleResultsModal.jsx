@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
-import { BackgroundContext } from './Puzzle';
+import BackgroundContext from '../../contexts/puzzleBackground.context';
 
 const customStyles = {
   content: {
@@ -37,7 +37,7 @@ const PuzzleResultsModal = (props) => {
           <div className="puzzle-results-modal__picture" style={{ backgroundImage: `url('${background.url}')` }} />
           <p className="puzzle-results-modal__picture-name">{background.pictureName}</p>
         </div>
-        <h4>I don't know: <span className="badge badge-pill badge-danger">{unguessed.length}</span></h4>
+        <h4>I don&apos;t know: <span className="badge badge-pill badge-danger">{unguessed.length}</span></h4>
         {unguessed.map((s) => <p>{s}</p>)}
         <h4>I know: <span className="badge badge-pill badge-success">{guessed.length}</span></h4>
         {guessed.map((s) => <p>{s}</p>)}
