@@ -28,17 +28,21 @@ export const pushUserSettings = (settings, userData) => {
 
 export const pullUserSettings = async (userData) => {
   const { userId, token } = userData;
-  const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`,
-    {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
+  try {
+    const response = await fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`,
+      {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+        }
       }
+    );
+    if (response.ok) {
+      return response.json();
     }
-  );
-  if (response.ok) {
-    return response.json();
+  } catch (e) {
+    console.log('ERROR ' + e);
   }
   // settings for user is not present;
   return null;
