@@ -34,7 +34,6 @@ const Settings = () => {
             dispatch(changeOptions(prepared))
           }
         })
-        .catch((e) => console.log('ERROR' + e));
     }
   }, [userData, dispatch]);
 
