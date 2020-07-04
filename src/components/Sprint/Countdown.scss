@@ -3,7 +3,7 @@
 .countdown {
   position: relative;
 
-  .countdown__visual {
+  &__visual {
     stroke-dasharray: 151px;
     stroke-dashoffset: 151px;
     stroke-linecap: butt;
@@ -18,7 +18,7 @@
     }
   }
 
-  .countdown__text {
+  &__text {
     position: absolute;
     top: 20px;
     width: 52px;

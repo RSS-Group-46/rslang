@@ -34,24 +34,25 @@
     ". footer .";
   grid-template-columns: 1fr auto 1fr;
   grid-template-rows: 50px auto 64px;
-}
 
-.game__stars {
-  grid-area: stars;
-  justify-self: center;
-  align-self: center;
-  margin-bottom: 1.2rem;
-}
+  &__stars {
+    grid-area: stars;
+    justify-self: center;
+    align-self: center;
+    margin-bottom: 1.2rem;
+  }
 
-.game__main {
-  grid-area: main;
-  font-size: 20px;
-}
+  &__main {
+    grid-area: main;
+    font-size: 20px;
+  }
 
-.game__countdown {
-  grid-area: countdown;
-}
+  &__countdown {
+    grid-area: countdown;
+  }
 
-.game__footer {
-  grid-area: footer;
+  &__footer {
+    grid-area: footer;
+  }
+
 }
