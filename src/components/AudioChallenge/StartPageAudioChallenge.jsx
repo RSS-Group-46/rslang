@@ -20,7 +20,7 @@ const StartPageAudioChallenge = ({ settings }) => {
       ? JSON.parse(localStorage.getItem('roundAudioCall'))
       : '0',
   );
-  const [knowWords, setKnowWords] = useState(false);
+  const [knowWords, setKnowWords] = useState(true);
   const [numberWord, setNumberWord] = useState(0);
   const { token, userId } = useAuth();
   const filter = {
@@ -45,20 +45,19 @@ const StartPageAudioChallenge = ({ settings }) => {
     }
   };
   const handleOnlyLearnedWords = () => {
-    setWords(false);
     setKnowWords(true);
     setNumberWord(0);
-    setLoader(true);
+    // setLoader(true);
   };
 
   const changeNumberWord = () => {
     setNumberWord(numberWord < words.length - 1 ? numberWord + 1 : numberWord);
-  } 
+  };
 
   const offLoader = () => setLoader(false);
 
   useEffect(() => {
-    if (start && !knowWords) {   
+    if (start && !knowWords) {
       setLoader(true);
       fetch(
         `https://pacific-castle-12388.herokuapp.com/words?page=${round}&group=${level}`,
@@ -68,7 +67,11 @@ const StartPageAudioChallenge = ({ settings }) => {
           setWords(data);
         });
     }
-    if (knowWords) {
+  }, [level, round, knowWords]);
+
+  useEffect(() => {
+    if (start && knowWords) {
+      setLoader(true);
       const filterEncoded = encodeURIComponent(JSON.stringify(filter));
       const paramsStr = `group=${group}&wordsPerPage=${settings.wordsPerDay}&filter=${filterEncoded}`;
       fetch(
@@ -91,24 +94,26 @@ const StartPageAudioChallenge = ({ settings }) => {
           }
         });
     }
-  }, [start, level, knowWords, round]);
+  }, [start, knowWords])
 
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className="start-page__audio-challenge">
       {!words ? (
-        <>
+        <div className='wrapper__audio-challenge'>
           <h2>AUDIOCALL</h2>
           <p>Choose the correct answer.</p>
-          <button
-            rol="tab"
-            type="button"
-            className="badge badge-success"
-            onClick={handleStartBtn}
-          >
-            Start
-          </button>
-        </>
+          <div className="wrapper__btn-next">
+            <button
+              rol="tab"
+              type="button"
+              className="badge badge-success"
+              onClick={handleStartBtn}
+            >
+              Start
+            </button>
+          </div>
+        </div>
       ) : (
         <AudioChallenge
           words={words}
@@ -121,7 +126,9 @@ const StartPageAudioChallenge = ({ settings }) => {
           changeNumberWord={changeNumberWord}
           numberWord={numberWord}
           settings={settings}
-
+          knowWords={knowWords}
+          token={token}
+          userId={userId}
         />
       )}
       {loader && <Loader />}
