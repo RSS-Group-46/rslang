@@ -92,6 +92,7 @@ const App = () => {
                 <Route path={ERROR}>
                   <ErrorIndicator />
                 </Route>
+                <Redirect to={BASE_URL} />
               </Switch>
             </>
           )}
