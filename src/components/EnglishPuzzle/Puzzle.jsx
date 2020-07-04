@@ -42,19 +42,12 @@ const resultsInitialState = {
   unguessed: []
 }
 
-const normalizeSentences = (sentences) => {
-  const mapped = sentences
-    .map((w) => {
-      return {
-        sentence: removeHtml(w.textExample),
-        translate: w.textExampleTranslate,
-        audioExample: w.audioExample
-      }
-    })
+const normalizeSentences = (sentences) => sentences.map((w) => ({
+      sentence: removeHtml(w.textExample),
+      translate: w.textExampleTranslate,
+      audioExample: w.audioExample
+    }))
     .filter((s) => s.sentence.split(' ').length <= MAX_WORDS);
-
-  return mapped;
-}
 
 const Puzzle = () => {
   const [sentences, setSentences] = useState([]);
@@ -213,9 +206,7 @@ const Puzzle = () => {
     }
   }
 
-  const finishGame = () => {
-    setPuzzleIsCompilled(true);
-  }
+  const finishGame = () => setPuzzleIsCompilled(true);
 
   const addUnguessed = (unguessed) => results.unguessed.push(unguessed);
 
@@ -227,9 +218,11 @@ const Puzzle = () => {
     addUnguessed(sentenceInRightOrder.join(' '));
   }
 
+  const getIsCompilledCorrect = () => JSON.stringify(compilledSentence.map((w) => w.word)) === JSON.stringify(sentenceInRightOrder);
+
   const checkCompilledSentence = () => {
     setNeedToCheck(true);
-    if (JSON.stringify(compilledSentence.map((w) => w.word)) === JSON.stringify(sentenceInRightOrder)) {
+    if (getIsCompilledCorrect()) {
       setIsChecked(true);
     }
   }
@@ -244,6 +237,16 @@ const Puzzle = () => {
     })
   }
 
+  const proceedGame = () => {
+    freezedSentences.push(compilledSentence);
+    clearWorkzone();
+    if (!sentences.length) {
+      finishGame();
+    } else {
+      prepareNextSentence();
+    }
+  }
+
   const doContinue = () => {
     const previousSentence = sentenceInRightOrder.join(' ');
     if (!results.unguessed.includes(previousSentence)) {
@@ -252,13 +255,7 @@ const Puzzle = () => {
     if (puzzleIsCompilled) {
       upgradeLevel();
     } else {
-      freezedSentences.push(compilledSentence);
-      clearWorkzone();
-      if (!sentences.length) {
-        finishGame();
-      } else {
-        prepareNextSentence();
-      }
+      proceedGame();
     }
   }
 
@@ -325,8 +322,9 @@ const Puzzle = () => {
   }
 
   return (
-    // TODO delete wrapper when the main wrapper will be introduce
+    // TODO delete wrapper when the main wrapper will be done
     <div className="puzzle_wrapper">
+      <div className="puzzle_background" />
       <div className="puzzle_container" style={{ minWidth: getContentWidth(screenWidth) }}>
         <ScreenWidthContext.Provider value={screenWidth}>
           <PuzzleOptions
@@ -353,7 +351,7 @@ const Puzzle = () => {
                     sentence={freezedSentence}
                     puzzleHeight={puzzleHeight}
                     rowNum={i}
-                    key={freezedSentence}
+                    key={freezedSentence.map((s) => s.word).join(' ')}
                   />
                 )}
               </div>
@@ -367,6 +365,7 @@ const Puzzle = () => {
                   puzzleAmount={sentenceInRightOrder.length}
                   needToCheck={needToCheck}
                   showImage={prompts.showImage}
+                  sentenceInRightOrder={sentenceInRightOrder}
                 />
               }
               {puzzleIsCompilled &&

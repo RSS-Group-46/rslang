@@ -8,7 +8,14 @@ import ScreenWidthContext from '../../contexts/screenWidth.context';
 const STORE_DROPPABLE_ID = 'store-droppable';
 
 const PuzzleSentenceToCompile = (props) => {
-  const { sentenceToCompile, puzzleHeight, freezedLength, puzzleAmount, showImage, moveToCompilled } = props;
+  const {
+    sentenceToCompile,
+    puzzleHeight,
+    freezedLength,
+    puzzleAmount,
+    showImage,
+    moveToCompilled
+  } = props;
   const screenWidth = useContext(ScreenWidthContext);
 
   const pimpWidth = getPimpWidth(puzzleAmount, screenWidth);
@@ -22,7 +29,7 @@ const PuzzleSentenceToCompile = (props) => {
         >
           {sentenceToCompile.map((w, i) =>
             <DraggablePuzzleElement
-              key={`${w.id}`}
+              key={w.id}
               variant={getPuzzleElementVariant(i, puzzleAmount)}
               puzzleWidth={puzzleWidth}
               pimpWidth={pimpWidth}

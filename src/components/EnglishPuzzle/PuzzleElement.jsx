@@ -3,12 +3,10 @@ import { PUZZLE_ELEMENT, CLASS_NAMES } from './puzzleConstants';
 import { getPuzzleLeftShift, getPuzzleTopSize, getPuzzleWidthWithVariant } from './puzzleUtils';
 import BackgroundContext from '../../contexts/puzzleBackground.context';
 
-const GREEN_COLOR = '#4cbf00';
-const RED_COLOR = '#f50000';
+const SUCCESS_COLOR = '#4cbf00';
+const UNSUCCESS_COLOR = '#f50000';
 
-const getColor = (isCorrect) => {
-  return isCorrect ? GREEN_COLOR : RED_COLOR;
-}
+const getColor = (isCorrect) => isCorrect ? SUCCESS_COLOR : UNSUCCESS_COLOR;
 
 const PuzzleElement = (props) => {
   const {

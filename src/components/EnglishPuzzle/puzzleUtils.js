@@ -21,9 +21,7 @@ export const getRandomImage = () => {
   };
 }
 
-export const getPuzzleTopSize = (rowNum, puzzleHeight) => {
-  return rowNum * puzzleHeight;
-}
+export const getPuzzleTopSize = (rowNum, puzzleHeight) => rowNum * puzzleHeight;
 
 export const getPuzzleLeftShift = (puzzleNum, puzzleWidth, pimpWidth) => {
   if (!puzzleNum) {
@@ -32,14 +30,10 @@ export const getPuzzleLeftShift = (puzzleNum, puzzleWidth, pimpWidth) => {
   return (puzzleWidth * puzzleNum) - (pimpWidth * puzzleNum);
 }
 
-export const mapSentenceToWordWithId = (sentence) => {
-  return sentence.map((word, i) => {
-    return {
-      word,
-      id: `${word}_${i}`
-    }
-  });
-};
+export const mapSentenceToWordWithId = (sentence) => sentence.map((word, i) => ({
+  word,
+  id: `${word}_${i}`
+}));
 
 export const getPuzzleElementVariant = (index, puzzlesLength) => {
   const finalIndex = (puzzlesLength - 1);
@@ -50,9 +44,7 @@ export const getPuzzleElementVariant = (index, puzzlesLength) => {
   }
 }
 
-export const removeHtml = (text) => {
-  return text.replace(/<\/?b>/g, '');
-}
+export const removeHtml = (text) => text.replace(/<\/?b>/g, '');
 
 export const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);

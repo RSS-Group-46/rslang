@@ -16,7 +16,7 @@ const PuzzleFreezedRow = (props) => {
       {
         sentence.map((w, i) =>
           <PuzzleElement
-            key={w.word}
+            key={w.id}
             variant={getPuzzleElementVariant(i, sentence.length)}
             puzzleWidth={puzzleWidth}
             pimpWidth={pimpWidth}

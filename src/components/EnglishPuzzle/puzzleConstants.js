@@ -1,7 +1,5 @@
-export const GROUP_KEY = 'group';
-export const PAGE_KEY = 'page';
+// gallery constants
 export const GALLERY_FOLDER_NAME = 'gallery';
-
 export const GALLERY = [
   { fileName: 'breigel-peizazh s drovosekami', pictureName: '"Речной пейзаж с дровосеками", Ян Брейгель Старший' },
   { fileName: 'brullov-poslednii den pompei', pictureName: '"Последний день Помпеи", Карл Брюллов' },
@@ -28,9 +26,7 @@ export const CLASS_NAMES = {
 }
 
 export const CONTENT_WIDTH = 1400;
-
 export const PIMP_WIDTH_PERCENT = 9;
-
 export const WORD_ID_DELIMETER = '_';
 
 // droppable id constants
@@ -41,7 +37,9 @@ export const PICTURE_ROW_DROPPABLE_ID = 'pictue-row-droppable';
 export const MAX_WORDS = 10;
 export const MAX_SENTENCES = 10;
 
-// level page default options
+// options constants
+export const GROUP_KEY = 'group';
+export const PAGE_KEY = 'page';
 export const START_LEVEL = 1;
 export const START_PAGE = 1;
 export const BORDER_LEVEL = 4;

@@ -3,7 +3,15 @@ import { getContentWidth } from './puzzleUtils';
 import ScreenWidthContext from '../../contexts/screenWidth.context';
 
 const PuzzleButtonToolbar = (props) => {
-  const { puzzleIsCompilled, sentenceIsCompilled, isChecked, dontKnow, checkCompilledSentence, doContinue, showResults } = props;
+  const {
+    puzzleIsCompilled,
+    sentenceIsCompilled,
+    isChecked,
+    dontKnow,
+    checkCompilledSentence,
+    doContinue,
+    showResults
+  } = props;
   const needToShowDontKnowButton = (!sentenceIsCompilled && !puzzleIsCompilled);
   const needToShowCheckButton = (sentenceIsCompilled && !puzzleIsCompilled && !isChecked);
   const needToShowContinueButton = isChecked || puzzleIsCompilled;

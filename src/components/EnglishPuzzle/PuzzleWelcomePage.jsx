@@ -12,7 +12,9 @@ const PuzzleWelcomePage = () => {
     <div style={{ backgroundImage: `url('${getRandomImage().url}')` }} className="welcome_background">
       <div className="welcome_overlay">
         <h1>ENGLISH PUZZLE</h1>
-        <div className="overlay_description">Click on words, collect phrases. Words can be drag and drop. Select tooltips in menu</div>
+        <div className="overlay_description">
+          Click on words, collect phrases. Words can be drag and drop. Select tooltips in menu
+        </div>
         <button type="button" variant="dark" className="btn btn-success" onClick={() => setGoToGame(true)}>Start</button>
       </div>
     </div>

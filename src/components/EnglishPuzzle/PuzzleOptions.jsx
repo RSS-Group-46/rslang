@@ -5,7 +5,16 @@ import { getContentWidth } from './puzzleUtils';
 import ScreenWidthContext from '../../contexts/screenWidth.context';
 
 const PuzzleOptions = (props) => {
-  const { doTranslate, doShowImage, doChangeLevel, doChangePage, doCheckUseUserWords, doVoice, prompts, options } = props;
+  const {
+    doTranslate,
+    doShowImage,
+    doChangeLevel,
+    doChangePage,
+    doCheckUseUserWords,
+    doVoice,
+    prompts,
+    options
+  } = props;
   const { hasTranslate, hasImageShown, hasVoice } = prompts;
   const { page, level, useUserWords } = options;
   return (

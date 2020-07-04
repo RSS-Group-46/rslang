@@ -6,7 +6,15 @@ import { WORD_ID_DELIMETER, PICTURE_ROW_DROPPABLE_ID } from './puzzleConstants';
 import ScreenWidthContext from '../../contexts/screenWidth.context';
 
 const PuzzleCompilledSentence = (props) => {
-  const { puzzleHeight, compilledSentence, freezedLength, needToCheck, puzzleAmount, showImage } = props;
+  const {
+    puzzleHeight,
+    compilledSentence,
+    freezedLength,
+    needToCheck,
+    puzzleAmount,
+    showImage,
+    sentenceInRightOrder
+  } = props;
   const screenWidth = useContext(ScreenWidthContext);
 
   const pimpWidth = getPimpWidth(puzzleAmount, screenWidth);
@@ -44,7 +52,7 @@ const PuzzleCompilledSentence = (props) => {
                   rowNum={freezedLength}
                   puzzleNum={puzzleNum}
                   needToCheck={needToCheck}
-                  isCorrect={puzzleNum === i}
+                  isCorrect={sentenceInRightOrder[i] === w.word}
                   index={i}
                   id={w.id}
                   showImage={showImage}
