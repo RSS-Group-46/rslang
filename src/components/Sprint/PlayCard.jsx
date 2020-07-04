@@ -1,14 +1,12 @@
 import React, { useCallback } from 'react';
 import Streak from './Streak';
 
-
 export default ({ playData, wordsLoading, handleAnswer, streak, maxStreak }) => {
   const playCurrent = useCallback(() => {
     const audio = new Audio();
     audio.src = playData.raw.audio;
     audio.play();
   }, [playData]);
-
 
   return (
     <div className="game__main card card-sprint border-primary mb-3">      

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
 
-
 export default () => {
 
   return (

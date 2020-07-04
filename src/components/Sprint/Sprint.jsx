@@ -1,18 +1,15 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { Switch, Route, useHistory, Redirect } from 'react-router-dom';
-
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import AuthContext from '../../contexts/auth.context';
-
 import Countdown from './Countdown';
 import Stats from './Stats';
 import StartPage from './StartPage';
 import PlayCard from './PlayCard';
-import { getPlayData, correctWordUrls } from './Utils';
-import { roundTime, wordsPerRound, scoreStep, streakToBonus, PLAY_PATH, ROUND_END_PATH, ROOT_PATH } from './Constants';
+import { getPlayData, correctWordUrls } from './utils';
+import { roundTime, wordsPerRound, scoreStep, streakToBonus, PLAY_PATH, ROUND_END_PATH, ROOT_PATH } from './constants';
 
 import './Sprint.scss';
-
 
 export default () => {
   const [currentScore, setScore] = useState(0);
@@ -20,7 +17,7 @@ export default () => {
   const [knownWords, setKnownWords] = useState([]);
   const [unknownWords, setUnknownWords] = useState([]);
   const [currentWord, setCurrentWord] = useState(0);
-  const [currentPage, setCurrentPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(0);
   const [currentGroup] = useState(0);
   const [roundEnd, setRoundEnd] = useState(false);
   
@@ -32,7 +29,6 @@ export default () => {
     setRoundEnd(true);
     history.push(ROUND_END_PATH);
   }, [history]);
-
 
   const resetStates = useCallback(() => {
     setScore(0);
@@ -86,13 +82,12 @@ export default () => {
     history.push(PLAY_PATH);
   }, [resetStates, history]);
 
-
   return (
     <div className="container ml-5">
       <div className="game">
         <Switch>
           <Route path={PLAY_PATH}>
-            <div className="game__title">{`${currentScore}`}</div>
+            <div className="game__title">{currentScore}</div>
             {playData && !roundEnd &&
               <PlayCard
                 wordsLoading={wordsLoading}
@@ -120,4 +115,4 @@ export default () => {
       </div>
     </div >
   )
-}
+};

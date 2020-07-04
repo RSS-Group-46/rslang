@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
-
-.known-words, unknown-words {
+.known-words,
+.unknown-words {
   display: flex;
   flex-direction: column;
 }

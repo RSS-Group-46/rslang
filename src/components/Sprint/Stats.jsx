@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useCallback } from 'react';
-
 import audioIcon from '../../assets/icons/audio.svg';
 
 import './Stats.scss';

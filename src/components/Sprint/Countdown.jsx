@@ -26,7 +26,9 @@ const Countdown = ({ duration, startImmediately, onTimeout }) => {
   }, [current, isActive]);
 
   useEffect(() => {
-    if(current <= 0) onTimeout();
+    if(current <= 0) {
+      onTimeout();
+    }
   }, [current, onTimeout])
 
   return (

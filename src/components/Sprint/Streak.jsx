@@ -1,14 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-
 import starWin from '../../assets/icons/star-win.svg';
 import star from '../../assets/icons/star.svg';
-
 
 export default ({ max, current }) => {
   const totalWinStars = Math.min(current, max);
   const totalEmptyStars = max - totalWinStars;
-
 
   return (
     <div className="game__stars border-primary">
