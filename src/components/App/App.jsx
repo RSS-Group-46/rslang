@@ -42,7 +42,7 @@ import './App.scss';
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
-  const isAuth = true;
+  const isAuth = !!token;
   return (
     <Router>
       <ErrorBoundary>
