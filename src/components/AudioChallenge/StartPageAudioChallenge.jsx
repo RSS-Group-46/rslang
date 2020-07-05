@@ -66,7 +66,7 @@ const StartPageAudioChallenge = ({ settings }) => {
     if (start && !knowWords) {
       setLoader(true);
       fetch(
-        `https://pacific-castle-12388.herokuapp.com/words?page=${round}&group=${level}`,
+        `https://afternoon-falls-25894.herokuapp.com/words?page=${round}&group=${level}`,
       )
         .then((response) => response.json())
         .then((data) => {
@@ -81,7 +81,7 @@ const StartPageAudioChallenge = ({ settings }) => {
       const filterEncoded = encodeURIComponent(JSON.stringify(filter));
       const paramsStr = `group=${group}&wordsPerPage=${settings.wordsPerDay}&filter=${filterEncoded}`;
       fetch(
-        `https://pacific-castle-12388.herokuapp.com/users/${userId}/aggregatedWords?${paramsStr}`,
+        `https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?${paramsStr}`,
         {
           method: 'GET',
           headers: {
