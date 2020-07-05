@@ -15,7 +15,6 @@ export const pushUserStatistic = (statistic, userData) => {
 
   const normalizedSettings = prepareStatisticForServer(statistic);
   const { userId, token } = userData;
-  console.log('body', normalizedSettings)
   fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
     {
       method: 'PUT',

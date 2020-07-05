@@ -1,115 +1,107 @@
 import React, { useEffect } from 'react';
-
+import { useSelector } from 'react-redux';
+import { selectStatistic, selectLearnedWords } from '../../../redux/selectors/statistic.selectors';
 import './Graph.scss';
 
-const arrWordCount = [7,10,5,12,10,10,5,3,8,7,6,12]
-const allWordCount = arrWordCount.reduce(function(item, current) {
-    return item + current
-  });
- // const  horizontalGridLines = 5;
-
- /*
-const minUnitGraph = () =>{
-   let minNumberhorizontalGrid = allWordCount / horizontalGridLines
-   let i=0;
-   while (minNumberhorizontalGrid > 10) { 
-    minNumberhorizontalGrid /= 10;
-    i+=1;
-   }
-   return Math.round(minNumberhorizontalGrid) * 10 ** i;
-} */
-
-
-
-const getDadaForExperement = () =>{
-    const localsTime = 'ru'
-    const optionsTime = {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric"
-      };
-
-    const arrData = [];
-    for (let i=0;i<arrWordCount.length;i +=1){
-        let newDate = new Date()
-        newDate.setDate(newDate.getDate() - i);
-        newDate = newDate.toLocaleString(localsTime, optionsTime);
-        arrData[i] = newDate;
-    }
-    return arrData.reverse()
+function wordsOfAnyTextLog (x) {
+    return -59.9864 + 18.0353*Math.log(x);
 }
 
-function wordsOfAnyText (x) {
-    // y = -3E-19x6 + 5E-15x5 - 3E-11x4 + 1E-07x3 - 0,0002x2 + 0,1699x
-    return -3*(10**(-19))*x**6 + 5*(10**(-15))*x**5 - 3*(10**(-11))*x**4 + (10**(-7))*x**3  - 0.0002*x**2 + 0.1699*x;
+function wordsOfAnyTextLine (x) {
+    return 17/70*x;
 }
 
+const procentWordsOfAnyText = (x) => {
+    if (x>70){return Math.round(wordsOfAnyTextLog (x))}
+    if (x<=70){return Math.round(wordsOfAnyTextLine (x))}
+    return 0
+}
 
 const heightGraph = 400;
-const widthGraph = 700;
+const widthGraph = 800;
 
 const Graph = () => {
     const canvasRef = React.useRef(null);
+    const learnedWordsNumber = useSelector(selectLearnedWords);
+    const statistic = useSelector(selectStatistic);
 
-        function drawGraph () {
-            const canvas = canvasRef.current;
-            const context = canvas.getContext('2d');  
+    function drawGraph () {
+        const canvas = canvasRef.current;
+        const context = canvas.getContext('2d');
 
-                context.beginPath();
-                context.strokeStyle = 'black';
-                context.moveTo(0, 0);
-                context.lineTo(widthGraph, 0);
-                context.lineTo(widthGraph, heightGraph);
-                context.lineTo(0, heightGraph);
-                context.lineTo(0, 0);
-               
-                for (let i=0; i<=100; i += 20){
-                   context.fillText(i + " %", 3, heightGraph-3- i/100*heightGraph*0.9-20); 
-                   context.moveTo(0, heightGraph - i/100*heightGraph*0.9-20);
-                   context.lineTo(widthGraph, heightGraph - i/100*heightGraph*0.9-20);
-                }
+        context.clearRect(0, 0, widthGraph, heightGraph);
 
-                for (let i=0; i<=5000; i += 1000){
-                    context.fillText(i, 35 + i/5000*widthGraph*0.9 , heightGraph-5); 
-                    context.moveTo(35 + i/5000*widthGraph*0.9, heightGraph-20);
-                    context.lineTo(35 + i/5000*widthGraph*0.9, 0);
-                 }
-                context.stroke();
+        context.beginPath();
+        context.strokeStyle = 'black';
+        context.moveTo(0, 0);
+        context.lineTo(widthGraph, 0);
+        context.lineTo(widthGraph, heightGraph);
+        context.lineTo(0, heightGraph);
+        context.lineTo(0, 0);
+        context.stroke();
 
-                context.beginPath();
-                context.moveTo(0 + 35, heightGraph-20);
-                for (let i=0; i<=5000; i += 1) {
-                   context.lineTo(35 + i/5000*widthGraph*0.9, heightGraph-20 - wordsOfAnyText (i)/100*heightGraph*0.9);
-                }
-                context.stroke();
-
-                context.beginPath();
-                let wordCount = 0;
-                for (let i=0;i<arrWordCount.length;i +=1){
-                    wordCount += arrWordCount[i];
-                    context.strokeStyle = 'blue';
-                    context.lineWidth=5;
-                    context.moveTo(i*1/arrWordCount.length*widthGraph+30,heightGraph);
-                    context.lineTo(i*1/arrWordCount.length*widthGraph+30, heightGraph - wordCount/allWordCount*heightGraph)
-                    context.fillText(getDadaForExperement()[i],
-                     i*1/arrWordCount.length*widthGraph+5, heightGraph+10);
-                
-                }
-
-                context.stroke();
-                context.onmouseover = function () {
-                    context.color = 'red'
-                }
+        context.beginPath();
+        for (let i=0; i<=100; i += 20){
+            context.fillText(i + " %", 3, heightGraph-3- i/100*heightGraph*0.9-20); 
+            context.moveTo(0, heightGraph - i/100*heightGraph*0.9-20);
+            context.lineTo(widthGraph, heightGraph - i/100*heightGraph*0.9-20);
         }
+
+        for (let i=0; i<=5000; i += 1000){
+            context.fillText(i, 35 + i/5000*widthGraph*0.9 , heightGraph-5); 
+            context.moveTo(35 + i/5000*widthGraph*0.9, heightGraph-20);
+            context.lineTo(35 + i/5000*widthGraph*0.9, 0);
+        }
+        context.stroke();
+
+        context.beginPath();
+        let i = 0;
+        context.strokeStyle = 'blue';
+        context.moveTo(0 + 35, heightGraph-20);
+        for (i=0; i<=5000; i += 1) {
+            if (i>70){
+                context.lineTo(35 + i/5000*widthGraph*0.9, heightGraph-20 - wordsOfAnyTextLog (i)/100*heightGraph*0.9);  
+            }
+            if (i<=70){
+                context.lineTo(35 + i/5000*widthGraph*0.9, heightGraph-20 - wordsOfAnyTextLine (i)/100*heightGraph*0.9);
+            }
+        }
+        context.lineTo(35 + i/5000*widthGraph*0.9,heightGraph-20);
+        context.lineTo(35 ,heightGraph-20);
+        context.fillStyle = 'rgba(0, 0, 200, 0.1)';
+        context.fill()
+        context.stroke();
+
+        context.beginPath();
+        let j = 0;
+        context.strokeStyle = 'blue';
+        context.moveTo(0 + 35, heightGraph-20);
+        for (j=0; j<=learnedWordsNumber; j += 1) {
+            if (j>70){
+                context.lineTo(35 + j/5000*widthGraph*0.9, heightGraph-20 - wordsOfAnyTextLog (j)/100*heightGraph*0.9);  
+            }
+            if (i<=70){
+                context.lineTo(35 + j/5000*widthGraph*0.9, heightGraph-20 - wordsOfAnyTextLine (j)/100*heightGraph*0.9);
+            }
+        }
+        context.lineTo(35 + j/5000*widthGraph*0.9,heightGraph-20);
+        context.lineTo(35 ,heightGraph-20);
+        context.fillStyle = 'rgba(3, 15, 200, 1)';
+        context.fill()
+        context.stroke();
+    }
     
     useEffect(() => {
         drawGraph ()
-    },[]);
+    },[statistic, learnedWordsNumber]);
     
     return (
-            <>
-                <canvas ref={canvasRef} width={widthGraph} height={heightGraph} />
-            </>
+        <>
+            <p className="statistic__text">
+                Теперь Вы должны понимать {procentWordsOfAnyText(learnedWordsNumber)} % слов любого текста.
+            </p>
+            <canvas ref={canvasRef} width={widthGraph} height={heightGraph} />
+        </>
     );
   };
   

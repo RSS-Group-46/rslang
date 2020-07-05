@@ -14,7 +14,7 @@ import './Statistic.scss';
 import Graph from './Components/Graph';
 
 /* ************ [Эти данные приходят после выполнения дневной нормы] ************* */
-const learnedWords = 30;
+const learnedWords = 1739;
 const passedCards = 12;
 const procentCorrectAnswers = 10;
 const newWords = 4;
@@ -35,14 +35,14 @@ userData = JSON.parse(userData);
 const getIsStatisticChanged = (settings) => JSON.stringify(settings) !== JSON.stringify(STATISTIC_INITIAL_STATE);
 
 const Statistic = () => {
-  const passedCardsNumber = useSelector(selectPassedCards);
-  const procentCorrectAnswersNumber = useSelector(selectProcentCorrectAnswers);
-  const newWordsNumber = useSelector(selectNewWords);
-  const longSeriesCorrectAnswersNumber = useSelector(selectLongSeriesCorrectAnswers);
-  const learnedWordsNumber = useSelector(selectLearnedWords);
-  let statistic = useSelector(selectStatistic);
-  
-  const dispatch = useDispatch();
+    const passedCardsNumber = useSelector(selectPassedCards);
+    const procentCorrectAnswersNumber = useSelector(selectProcentCorrectAnswers);
+    const newWordsNumber = useSelector(selectNewWords);
+    const longSeriesCorrectAnswersNumber = useSelector(selectLongSeriesCorrectAnswers);
+    const learnedWordsNumber = useSelector(selectLearnedWords);
+    let statistic = useSelector(selectStatistic);
+    
+    const dispatch = useDispatch();
 /* ******** [ кнопка вспомогательная 
   выполнения дневной нормы должен сработать экшен saveStatistic и перезаписать статистику
 так же надо предварительно пересчитать общее цисло выученых слов learnedWords!!! ] ******** */
@@ -95,71 +95,70 @@ const Statistic = () => {
         <h3 className="statistic__title">Statistic</h3>
         
         <section className={shortStatistic}>
-                    <p className="statistic__text">
-                        Краткосрочная статистика. Указывается количество пройденных карточек со словами, процент
-                        правильных ответов, количество новых слов, самая длинная серия
-                        правильных ответов
-                    </p>
-                    <div className="statistic__button">
-                      <button 
-                        type="button" 
-                        className="btn btn-info" 
-                        onClick={() => saveStatisticClick ()}
-                        >Сохранить статистику</button>
-                    </div>
+            <p className="statistic__text">
+                Краткосрочная статистика. Указывается количество пройденных карточек со словами, процент
+                правильных ответов, количество новых слов, самая длинная серия
+                правильных ответов
+            </p>
+            <div className="statistic__button">
+                <button 
+                    type="button" 
+                    className="btn btn-info" 
+                    onClick={() => saveStatisticClick ()}
+                >Сохранить статистику</button>
+            </div>
 
-
-                    <ul className="list-group">
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                        Количество пройденных карточек со словами
-                        <span className="badge badge-primary badge-pill">{passedCardsNumber}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                        Процент правильных ответов
-                        <span className="badge badge-primary badge-pill">{procentCorrectAnswersNumber}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                        Количество новых слов
-                        <span className="badge badge-primary badge-pill">{newWordsNumber}</span>
-                    </li>
-                    <li className="list-group-item d-flex justify-content-between align-items-center">
-                        Самая длинная серия правильных ответов
-                        <span className="badge badge-primary badge-pill">{longSeriesCorrectAnswersNumber}</span>
-                    </li>
-                </ul>
-                <div className="statistic__button">
-                    <button 
-                        type="button" 
-                        className="btn btn-info" 
-                        onClick={() => showLongStatistic ()}
-                        >Долгосрочная статистика</button>
-                        <button
-                        type="button" 
-                        className="btn btn-danger" 
-                        onClick={() => deleteStatisticClick ()}
-                        >Удалить статистику</button>
-                </div>
+            <ul className="list-group">
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                    Количество пройденных карточек со словами
+                    <span className="badge badge-primary badge-pill">{passedCardsNumber}</span>
+                </li>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                    Процент правильных ответов
+                    <span className="badge badge-primary badge-pill">{procentCorrectAnswersNumber}</span>
+                </li>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                    Количество новых слов
+                    <span className="badge badge-primary badge-pill">{newWordsNumber}</span>
+                </li>
+                <li className="list-group-item d-flex justify-content-between align-items-center">
+                    Самая длинная серия правильных ответов
+                    <span className="badge badge-primary badge-pill">{longSeriesCorrectAnswersNumber}</span>
+                </li>
+            </ul>
+            <div className="statistic__button">
+                <button 
+                    type="button" 
+                    className="btn btn-info" 
+                    onClick={() => showLongStatistic ()}
+                >Долгосрочная статистика</button>
+                <button
+                    type="button" 
+                    className="btn btn-danger" 
+                    onClick={() => deleteStatisticClick ()}
+                >Удалить статистику</button>
+            </div>
         </section>
         <section className={longStatistic}>
-                <p className="statistic__text">
-                    Долгосрочная статистика - график, на котором отображается общее количество изученных 
-                    слов за весь период.
-                </p>
-                <p className="statistic__text">
-                    Всего изучено слов {learnedWordsNumber}.
-                </p>
-                <Graph />
-                <div className="statistic__button">
-                    <button type="button" className="btn btn-info" 
+            <p className="statistic__text">
+                Долгосрочная статистика - график, на котором отображается общее количество изученных 
+                слов за весь период.
+            </p>
+            <p className="statistic__text">
+                  Всего изучено слов {learnedWordsNumber}.
+            </p>
+            <Graph />
+            <div className="statistic__button">
+                <button type="button" 
+                    className="btn btn-info" 
                     onClick={() => showShortStatistic ()}
-                    >Краткосрочная статистика</button>
-                    <button
-                        type="button" 
-                        className="btn btn-danger" 
-                        onClick={() => deleteStatisticClick ()}
-                        >Удалить статистику</button>
-                </div>
-
+                >Краткосрочная статистика</button>
+                <button
+                    type="button" 
+                    className="btn btn-danger" 
+                    onClick={() => deleteStatisticClick ()}
+                >Удалить статистику</button>
+            </div>
         </section>
       </div>
     );
