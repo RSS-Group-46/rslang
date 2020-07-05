@@ -103,7 +103,6 @@ const StartPageAudioChallenge = ({ settings }) => {
   }, [start, knowWords]);
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className="start-page__audio-challenge">
       {!words && !startTest ? (
         <div className="wrapper__audio-challenge">
