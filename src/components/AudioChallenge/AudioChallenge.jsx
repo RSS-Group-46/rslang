@@ -92,7 +92,6 @@ const AudioChallenge = ({
       setCorrectWord(wordId);
       handleButtonDontKnow();
       setArrCorrectAnswers([...arrCorrectAnswers, words[numberWord]]);
-
     } else {
       setInCorrectWord(e.target.id);
       setCorrectWord(wordId);
@@ -162,7 +161,6 @@ const AudioChallenge = ({
       setLoader(false);
     }
   }, [words[numberWord]]);
-
 
   return (
     <>
