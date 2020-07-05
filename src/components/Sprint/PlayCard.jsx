@@ -9,13 +9,13 @@ export default ({ playData, wordsLoading, handleAnswer, streak, maxStreak }) => 
   }, [playData]);
 
   return (
-    <div className="game__main card card-sprint border-primary mb-3">      
+    <div className="game__main card card-sprint border-primary mb-3">
       <div className="card-body d-flex flex-column justify-content-between">
         {playData.raw &&
           <div className="card-title d-flex justify-content-between align-self-center">
-            <h4>{playData.word}</h4>            
+            <h4>{playData.word}</h4>
           </div>}
-          <Streak current={streak} max={maxStreak} />
+        <Streak current={streak} max={maxStreak} />
         <h4 className="card-subtitle text-muted align-self-center">{playData.wordTranslate}</h4>
       </div>
       <div className="card-footer">
@@ -24,10 +24,11 @@ export default ({ playData, wordsLoading, handleAnswer, streak, maxStreak }) => 
           <button className="btn btn-info" type="button" onClick={playCurrent}>Play</button>
           <button className="btn btn-success" type="button" onClick={() => handleAnswer(true)}>Верно</button>
         </div>
-      </div>    
-      {wordsLoading && <div className="card-img-overlay loader p-0">
-        <h1>loading</h1>
-      </div>}
+      </div>
+      {wordsLoading &&
+        <div className="card-img-overlay loader p-0">
+          <h1>loading</h1>
+        </div>}
     </div>
   );
 };
