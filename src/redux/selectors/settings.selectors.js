@@ -7,3 +7,5 @@ export const selectShowExample = (state) => state.settings.showExample;
 export const selectShowAnswerButton = (state) => state.settings.showAnswerButton;
 export const selectShowDeleteButton = (state) => state.settings.showDeleteButton;
 export const selectShowMoveToComplicatedButton = (state) => state.settings.showMoveToComplicatedButton;
+export const selectVolume = (state) => state.settings.volume;
+export const selectDifficulty = (state) => state.settings.difficulty;
