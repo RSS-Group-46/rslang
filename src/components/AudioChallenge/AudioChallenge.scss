@@ -218,7 +218,7 @@ header {
   z-index: 3;
   width: 90%;
   flex-wrap: wrap;
-  .lds-ellipsis{
+  .lds-ellipsis {
     width: 90%;
   }
 }
@@ -307,6 +307,91 @@ header {
   width: 100%;
   margin: 10px 0;
 }
+.wrapper__test {
+  min-height: 100vh;
+  padding-left: 80px;
+  z-index: 2;
+  background: linear-gradient(
+    45deg,
+    rgba(103, 0, 31, 0.8),
+    rgba(34, 101, 163, 0.5)
+  );
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 5px;
+    li {
+      width: 25%;
+      label {
+        color: $white;
+      }
+      input {
+        margin-right: 5px;
+        &::before {
+          border-color: $teal;
+        }
+        &:checked:before {
+          background-color: $green;
+        }
+      }
+    }
+    p {
+      margin: 10px;
+      width: 100%;
+      text-align: left;
+    }
+  }
+}
+.result__test {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  top: 0;
+  left: 0;
+  button {
+    width: 50px;
+    height: 50px;
+    margin: 0;
+  }
+  .alert-secondary {
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    p{
+      color: $black;
+      margin-top: 5px;
+    }
+  }
+}
+.wrapper__btn-result{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  button{
+    margin: 5px;
+  }
+}
+.error-result{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 191px;
+  height: 50px;
+  background-color: rgba(241, 241, 241, 0.76);
+}
 @media screen and (max-width: 1280px) {
   .list__word .init_word,
   .list__word .unknown_word,
@@ -362,6 +447,18 @@ header {
   }
   .start-page__audio-challenge button {
     width: 191px;
+  }
+  .wrapper__test {
+    ul{
+      flex-direction: column;
+      p{
+        width: 90%;
+      }
+      li{
+        width: 90%;
+      }
+    }
+
   }
 }
 @media screen and (max-width: 700px) {

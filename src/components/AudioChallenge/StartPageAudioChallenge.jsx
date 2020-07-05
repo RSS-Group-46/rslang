@@ -1,6 +1,8 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import AudioChallenge from './AudioChallenge';
+import TestEnglish from './TestEnglish';
 import Loader from '../Loader/Loader';
 import './AudioChallenge.scss';
 import { ONLY_USER_WORDS } from '../../constants/apiConstants';
@@ -10,6 +12,7 @@ const StartPageAudioChallenge = ({ settings }) => {
   const [start, setStart] = useState(false);
   const [loader, setLoader] = useState(false);
   const [words, setWords] = useState(null);
+  const [startTest, setStartTest] = useState(false);
   const [level, setLevel] = useState(
     localStorage.getItem('levelAudioCall')
       ? JSON.parse(localStorage.getItem('levelAudioCall'))
@@ -30,6 +33,9 @@ const StartPageAudioChallenge = ({ settings }) => {
 
   const handleStartBtn = () => {
     setStart(true);
+  };
+  const handleStartTest = () => {
+    setStartTest(true);
   };
   const handleLevel = (e) => {
     if (level !== +e.target.value - 1) {
@@ -94,15 +100,17 @@ const StartPageAudioChallenge = ({ settings }) => {
           }
         });
     }
-  }, [start, knowWords])
+  }, [start, knowWords]);
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div className="start-page__audio-challenge">
-      {!words ? (
-        <div className='wrapper__audio-challenge'>
+      {!words && !startTest ? (
+        <div className="wrapper__audio-challenge">
           <h2>AUDIOCALL</h2>
-          <p>Choose the correct answer.</p>
+          <p>
+            You can start the game or take a test to determine your English
+            level
+          </p>
           <div className="wrapper__btn-next">
             <button
               rol="tab"
@@ -110,11 +118,19 @@ const StartPageAudioChallenge = ({ settings }) => {
               className="badge badge-success"
               onClick={handleStartBtn}
             >
-              Start
+              Start Game
+            </button>
+            <button
+              rol="tab"
+              type="button"
+              className="badge badge-success"
+              onClick={handleStartTest}
+            >
+              Start Test
             </button>
           </div>
         </div>
-      ) : (
+      ) : words && !startTest ? (
         <AudioChallenge
           words={words}
           offLoader={offLoader}
@@ -130,6 +146,8 @@ const StartPageAudioChallenge = ({ settings }) => {
           token={token}
           userId={userId}
         />
+      ) : (
+        <TestEnglish />
       )}
       {loader && <Loader />}
     </div>
