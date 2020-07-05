@@ -26,7 +26,7 @@ header {
   }
   h2,
   p {
-    z-index: 2;
+    z-index: 0;
     color: white;
     text-align: center;
   }
@@ -48,14 +48,14 @@ header {
     }
   }
   .fa-volume-up {
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     color: $gray-600;
     background-color: rgba(241, 241, 241, 0.5);
     padding: 10px;
     border-radius: 50%;
     transition: all 0.5s;
-    z-index: 2;
+    z-index: 0;
     &:hover {
       border: 1px solid;
       background-color: rgba(182, 179, 179, 0.7);
@@ -78,7 +78,7 @@ header {
   align-items: center;
   padding: 20px 10px;
   color: $list-group-active-color;
-  z-index: 2;
+  z-index: 0;
   .init_word {
     font-size: 2rem;
     padding: 10px 10px;
@@ -119,14 +119,14 @@ header {
 }
 .picture__wrapper {
   width: 100%;
-  height: 120px;
-  margin: 30px 0;
-  z-index: 2;
+  height: 100px;
+  margin: 10px 0;
+  z-index: 0;
   display: flex;
   justify-content: center;
 }
 .picture {
-  width: 120px;
+  width: 100px;
   height: 100%;
   border-radius: 50%;
   border: 1px solid;
@@ -214,8 +214,8 @@ header {
 }
 .game-mode {
   display: flex;
-  margin: 20px 0 20px 80px;
-  z-index: 3;
+  margin: 5px 0 20px 80px;
+  z-index: 1;
   width: 90%;
   flex-wrap: wrap;
   .lds-ellipsis {
@@ -244,9 +244,13 @@ header {
 }
 .wrapper__btn-next {
   width: 100%;
-  z-index: 2;
+  z-index: 0;
   display: flex;
   justify-content: center;
+  margin-bottom: 65px;
+  button{
+    margin: 0;
+  }
 }
 .statistic__detaile {
   position: absolute;
@@ -260,6 +264,7 @@ header {
   align-items: flex-start;
   padding: 25px 5px;
   flex-wrap: wrap;
+  margin-bottom: 65px;
   div {
     width: 100%;
     margin-top: 20px;
