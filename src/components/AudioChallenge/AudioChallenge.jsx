@@ -8,6 +8,7 @@ import ButtonLevel from './ButtonLevel';
 import ButtonRound from './ButtonRound';
 import StatisticDetaile from './StatisticDetaile';
 import { API_SIMILAR_WORDS } from '../../constants/audioChallenge';
+import { EVENTTYPES } from '../../constants/actionTypeConstants';
 import Picture from './picture';
 import ProgressRound from './ProgressRound';
 import '@fortawesome/fontawesome-free/js/all';
@@ -36,7 +37,6 @@ const AudioChallenge = ({
   const [arrCorrectAnswers, setArrCorrectAnswers] = useState([]);
   const [arrErrorAnswers, setArrErrorAnswer] = useState([]);
   const [showStatisticDetaile, setShowStatisticDetaile] = useState(false);
-  const eventType = 'Enter';
 
   const partsSpeech = {
     n: 'noun',
@@ -62,7 +62,7 @@ const AudioChallenge = ({
     if (numberWord === words.length - 1) {
       setShowStatistic(true);
     }
-    if (dontKnow || (dontKnow && e.key === eventType)) {
+    if (dontKnow || (dontKnow && e.key === EVENTTYPES)) {
       setDontKnow(false);
       changeNumberWord();
       setLoader(true);
@@ -89,7 +89,7 @@ const AudioChallenge = ({
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === eventType && e.target.id === wordId) {
+    if (e.key === EVENTTYPES && e.target.id === wordId) {
       setCorrectWord(wordId);
       handleButtonDontKnow();
       setArrCorrectAnswers([...arrCorrectAnswers, words[numberWord]]);
