@@ -23,6 +23,7 @@ import {
   TEAM_URL,
   AUTH_URL,
   ERROR,
+  OURGAME_URL,
 } from '../../constants/urlConstants';
 import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
@@ -35,6 +36,7 @@ import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
+import StartPageOurGame from '../OurGame/StartPageOurGame';
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 
 import './App.scss';
@@ -86,6 +88,9 @@ const App = () => {
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPRINT_URL}>
                   <div>sprint</div>
+                </Route>
+                <Route exact path={MINI_GAMES_URL + OURGAME_URL}>
+                  <StartPageOurGame />
                 </Route>
                 <Route exact path={PROMO_URL}>
                   <div>promo</div>
