@@ -35,6 +35,8 @@ import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
+import MainGame from '../MainGame/MainGame';
+
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 
 import './App.scss';
@@ -53,6 +55,7 @@ const App = () => {
               <Switch>
                 <Route exact path={BASE_URL}>
                   <div>Hello Group 46 !</div>
+                  <MainGame />
                 </Route>
                 <Route exact path={STATISTICS_URL}>
                   <div>statistics</div>

@@ -1,0 +1,51 @@
+@import '../../styles/variables';
+
+.none {
+  display: none;
+}
+
+.container__wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.maingame {
+    padding: 10px;
+    
+  
+    &__pasteWord {
+      margin: 5px;
+      padding: 2px;
+      background-color: $gray-300;
+      border-radius: 3px;
+    }
+
+    &__text {
+        font-size: 16px;
+      }
+
+      &__sentence {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+
+      &__description {
+        font-size: 36px;
+        margin-left: 200px;
+      }
+
+      &__indicator {
+        font-size: 24px;
+        margin: 5px;
+      }
+
+      
+      &__line{
+        color: $gray-300;
+      }
+
+    &__button {
+        margin: 15px auto;
+    }
+
+}
