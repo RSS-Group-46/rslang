@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import React from 'react';
 
+const numberLevels = 6;
 const ButtonLevel = ({ handleLevel, level }) => {
   const arrLevel = [];
-  for (let i = 1; i < 7; i += 1) {
+  for (let i = 1; i <= numberLevels; i += 1) {
     arrLevel.push(i);
   }
   return (

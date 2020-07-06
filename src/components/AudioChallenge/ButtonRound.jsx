@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-onchange */ 
 import React from 'react';
 
+const numberRounds = 30;
 const ButtonRound = ({ handleRound, round }) => {
   const arrRound = [];
-  for (let i = 1; i < 31; i += 1) {
+  for (let i = 1; i <= numberRounds; i += 1) {
     arrRound.push(i);
   }
   return (
