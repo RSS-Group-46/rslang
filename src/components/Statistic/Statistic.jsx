@@ -2,7 +2,7 @@ import React, { useState, useEffect  } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { saveStatistic, loadStatistic, deleteStatistic } from '../../redux/actions/statistic.actions';
-import { selectStatistic, selectPassedCards, selectProcentCorrectAnswers, selectNewWords, selectLongSeriesCorrectAnswers, selectLearnedWords } from '../../redux/selectors/statistic.selectors';
+import { selectStatistic, selectPassedCards, selectProcentCorrectAnswers, selectNewWords, selectLongSeriesCorrectAnswers } from '../../redux/selectors/statistic.selectors';
 
 import { USER_DATA_STORAGE_NAME } from '../../constants/commonConstants';
 import { pushUserStatistic, pullUserStatistic, prepareStatisticForApp } from '../../services/statistic.service';
@@ -39,7 +39,6 @@ const Statistic = () => {
     const procentCorrectAnswersNumber = useSelector(selectProcentCorrectAnswers);
     const newWordsNumber = useSelector(selectNewWords);
     const longSeriesCorrectAnswersNumber = useSelector(selectLongSeriesCorrectAnswers);
-    const learnedWordsNumber = useSelector(selectLearnedWords);
     let statistic = useSelector(selectStatistic);
     
     const dispatch = useDispatch();
@@ -92,14 +91,8 @@ const Statistic = () => {
 
     return (
       <div className="statistic  container">
-        <h3 className="statistic__title">Statistic</h3>
-        
         <section className={shortStatistic}>
-            <p className="statistic__text">
-                Краткосрочная статистика. Указывается количество пройденных карточек со словами, процент
-                правильных ответов, количество новых слов, самая длинная серия
-                правильных ответов
-            </p>
+            <h5 className="statistic__title">Statistic</h5>
             <div className="statistic__button">
                 <button 
                     type="button" 
@@ -140,13 +133,6 @@ const Statistic = () => {
             </div>
         </section>
         <section className={longStatistic}>
-            <p className="statistic__text">
-                Долгосрочная статистика - график, на котором отображается общее количество изученных 
-                слов за весь период.
-            </p>
-            <p className="statistic__text">
-                  Всего изучено слов {learnedWordsNumber}.
-            </p>
             <Graph />
             <div className="statistic__button">
                 <button type="button" 

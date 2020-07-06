@@ -17,7 +17,7 @@ const procentWordsOfAnyText = (x) => {
     return 0
 }
 
-const heightGraph = 400;
+const heightGraph = 430;
 const widthGraph = 800;
 
 const Graph = () => {
@@ -98,7 +98,7 @@ const Graph = () => {
     return (
         <>
             <p className="statistic__text">
-                Теперь Вы должны понимать {procentWordsOfAnyText(learnedWordsNumber)} % слов любого текста.
+                Всего изучено слов {learnedWordsNumber}. Теперь Вы должны понимать {procentWordsOfAnyText(learnedWordsNumber)} % слов любого текста.
             </p>
             <canvas ref={canvasRef} width={widthGraph} height={heightGraph} />
         </>
