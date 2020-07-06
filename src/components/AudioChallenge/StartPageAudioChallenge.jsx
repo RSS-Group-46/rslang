@@ -5,7 +5,7 @@ import AudioChallenge from './AudioChallenge';
 import TestEnglish from './TestEnglish';
 import Loader from '../Loader/Loader';
 import './AudioChallenge.scss';
-import { ONLY_USER_WORDS } from '../../constants/apiConstants';
+import { ONLY_USER_WORDS, METHODS } from '../../constants/apiConstants';
 import useAuth from '../../hooks/auth.hook';
 
 const StartPageAudioChallenge = ({ settings }) => {
@@ -13,15 +13,17 @@ const StartPageAudioChallenge = ({ settings }) => {
   const [loader, setLoader] = useState(false);
   const [words, setWords] = useState(null);
   const [startTest, setStartTest] = useState(false);
+  const roundAudioCall = 'roundAudioCall';
+  const levelAudioCall = 'levelAudioCall';
   const [level, setLevel] = useState(
-    localStorage.getItem('levelAudioCall')
-      ? JSON.parse(localStorage.getItem('levelAudioCall'))
-      : '0',
+    localStorage.getItem(levelAudioCall)
+      ? JSON.parse(localStorage.getItem(levelAudioCall))
+      : 0,
   );
   const [round, setRound] = useState(
-    localStorage.getItem('roundAudioCall')
-      ? JSON.parse(localStorage.getItem('roundAudioCall'))
-      : '0',
+    localStorage.getItem(roundAudioCall)
+      ? JSON.parse(localStorage.getItem(roundAudioCall))
+      : 0,
   );
   const [knowWords, setKnowWords] = useState(true);
   const [numberWord, setNumberWord] = useState(0);
@@ -40,20 +42,19 @@ const StartPageAudioChallenge = ({ settings }) => {
   const handleLevel = (e) => {
     if (level !== +e.target.value - 1) {
       setLevel(+e.target.value - 1);
-      localStorage.setItem('levelAudioCall', +e.target.value - 1);
+      localStorage.setItem(levelAudioCall, +e.target.value - 1);
     }
     setKnowWords(false);
   };
   const handleRound = (e) => {
     if (round !== +e.target.value - 1) {
       setRound(+e.target.value - 1);
-      localStorage.setItem('roundAudioCall', +e.target.value - 1);
+      localStorage.setItem(roundAudioCall, +e.target.value - 1);
     }
   };
   const handleOnlyLearnedWords = () => {
     setKnowWords(true);
     setNumberWord(0);
-    // setLoader(true);
   };
 
   const changeNumberWord = () => {
@@ -83,7 +84,7 @@ const StartPageAudioChallenge = ({ settings }) => {
       fetch(
         `https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?${paramsStr}`,
         {
-          method: 'GET',
+          method: METHODS.GET,
           headers: {
             Authorization: `Bearer ${token}`,
             Accept: 'application/json',

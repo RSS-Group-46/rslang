@@ -55,13 +55,13 @@ const StatisticDetaile = ({
             </ul>
 
             {statistic &&
-              statistic.map((item) => {
+              statistic.map(({ date, percentCorrectWords, level, round }) => {
                 return (
-                  <ul key={item.date}>
-                    <li key={item.date}>{item.date}</li>
-                    <li key={item.date}>{item.percentCorrectWords}</li>
-                    <li key={item.date}>{item.level}</li>
-                    <li key={item.date}>{item.round}</li>
+                  <ul key={date}>
+                    <li key={date}>{date}</li>
+                    <li key={date}>{percentCorrectWords}</li>
+                    <li key={date}>{level}</li>
+                    <li key={date}>{round}</li>
                   </ul>
                 );
               })}

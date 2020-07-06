@@ -36,6 +36,7 @@ const AudioChallenge = ({
   const [arrCorrectAnswers, setArrCorrectAnswers] = useState([]);
   const [arrErrorAnswers, setArrErrorAnswer] = useState([]);
   const [showStatisticDetaile, setShowStatisticDetaile] = useState(false);
+  const eventType = 'Enter';
 
   const partsSpeech = {
     n: 'noun',
@@ -61,7 +62,7 @@ const AudioChallenge = ({
     if (numberWord === words.length - 1) {
       setShowStatistic(true);
     }
-    if (dontKnow || (dontKnow && e.key === 'Enter')) {
+    if (dontKnow || (dontKnow && e.key === eventType)) {
       setDontKnow(false);
       changeNumberWord();
       setLoader(true);
@@ -88,7 +89,7 @@ const AudioChallenge = ({
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && e.target.id === wordId) {
+    if (e.key === eventType && e.target.id === wordId) {
       setCorrectWord(wordId);
       handleButtonDontKnow();
       setArrCorrectAnswers([...arrCorrectAnswers, words[numberWord]]);
@@ -101,7 +102,6 @@ const AudioChallenge = ({
     }
   };
 
-  // Audio
   const handleAudio = () => {
     const audio = new Audio(
       `https://raw.githubusercontent.com/irinainina/rslang-data/master/${words[numberWord].audio}`,
@@ -112,7 +112,6 @@ const AudioChallenge = ({
   const handleStatisticDetaile = () =>
     setShowStatisticDetaile(!showStatisticDetaile);
 
-  // Get part speech
   useEffect(() => {
     if (words[numberWord]) {
       fetch(
@@ -178,7 +177,7 @@ const AudioChallenge = ({
         />
       )}
       <div className="game-mode">
-      <ProgressRound current={numberWord} size={words.length} />
+        <ProgressRound current={numberWord} size={words.length} />
         <OnlyLearnedWords handleOnlyLearnedWords={handleOnlyLearnedWords} />
         <ButtonLevel handleLevel={handleLevel} level={level} />
         <ButtonRound handleRound={handleRound} round={round} />
@@ -204,7 +203,6 @@ const AudioChallenge = ({
       <div className="list__word">
         {listSimilarWords &&
           listSimilarWords.map((element, index) => (
-            // eslint-disable-next-line react/void-dom-elements-no-children
             <li
               type="button"
               role="tab"
@@ -246,7 +244,9 @@ const AudioChallenge = ({
     </>
   );
 };
+
 const mapStateToProps = ({ settings }) => ({
   settings,
 });
+
 export default connect(mapStateToProps)(AudioChallenge);

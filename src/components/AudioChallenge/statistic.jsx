@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/js/all';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
+import { METHODS } from '../../constants/apiConstants';
 
 const StatisticAudioChallenge = ({
   arrCorrectAnswers,
@@ -23,7 +24,6 @@ const StatisticAudioChallenge = ({
     audio.play();
   };
 
-  // Get statistic
   useEffect(() => {
     fetch(
       `https://pacific-castle-12388.herokuapp.com/users/${userId}/statistics`,
@@ -40,14 +40,13 @@ const StatisticAudioChallenge = ({
       .then((data) => setStatistic(data));
   }, []);
 
-  // Add statistic
   useEffect(() => {
     if (statistic) {
       const date = new Date()
       fetch(
         `https://pacific-castle-12388.herokuapp.com/users/${userId}/statistics`,
         {
-          method: 'PUT',
+          method: METHODS.PUT,
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${token}`,
