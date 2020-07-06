@@ -1,5 +1,49 @@
 @import '../../styles/variables';
 
+header {
+  .navbar {
+    z-index: 2;
+  }
+}
+
 .wrapper__our-game{
-  background-color: red;
+  width: 100%;
+  min-height: 100vh;
+  background: url('../../assets/images/background-OurGame.jpg');
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h2{
+    color: $light;
+    z-index: 0;
+  }
+    &::before {
+      content: '';
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .btn-info{
+      width: 200px;
+      height: 70px;
+      z-index: 0;
+      box-shadow:
+      0 1px 4px rgba(255, 254, 254, 0.3),
+      -23px 0 20px -23px rgba(255, 255, 255, 0.8),
+      23px 0 20px -23px rgba(255, 255, 255, 0.8),
+      0 0 40px rgba(255, 255, 255, 0.1) inset;
+      transition: all .5s;
+       &:hover{
+         background-color: $purple;
+       }
+   }
+   .wrapper__button-start{
+     z-index: 0;
+   }
 }
