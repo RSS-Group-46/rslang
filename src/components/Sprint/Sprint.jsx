@@ -20,7 +20,7 @@ export default () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [currentGroup] = useState(0);
   const [roundEnd, setRoundEnd] = useState(false);
-  
+
   const history = useHistory();
 
   const { userId, token } = useContext(AuthContext);
@@ -47,7 +47,7 @@ export default () => {
     group: currentGroup,
     page: currentPage,
     wordsPerPage: wordsPerRound,
-    filter: { },
+    filter: { "$or": [{ "page": currentPage }, { "page": currentPage + 1 }] },
   };
 
   const { data, error: wordsLoadError, loading: wordsLoading } = useUserAggregatedWords(wordsConfig);

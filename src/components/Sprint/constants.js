@@ -1,7 +1,7 @@
 import { MINI_GAMES_URL, SPRINT_URL } from '../../constants/urlConstants';
 
 export const roundTime = 60;
-export const wordsPerRound = Math.max(1, Math.floor(roundTime / 2));
+export const wordsPerRound = 40;
 export const scoreStep = 10;
 export const streakToBonus = 4;
 
