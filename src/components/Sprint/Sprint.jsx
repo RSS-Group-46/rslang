@@ -45,7 +45,6 @@ export default () => {
     userId,
     token,
     group: currentGroup,
-    page: currentPage,
     wordsPerPage: wordsPerRound,
     filter: { "$or": [{ "page": currentPage }, { "page": currentPage + 1 }] },
   };
@@ -78,7 +77,7 @@ export default () => {
 
   const nextPage = useCallback(() => {
     resetStates();
-    setCurrentPage((c) => c + 1);
+    setCurrentPage((c) => c + 2);
     history.push(PLAY_PATH);
   }, [resetStates, history]);
 
