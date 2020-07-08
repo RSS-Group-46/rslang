@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/js/all';
 import ButtonLevel from './ButtonLevel';
 import ButtonRound from './ButtonRound';
+import Statistic from './Statistic';
 import ListWord from './ListWord';
 import { cleaningSentence } from './utils';
 import { API_SIMILAR_WORDS } from './constants';
+import { MINI_GAMES_URL } from '../../constants/urlConstants';
 
 const OurGame = (props) => {
   const {
@@ -15,10 +18,15 @@ const OurGame = (props) => {
     level,
     enableLoader,
     offLoader,
+    userId,
+    token,
   } = props;
   const [correctSentence, setCorrectSentence] = useState(null);
   const [similarWors, setSimilarWords] = useState(null);
   const [resultRound, setResultRound] = useState(false);
+  const [numberWord, setNumberWord] = useState(0);
+  const [selectWord, setSelectWord] = useState([]);
+  const [statistic, setStatistic] = useState(false);
 
   const handleAudio = () => {
     const audio = new Audio(
@@ -28,6 +36,25 @@ const OurGame = (props) => {
   };
 
   const showResultRound = () => setResultRound(true);
+
+  const handleWord = (e) => {
+    // eslint-disable-next-line no-unused-expressions
+    numberWord < similarWors.length - 1
+      ? setNumberWord(numberWord + 1)
+      : showResultRound();
+
+    setSelectWord(selectWord.concat(e.target.textContent));
+  };
+
+  const handleRepeat = () => {
+    setResultRound(false);
+    setNumberWord(0);
+    setSelectWord([]);
+  };
+
+  const handleStatistic = () => {
+    setStatistic(true);
+  }
 
   useEffect(() => {
     if (sentence) {
@@ -64,8 +91,21 @@ const OurGame = (props) => {
   return (
     <div className="our-game">
       <div className="level-round__our-game">
-        <ButtonLevel handleLevel={handleLevel} level={level} />
-        <ButtonRound handleRound={handleRound} round={round} />
+        <div>
+          <ButtonLevel handleLevel={handleLevel} level={level} />
+          <ButtonRound handleRound={handleRound} round={round} />
+          <button type='button' className='btn-statistic__our-game' onClick={handleStatistic}>Statistic</button>
+        </div>
+        {resultRound && (
+          <NavLink
+            type="button"
+            className="close__our-game"
+            data-dismiss="alert"
+            to={MINI_GAMES_URL}
+          >
+            ×
+          </NavLink>
+        )}
       </div>
       {!resultRound && (
         <div
@@ -83,16 +123,26 @@ const OurGame = (props) => {
             correctSentence={correctSentence}
             showResultRound={showResultRound}
             resultRound={resultRound}
+            handleWord={handleWord}
+            numberWord={numberWord}
+            selectWord={selectWord}
           />
         </div>
       )}
-      {!resultRound && (
+      {!resultRound  ? (
         <div className="btn-listen__our-game">
           <button type="button" onClick={handleAudio}>
             LISTEN
           </button>
         </div>
+      ) : (
+        <div className="btn-listen__our-game">
+          <button type="button" onClick={handleRepeat}>
+            REPEAT
+          </button>
+        </div>
       )}
+      {statistic && <Statistic userId={userId} token={token}/>}
     </div>
   );
 };

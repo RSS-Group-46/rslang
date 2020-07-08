@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Loader from '../Loader/Loader';
 import OurGame from './OurGame';
+import useAuth from '../../hooks/auth.hook';
 
 import './OurGame.scss';
 
@@ -21,6 +22,7 @@ const StartPageOurGame = () => {
       ? JSON.parse(localStorage.getItem(roundOurGame))
       : 0,
   );
+  const { token, userId } = useAuth();
 
   const handleBtnStartOurGame = () => setStart(true);
 
@@ -77,6 +79,8 @@ const StartPageOurGame = () => {
           round={round}
           enableLoader={enableLoader}
           offLoader={offLoader}
+          token={token}
+          userId={userId}
         />
       )}
     </div>

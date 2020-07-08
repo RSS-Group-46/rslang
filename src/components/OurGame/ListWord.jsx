@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 const ListWord = (props) => {
-  const {listSimilarWors, correctSentence, showResultRound, resultRound } = props;
+  const {listSimilarWors, correctSentence, resultRound, selectWord, numberWord, handleWord } = props;
   const [rondomWords, setRondomWords] = useState();
-  const [numberWord, setNumberWord] = useState(0);
-  const [selectWord, setSelectWord] = useState([]);
-
-  const handleWord = (e) => {
-    // eslint-disable-next-line no-unused-expressions
-    numberWord < listSimilarWors.length - 1
-      ? setNumberWord(numberWord + 1)
-      : showResultRound();
-
-    setSelectWord(selectWord.concat(e.target.textContent));
-  };
-
+  
   useEffect(() => {
     if (listSimilarWors) {
       const arr = listSimilarWors[numberWord].similarWords.concat({
@@ -66,7 +55,7 @@ const ListWord = (props) => {
               <li
                 role="presentation"
                 key={`${word.item + index}`}
-                onClick={handleWord}
+                onClick={(e) => handleWord(e)}
               >
                 {word.item.toLowerCase()}
               </li>
