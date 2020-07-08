@@ -6,44 +6,226 @@ header {
   }
 }
 
-.wrapper__our-game{
+.wrapper__our-game {
   width: 100%;
   min-height: 100vh;
   background: url('../../assets/images/background-OurGame.jpg');
   background-size: cover;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: fle;
   align-items: center;
-  h2{
+  padding: 10px 10px 10px 60px;
+
+  h2 {
     color: $light;
     z-index: 0;
   }
-    &::before {
-      content: '';
-      display: block;
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: rgba(0, 0, 0, 0.2);
-    }
-    .btn-info{
-      width: 200px;
-      height: 70px;
-      z-index: 0;
-      box-shadow:
-      0 1px 4px rgba(255, 254, 254, 0.3),
+
+  &::before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .btn-info {
+    width: 200px;
+    height: 70px;
+    z-index: 0;
+    box-shadow: 0 1px 4px rgba(255, 254, 254, 0.3),
       -23px 0 20px -23px rgba(255, 255, 255, 0.8),
       23px 0 20px -23px rgba(255, 255, 255, 0.8),
       0 0 40px rgba(255, 255, 255, 0.1) inset;
+    transition: all 0.5s;
+
+    &:hover {
+      background-color: $purple;
+    }
+  }
+
+  .wrapper__button-start {
+    z-index: 0;
+  }
+}
+
+.our-game {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.audio__our-game {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 0;
+  color: $dark;
+
+  svg {
+    height: 100px;
+    width: 100px !important;
+    background-color: $gray-200;
+    padding: 10px;
+    border-radius: 50%;
+    transition: all 0.5s;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 0 0 7px rgb(118, 46, 177),
+        0 0 0 14px rgba(118, 46, 177, 0.6), 0 0 0 21px rgba(118, 46, 177, 0.4);
+    }
+  }
+}
+
+.level-round__our-game {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+
+  .level__our-game,
+  .round__our-game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h3 {
+      margin: 0 10px 0 0;
+      color: $light;
+    }
+
+    select {
+      background-color: $light;
+      color: $primary;
+      font-size: 1.5rem;
+      padding: 5px 20px;
+      cursor: pointer;
+      margin-right: 20px;
+      transition: opacity 0.5s;
+      border: 3px solid;
+    }
+  }
+}
+
+.btn-listen__our-game {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  button {
+    padding: 15px 50px;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.5rem;
+    transition: all .5s;
+
+    &:hover{
+      cursor: pointer;
+      box-shadow: 0 0 0 7px rgb(118, 46, 177),
+      0 0 0 14px rgba(118, 46, 177, 0.6), 0 0 0 21px rgba(118, 46, 177, 0.4);
+    }
+  }
+}
+
+.list-word__our-game{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px 0;
+
+  ul{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 70%;
+
+    li{
+      width: 33%;
+      padding: 5px;
+      text-align: center;
+      font-size: 1.2rem;
+      background-color: $light;
+      border: 1px solid;
       transition: all .5s;
-       &:hover{
-         background-color: $purple;
-       }
-   }
-   .wrapper__button-start{
-     z-index: 0;
-   }
+
+      &:hover{
+        cursor: pointer;
+        background-color: $gray-300;
+      }
+
+      &:nth-child(1){
+        border-radius: 10px 0 0 0;
+      }
+
+      &:nth-child(3){
+        border-radius: 0 10px 0 0;
+      }
+
+      &:nth-child(4){
+        border-radius: 0 0 0 10px;
+      }
+
+      &:nth-child(6){
+        border-radius: 0 0 10px;
+      }
+    }
+  }
+}
+
+.select-word{
+  width: 80%;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: $light;
+  background-color: rgba(255, 255, 255, 0);
+  
+  div{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 90px;
+  }
+
+  span{
+
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .fa-backspace{
+    transition: all .5s;
+
+    &:hover{
+      color: $gray-600;
+      cursor: pointer;
+    }
+  }
+}
+
+.error__select-word{
+  text-decoration: line-through;
+  color: rgb(255, 115, 115);
+}
+
+.correct__word_hidden{
+  opacity: 0;
+}
+
+.correct__word_visible{
+  opacity: 1;
+  color: rgb(208, 255, 138);
 }
