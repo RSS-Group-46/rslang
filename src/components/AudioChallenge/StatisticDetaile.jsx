@@ -57,11 +57,11 @@ const StatisticDetaile = ({
             {statistic &&
               statistic.map(({ date, percentCorrectWords, level, round }) => {
                 return (
-                  <ul key={date}>
-                    <li key={date}>{date}</li>
-                    <li key={date}>{percentCorrectWords}</li>
-                    <li key={date}>{level}</li>
-                    <li key={date}>{round}</li>
+                  <ul key={Math.random()}>
+                    <li key={Math.random()}>{date}</li>
+                    <li key={Math.random()}>{percentCorrectWords}</li>
+                    <li key={Math.random()}>{level}</li>
+                    <li key={Math.random()}>{round}</li>
                   </ul>
                 );
               })}

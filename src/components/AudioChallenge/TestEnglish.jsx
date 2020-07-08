@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
 import test from './test.json';
 
+const numberQuestions = 25;
 const TestEnglish = () => {
   const [numberCorrectAnswers, setNumberCorrectAnswers] = useState(0);
   const [errorResult, setErrorResult] = useState(false);
@@ -20,7 +21,7 @@ const TestEnglish = () => {
           ),
       ),
     );
-    if (arrAnswers.length === 25) {
+    if (arrAnswers.length === numberQuestions) {
       let arrCorretAnswers = 0;
       test.forEach((item) => {
         if (arrAnswers.indexOf(item.correctAnswer) > 0) {
