@@ -35,6 +35,8 @@ import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
+import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
+import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 
 import './App.scss';
 
@@ -70,6 +72,9 @@ const App = () => {
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
                   <SpeakItWelcome />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + SPEAKIT_URL + PATH_SPEAKIT_TRAIN}>
+                  <SpeakItTrain />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
                   <div>puzzle</div>
