@@ -17,10 +17,8 @@ const PuzzleResultsModal = (props) => {
   const { modalIsOpen, closeModal, doContinue, results } = props;
   const background = useContext(BackgroundContext);
   const { guessed, unguessed } = results;
-  if (!background) {
-    return null;
-  }
-  return (
+  
+  return background && (
     <ReactModal
       isOpen={modalIsOpen}
       onRequestClose={closeModal}

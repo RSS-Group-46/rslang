@@ -11,7 +11,7 @@ import PuzzleResultsModal from './PuzzleResultsModal';
 import { getRandomImage, mapSentenceToWordWithId, removeHtml, move, reorder, getNextLevelPageOptions, shuffle, getContentWidth, mergeSentences } from './puzzleUtils';
 import { STORE_DROPPABLE_ID, PICTURE_ROW_DROPPABLE_ID, MAX_WORDS, MAX_SENTENCES, START_PAGE, START_LEVEL } from './puzzleConstants';
 import { ONLY_USER_WORDS } from '../../constants/apiConstants';
-import { getWords } from '../../services/common.service';
+import getWords from '../../services/common.service';
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import useWindowDimensions from '../../hooks/useWindowDimensions.hook';
 import useAuth from '../../hooks/auth.hook';

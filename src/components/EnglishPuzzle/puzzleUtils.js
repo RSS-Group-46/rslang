@@ -23,12 +23,7 @@ export const getRandomImage = () => {
 
 export const getPuzzleTopSize = (rowNum, puzzleHeight) => rowNum * puzzleHeight;
 
-export const getPuzzleLeftShift = (puzzleNum, puzzleWidth, pimpWidth) => {
-  if (!puzzleNum) {
-    return 0;
-  }
-  return (puzzleWidth * puzzleNum) - (pimpWidth * puzzleNum);
-}
+export const getPuzzleLeftShift = (puzzleNum, puzzleWidth, pimpWidth) => puzzleNum ? (puzzleWidth * puzzleNum) - (pimpWidth * puzzleNum) : 0;
 
 export const mapSentenceToWordWithId = (sentence) => sentence.map((word, i) => ({
   word,
@@ -68,12 +63,7 @@ export const move = (source, destination, droppableSource, droppableDestination)
   return result;
 };
 
-export const getPuzzleWidthWithVariant = (width, variant, pimpWidth) => {
-  if (variant === END) {
-    return width - pimpWidth;
-  }
-  return width;
-}
+export const getPuzzleWidthWithVariant = (width, variant, pimpWidth) => variant === END ? width - pimpWidth : width;
 
 export const getContentWidth = (screenWidth) => {
   if (screenWidth > 1400) return 1400;

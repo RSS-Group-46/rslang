@@ -32,6 +32,7 @@ const PuzzleElement = (props) => {
     dragHandleProps = { style: {} }
   } = draggableProvided;
   const backgroundUrl = useContext(BackgroundContext).url;
+  
   return (
     <div
       ref={draggableProvided && draggableProvided.innerRef}

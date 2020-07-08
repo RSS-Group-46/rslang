@@ -1,4 +1,3 @@
-// gallery constants
 export const GALLERY_FOLDER_NAME = 'gallery';
 export const GALLERY = [
   { fileName: 'breigel-peizazh s drovosekami', pictureName: '"Речной пейзаж с дровосеками", Ян Брейгель Старший' },
@@ -13,7 +12,6 @@ export const GALLERY = [
   { fileName: 'breigel-flamandskie', pictureName: '"Фламандские пословицы", Питер Брейгель Старший' },
 ];
 
-// puzzle constants
 export const PUZZLE_ELEMENT = 'puzzle-element';
 export const MIDDLE = 'middle';
 export const START = 'start';
@@ -29,15 +27,12 @@ export const CONTENT_WIDTH = 1400;
 export const PIMP_WIDTH_PERCENT = 9;
 export const WORD_ID_DELIMETER = '_';
 
-// droppable id constants
 export const STORE_DROPPABLE_ID = 'store-droppable';
 export const PICTURE_ROW_DROPPABLE_ID = 'pictue-row-droppable';
 
-// sentence words amount constants
 export const MAX_WORDS = 10;
 export const MAX_SENTENCES = 10;
 
-// options constants
 export const GROUP_KEY = 'group';
 export const PAGE_KEY = 'page';
 export const START_LEVEL = 1;
