@@ -4,6 +4,7 @@
 
 import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from 'react-router-dom';
+import Pagination from "react-js-pagination";
 import { VOCABULARY_URL, LEARNED_URL, COMPLICATED_URL, DELETED_URL } from '../../constants/urlConstants';
 import AuthContext from '../../contexts/auth.context';
 import useUserAggregatedWords from "../../hooks/userAggregatedWords.hook";
@@ -12,22 +13,31 @@ import './Vocabulary.scss';
 
 function Vocabulary() {
   const [words, setWords] = useState([]);
+  const [page, setPage] = useState(0);
+  const [maxWordsToDisplay, setMaxWordsToDisplay] = useState(WORDS_PER_PAGE);
   const { userId, token } = useContext(AuthContext);
 
-  const { loading, data } = useUserAggregatedWords({ userId, token, group: 0, wordsPerPage: WORDS_PER_PAGE, filter: HARD_WORDS })
+  const { loading, data } = useUserAggregatedWords({ userId, token, group: page, wordsPerPage: WORDS_PER_PAGE, filter: HARD_WORDS })
 
   useEffect(() => {
     if (!loading && data && data[0]) {
-      const { paginatedResults } = data[0];
-      setWords(paginatedResults);
+      const { paginatedResults, totalCount } = data[0];
+      if (paginatedResults.length && totalCount[0]) {
+        setWords(paginatedResults);
+        setMaxWordsToDisplay(totalCount[0].count);
+      }
     }
   }, [loading, data]);
 
+  function playPronunciation(target) {
+    const src = target.getAttribute('data-audio');
+    const audio = new Audio(`https://raw.githubusercontent.com/shevv920/rslang-data/master/${src}`);
+    audio.play();
+  }
+
   function handleClick({ target }) {
     if (target.classList.contains('word__audio') && target.hasAttribute('data-audio')) {
-      const src = target.getAttribute('data-audio');
-      const audio = new Audio(`https://raw.githubusercontent.com/shevv920/rslang-data/master/${src}`);
-      audio.play();
+      playPronunciation(target);
     }
   }
 
@@ -48,6 +58,26 @@ function Vocabulary() {
     );
   }
 
+  function handlePageChange(pageNumber) {
+    setPage(pageNumber - 1);
+  }
+
+  function renderPagination() {
+    return (
+      <div className="pagination">
+        <Pagination
+          activePage={page + 1}
+          itemsCountPerPage={WORDS_PER_PAGE}
+          totalItemsCount={maxWordsToDisplay}
+          pageRangeDisplayed={5}
+          onChange={handlePageChange}
+          itemClass="page-item"
+          linkClass="page-link"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="vocabulary container pt-1" onClick={handleClick} role="article">
       <div className="vocabulary-controls d-flex mb-2">
@@ -62,8 +92,9 @@ function Vocabulary() {
         </NavLink>
       </div>
       <div className="dictionary-cards container">
+        {renderPagination()}
         {words && words.map((word) => (
-            <div key={word._id} className="word row mb-2 container">
+            <div key={word._id} data-id={word._id} className="word row mb-2 container">
               <div className="col-sm-auto flex-column">
                 <img
                   className="word__image img-thumbnail"
@@ -90,13 +121,14 @@ function Vocabulary() {
                   {renderWordExample(word.textExample, word.textExampleTranslate, word._id + 2)}
                 </div>
               </div>
-              <div className="word__close">
+              <div className="word__delete">
                 <button type="button" className="close position-absolute" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
             </div>
         ))}
+        {!loading && !!words.length && renderPagination()}
       </div>
     </div>
   );

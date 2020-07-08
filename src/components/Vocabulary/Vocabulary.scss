@@ -56,5 +56,15 @@
         }
       }
     }
+
+    .pagination {
+      &:first-child {
+        margin: 20px 0;
+      }
+
+      &:last-child {
+        margin: 20px 0 100px 0;
+      }
+    }
   }
 }
