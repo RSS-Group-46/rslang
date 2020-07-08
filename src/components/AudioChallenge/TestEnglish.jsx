@@ -22,12 +22,11 @@ const TestEnglish = () => {
       ),
     );
     if (arrAnswers.length === numberQuestions) {
-      let arrCorretAnswers = 0;
+      let numberCorretAnswers = 0;
       test.forEach((item) => {
         if (arrAnswers.indexOf(item.correctAnswer) > 0) {
-          arrCorretAnswers += +1;
-
-          setNumberCorrectAnswers(arrCorretAnswers);
+          numberCorretAnswers += +1;
+          setNumberCorrectAnswers(numberCorretAnswers);
         }
       });
     } else {

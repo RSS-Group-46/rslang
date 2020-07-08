@@ -33,6 +33,10 @@ const StatisticDetaile = ({
         });
     }
   }, [showStatisticDetaile]);
+
+  const getRandomInt = (max) => {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
   return (
     <>
       {loader && <Loader />}
@@ -57,11 +61,11 @@ const StatisticDetaile = ({
             {statistic &&
               statistic.map(({ date, percentCorrectWords, level, round }) => {
                 return (
-                  <ul key={Math.random()}>
-                    <li key={Math.random()}>{date}</li>
-                    <li key={Math.random()}>{percentCorrectWords}</li>
-                    <li key={Math.random()}>{level}</li>
-                    <li key={Math.random()}>{round}</li>
+                  <ul key={getRandomInt(10000)}>
+                    <li key={getRandomInt(10000)}>{date}</li>
+                    <li key={getRandomInt(10000)}>{percentCorrectWords}</li>
+                    <li key={getRandomInt(10000)}>{level}</li>
+                    <li key={getRandomInt(10000)}>{round}</li>
                   </ul>
                 );
               })}
