@@ -6,10 +6,7 @@ import {
   selectShowDeleteButton,
   selectShowMoveToComplicatedButton
 } from '../../../redux/selectors/settings.selectors';
-
-const showAnswerButtonOptionName = 'showAnswerButton';
-const showDeleteButtonOptionName = 'showDeleteButton';
-const showMoveToComplicatedOptionName = 'showMoveToComplicatedButton';
+import { SETTINGS_NAMES } from '../../../constants/settingsConstants';
 
 const CardWordOperationOptions = () => {
   const showAnswerButton = useSelector(selectShowAnswerButton);
@@ -31,7 +28,7 @@ const CardWordOperationOptions = () => {
             className="custom-control-input"
             id="answerCheck"
             checked={showAnswerButton}
-            onChange={() => doChangeOption(showAnswerButtonOptionName, !showAnswerButton)}
+            onChange={() => doChangeOption(SETTINGS_NAMES.showAnswerButton, !showAnswerButton)}
           />
           <label className="custom-control-label" htmlFor="answerCheck">Reveal the <strong>answer</strong></label>
         </div>
@@ -41,7 +38,7 @@ const CardWordOperationOptions = () => {
             className="custom-control-input"
             id="deleteCheck"
             checked={showDeleteButton}
-            onChange={() => doChangeOption(showDeleteButtonOptionName, !showDeleteButton)}
+            onChange={() => doChangeOption(SETTINGS_NAMES.showDeleteButton, !showDeleteButton)}
           />
           <label className="custom-control-label" htmlFor="deleteCheck"><strong>Delete</strong> this word</label>
         </div>
@@ -51,7 +48,7 @@ const CardWordOperationOptions = () => {
             className="custom-control-input"
             id="complicatedCheck"
             checked={showMoveToComplicatedButton}
-            onChange={() => doChangeOption(showMoveToComplicatedOptionName, !showMoveToComplicatedButton)}
+            onChange={() => doChangeOption(SETTINGS_NAMES.showMoveToComplicatedButton, !showMoveToComplicatedButton)}
           />
           <label className="custom-control-label" htmlFor="complicatedCheck">Move to <strong>Complicated</strong></label>
         </div>

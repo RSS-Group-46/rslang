@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectVolume, selectDifficulty } from '../../../redux/selectors/settings.selectors';
 import { changeOption } from '../../../redux/actions/settings.actions';
-import { DIFFICULTY_DESCRIPTIONS } from '../../../constants/settingsConstants';
+import { DIFFICULTY_DESCRIPTIONS, SETTINGS_NAMES } from '../../../constants/settingsConstants';
 
 const difficultyToString = (n) => `${DIFFICULTY_DESCRIPTIONS[n]} (${n})`;
 
@@ -10,8 +10,8 @@ export default () => {
   const volume = useSelector(selectVolume);
   const difficulty = useSelector(selectDifficulty);
   const dispatch = useDispatch();
-  const changeVolume = (e) => dispatch(changeOption('volume', e.target.value));
-  const changeDifficulty = (e) => dispatch(changeOption('difficulty', e.target.value));
+  const changeVolume = (e) => dispatch(changeOption(SETTINGS_NAMES.volume, e.target.value));
+  const changeDifficulty = (e) => dispatch(changeOption(SETTINGS_NAMES.difficulty, e.target.value));
 
   return (
     <div className="form-group">
