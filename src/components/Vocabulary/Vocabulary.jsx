@@ -8,7 +8,8 @@ import Pagination from "react-js-pagination";
 import { VOCABULARY_URL, LEARNED_URL, COMPLICATED_URL, DELETED_URL } from '../../constants/urlConstants';
 import AuthContext from '../../contexts/auth.context';
 import useUserAggregatedWords from "../../hooks/userAggregatedWords.hook";
-import { HARD_WORDS, WORDS_PER_PAGE } from "../../constants/apiConstants";
+import useWord from "../../hooks/word.hook";
+import { ONLY_USER_WORDS, WORDS_PER_PAGE } from "../../constants/apiConstants";
 import './Vocabulary.scss';
 
 function Vocabulary() {
@@ -16,8 +17,9 @@ function Vocabulary() {
   const [page, setPage] = useState(0);
   const [maxWordsToDisplay, setMaxWordsToDisplay] = useState(WORDS_PER_PAGE);
   const { userId, token } = useContext(AuthContext);
+  const { deleteUserWord } = useWord();
 
-  const { loading, data } = useUserAggregatedWords({ userId, token, group: page, wordsPerPage: WORDS_PER_PAGE, filter: HARD_WORDS })
+  const { loading, data } = useUserAggregatedWords({ userId, token, group: page, wordsPerPage: WORDS_PER_PAGE, filter: ONLY_USER_WORDS })
 
   useEffect(() => {
     if (!loading && data && data[0]) {
@@ -35,9 +37,21 @@ function Vocabulary() {
     audio.play();
   }
 
+  function deleteWord(word) {
+    if (word.hasAttribute('data-id')) {
+      const wordId = word.getAttribute('data-id');
+      if (deleteUserWord({ userId, wordId, token })) {
+        word.remove();
+      }
+    }
+  }
+
   function handleClick({ target }) {
     if (target.classList.contains('word__audio') && target.hasAttribute('data-audio')) {
       playPronunciation(target);
+    } else if (target.closest('.word__delete')
+      && target.closest('.word__delete').parentNode.classList.contains('word')) {
+      deleteWord(target.closest('.word__delete').parentNode);
     }
   }
 
