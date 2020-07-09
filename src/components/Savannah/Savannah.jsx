@@ -1,161 +1,207 @@
-/* eslint-disable no-else-return */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-did-update-set-state */
-/* eslint-disable no-console */
-
+/* eslint-disable */
 import React, { Component } from 'react';
-import getWords from './words';
 import Loader from '../Loader/Loader';
-import GameOver from './GameOver';
+import GameOver from './UI/GameOver';
+import Game from './UI/Game';
+import Queue from '../../utils/Queue';
+import savannahUtils from './utils';
 import './Savannah.scss';
+
+const {
+  setKey,
+  getButtonValue,
+  randomize,
+  resetAnimation,
+  initialState,
+  getMountedState,
+  getWords,
+  getNewState,
+  setClick,
+  setToStatistics,
+} = savannahUtils();
 
 class Savannah extends Component {
   constructor() {
     super();
     this.state = {
-      keyClassName: '',
-      word: '',
-      translatedWord: '',
-      words: [],
-      translatedWords: [],
-      translatedButtons: [],
-      isMounted: false,
-      isGameOver: true,
+      ...initialState,
     };
+    this.stats = [];
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   async componentDidMount() {
-    const { words, translatedWords } = await getWords();
-    document.addEventListener('keydown', this.handleKeyPress);
+    const { userId, token } = this.state;
+    const { words, translatedWords, ids } = await getWords(userId, token);
+    const lifes = new Queue(['*', '*', '*', '*', '*']);
+    const mountedState = getMountedState(words, translatedWords, lifes);
+
+    this.setListeners();
+
     this.setState({
-      word: words.next(),
-      translatedWord: translatedWords.next(),
-      words,
-      translatedWords,
-      isMounted: true,
+      ...mountedState,
     });
+
     const { translatedWord } = this.state;
+    this.setTimer();
     this.randomizeWords(translatedWord);
   }
 
   componentDidUpdate() {
-    const { keyClassName, translatedWord, words, isGameOver } = this.state;
+    const {
+      keyClassName,
+      translatedWord,
+      words,
+      isGameOver,
+      lifes,
+    } = this.state;
 
-    if (
-      keyClassName !== 0 &&
-      keyClassName.length > 0 &&
-      words.getLength() > 0
-    ) {
-      const buttonValue = this.getButtonValue(keyClassName);
+    const gameOn =
+      keyClassName !== 0 && keyClassName.length > 0 && words.getLength() > 0;
+    const gameOver =
+      (words.getLength() === 0 || lifes.getLength() === 0) && !isGameOver;
+
+    if (gameOn) {
+      const buttonValue = getButtonValue(keyClassName);
       this.compare(buttonValue, translatedWord);
-    } else if (words.getLength() === 0 && !isGameOver) {
+    } else if (gameOver) {
       this.setState({
         isGameOver: true,
       });
+      this.removeListeners();
     }
   }
 
-  setKey(key) {
-    switch (key) {
-      case '1':
-        return '.btn-first__value';
-
-      case '2':
-        return '.btn-second__value';
-
-      case '3':
-        return '.btn-third__value';
-
-      case '4':
-        return '.btn-fourth__value';
-
-      default:
-        return 0;
-    }
+  componentWillUnmount() {
+    this.removeListeners();
   }
 
-  getButtonValue(className) {
-    const value = document.querySelector(className).textContent;
-    return value;
+  setListeners() {
+    document.addEventListener('keydown', this.handleKeyPress);
+    document.addEventListener('click', this.handleClick);
   }
 
-  compare(buttonValue, currentWord) {
-    const { words, translatedWords } = this.state;
-
-    if (currentWord.toLowerCase() === buttonValue.toLowerCase()) {
+  setTimer() {
+    this.timer = setInterval(() => {
+      const { words, translatedWords } = this.state;
       const word = words.next();
       const translatedWord = translatedWords.next();
+
       this.setState({
         word,
         translatedWord,
       });
+
       this.randomizeWords(translatedWord);
-    } else {
-      // console.log('bad');
+    }, 10000);
+  }
+
+  compare(buttonValue, currentWord) {
+    const {
+      words,
+      translatedWords,
+      lifes,
+      keyClassName,
+      correctAnswers,
+      wrongAnswers,
+    } = this.state;
+    const isEquals = currentWord.toLowerCase() === buttonValue.toLowerCase();
+    const isntEquals =
+      keyClassName === 0 ||
+      currentWord.toLowerCase() !== buttonValue.toLowerCase();
+
+    if (isEquals) {
+      setToStatistics(this.stats, currentWord);
+      const { state, translatedWord } = getNewState(
+        words,
+        translatedWords,
+        lifes,
+        correctAnswers,
+        wrongAnswers,
+      );
+      this.setState({
+        ...state,
+      });
+      this.randomizeWords(translatedWord);
+      this.resetTimer();
+    } else if (isntEquals) {
+      setToStatistics(this.stats, currentWord, 'wrong');
+      const { state, translatedWord } = getNewState(
+        words,
+        translatedWords,
+        lifes,
+        correctAnswers,
+        wrongAnswers,
+        'wrong',
+      );
+      this.setState({
+        ...state,
+      });
+      this.randomizeWords(translatedWord);
     }
   }
 
   randomizeWords(translatedWord) {
     const { translatedWords } = this.state;
-    const translatedButtons = [];
-    const correctWordIndex = Math.floor(Math.random() * 4);
-
-    for (let i = 0; i < 4; i += 1) {
-      const index = Math.round(
-        Math.random() * (translatedWords.getLength() - 1),
-      );
-
-      if (i === correctWordIndex) {
-        translatedButtons.push(translatedWord);
-      } else {
-        translatedButtons.push(translatedWords.getItem(index));
-      }
-    }
-
+    const translatedButtons = randomize(translatedWord, translatedWords);
     this.setState({
       translatedButtons,
     });
   }
 
-  compenntWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyPress);
-  }
-
   handleKeyPress(e) {
-    const keyClassName = this.setKey(e.key);
+    const keyClassName = setKey(e.key);
     this.setState({
       keyClassName,
     });
   }
 
+  handleClick(e) {
+    const keyClassName = setClick(e.target.className);
+    this.setState({
+      keyClassName,
+    });
+  }
+
+  removeListeners() {
+    document.removeEventListener('keydown', this.handleKeyPress);
+    document.removeEventListener('click', this.handleClick);
+  }
+
+  resetTimer() {
+    clearInterval(this.timer);
+    resetAnimation('.drop');
+    this.setTimer();
+  }
+
   render() {
-    const { word, translatedButtons, isGameOver, isMounted } = this.state;
-    if (!isMounted) {
-      return <Loader />;
-    } else if (isMounted && !isGameOver) {
-      return (
-        <div className="container">
-          <h1 className="drop">{word}</h1>
-          <button className="btn btn-outline-danger" type="button">
-            1 - <span className="btn-first__value">{translatedButtons[0]}</span>
-          </button>
-          <button className="btn btn-outline-danger" type="button">
-            2 -{' '}
-            <span className="btn-second__value">{translatedButtons[1]}</span>
-          </button>
-          <button className="btn btn-outline-danger" type="button">
-            3 - <span className="btn-third__value">{translatedButtons[2]}</span>
-          </button>
-          <button className="btn btn-outline-danger" type="button">
-            4 -{' '}
-            <span className="btn-fourth__value">{translatedButtons[3]}</span>
-          </button>
-        </div>
-      );
-    } else {
-      return <GameOver />;
-    }
+    const {
+      word,
+      translatedButtons,
+      isGameOver,
+      isMounted,
+      lifes,
+      correctAnswers,
+      wrongAnswers,
+    } = this.state;
+
+    return (
+      <>
+        {!isMounted && <Loader />}
+        {isMounted && !isGameOver && (
+          <Game lifes={lifes} buttons={translatedButtons} word={word} />
+        )}
+        {isGameOver && (
+          <GameOver
+            correct={correctAnswers}
+            wrong={wrongAnswers}
+            stats={this.stats}
+          />
+        )}
+      </>
+    );
   }
 }
 
