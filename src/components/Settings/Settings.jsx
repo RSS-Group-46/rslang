@@ -7,6 +7,7 @@ import { selectSettings } from '../../redux/selectors/settings.selectors';
 import { pushUserSettings, pullUserSettings, prepareSettingsForApp } from '../../services/settings.service';
 import { USER_DATA_STORAGE_NAME } from '../../constants/commonConstants';
 import { WORDS_PER_DAY_DEFAULT_VALUE, SETTINGS_INITIAL_STATE } from '../../constants/settingsConstants';
+import General from './Cards/GeneralSettings';
 
 const gearSize = 40;
 const headerPadding = 10;
@@ -102,6 +103,7 @@ const Settings = () => {
         <div className={getSettingsBodyClassNames(showSettings)}>
           <form>
             <h2 className="settings_to-learn"><div>To learn per day: </div>{updateWordsAmount ? wordsAmountForm : toLearn}</h2>
+            <General/>
             <CardsSettings />
           </form>
         </div>

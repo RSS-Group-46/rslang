@@ -30,6 +30,15 @@ import useAuth from '../../hooks/auth.hook';
 import Team from '../Team/Team';
 import Header from '../Header/Header';
 import Settings from '../Settings/Settings';
+import Sprint from '../Sprint/Sprint';
+import MiniGames from '../MiniGames/MiniGames';
+import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
+import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
+import Footer from '../Footer/Footer';
+import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
+import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
+import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
+import MiniGames from '../MiniGames/MiniGames';
 
 import './App.scss';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
@@ -63,10 +72,13 @@ const App = () => {
                   <div>deleted</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL}>
-                  <div>mini-games</div>
+                <MiniGames />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
-                  <div>speakit</div>
+                  <SpeakItWelcome />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + SPEAKIT_URL + PATH_SPEAKIT_TRAIN}>
+                  <SpeakItTrain />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
                   <div>puzzle</div>
@@ -75,10 +87,10 @@ const App = () => {
                   <Savannah />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
-                  <div>audiocall</div>
+                  <StartPageAudioChallenge />
                 </Route>
-                <Route exact path={MINI_GAMES_URL + SPRINT_URL}>
-                  <div>sprint</div>
+                <Route path={MINI_GAMES_URL + SPRINT_URL}>
+                  <Sprint />
                 </Route>
                 <Route exact path={PROMO_URL}>
                   <div>promo</div>
@@ -93,13 +105,13 @@ const App = () => {
               </Switch>
             </>
           )}
-          <div>footer</div>
+          <Footer />
           {!isAuth && (
             <Switch>
               <Route exact path={AUTH_URL}>
                 <Authorization />
               </Route>
-              <Redirect to={AUTH_URL} />
+             <Redirect to={AUTH_URL} />
             </Switch>
           )}
         </AuthContext.Provider>

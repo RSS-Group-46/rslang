@@ -1,4 +1,5 @@
-@import '../../styles/_variables';
+
+@import '../../styles/variables';
 
 .lds-ellipsis {
   position: absolute;
@@ -7,7 +8,7 @@
   height: 100vh;
   max-height: 100vh;
 
-  background-color: $gray-700;
+  background-color: $progress-bar-bg;
   backdrop-filter: blur(50px);
 
   z-index: 10;
