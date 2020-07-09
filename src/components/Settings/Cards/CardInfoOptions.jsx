@@ -6,9 +6,11 @@ import {
   selectShowDescribe,
   selectShowExample
 } from '../../../redux/selectors/settings.selectors';
-import { SETTINGS_NAMES } from '../../../constants/settingsConstants';
 
-const optionNames = [SETTINGS_NAMES.showTranscription, SETTINGS_NAMES.showDescribe, SETTINGS_NAMES.showExample];
+const showTranscriptionOptionName = 'showTranslation';
+const showDescribeOptionName = 'showDescribe';
+const showExampleOptionName = 'showExample';
+const optionNames = [showTranscriptionOptionName, showDescribeOptionName, showExampleOptionName];
 
 const getRandomNameToChoose = (toExclude) => {
   const excludingIndex = optionNames.indexOf(toExclude);
@@ -45,7 +47,7 @@ const CardInfoOptions = () => {
             className="custom-control-input"
             id="translationButton"
             checked={showTranslation}
-            onChange={() => doChangeOption(SETTINGS_NAMES.showTranscription, !showTranslation)}
+            onChange={() => doChangeOption(showTranscriptionOptionName, !showTranslation)}
           />
           <label htmlFor="translationButton" className="custom-control-label">
             Word translation
@@ -57,7 +59,7 @@ const CardInfoOptions = () => {
             className="custom-control-input"
             id="describeButton"
             checked={showDescribe}
-            onChange={() => doChangeOption(SETTINGS_NAMES.showDescribe, !showDescribe)}
+            onChange={() => doChangeOption(showDescribeOptionName, !showDescribe)}
           />
           <label htmlFor="describeButton" className="custom-control-label">
             Describe the word
@@ -69,7 +71,7 @@ const CardInfoOptions = () => {
             className="custom-control-input"
             id="exampleButton"
             checked={showExample}
-            onChange={() => doChangeOption(SETTINGS_NAMES.showExample, !showExample)}
+            onChange={() => doChangeOption(showExampleOptionName, !showExample)}
           />
           <label htmlFor="exampleButton" className="custom-control-label">
             Example sentence

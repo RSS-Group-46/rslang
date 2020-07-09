@@ -1,12 +1,11 @@
 import { useState, useCallback } from 'react';
-import { METHODS } from '../constants/apiConstants';
 
 const useHttp = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const request = useCallback(
-    async (url, method = METHODS.GET, body = null, headers = {}) => {
+    async (url, method = 'GET', body = null, headers = {}) => {
       setLoading(true);
 
       try {
