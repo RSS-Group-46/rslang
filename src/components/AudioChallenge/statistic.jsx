@@ -42,7 +42,7 @@ const StatisticAudioChallenge = ({
 
   useEffect(() => {
     if (statistic) {
-      const date = new Date()
+      const date = new Date();
       fetch(
         `https://pacific-castle-12388.herokuapp.com/users/${userId}/statistics`,
         {
@@ -56,17 +56,22 @@ const StatisticAudioChallenge = ({
           body: JSON.stringify({
             learnedWords: 13,
             optional: {
-              ...statistic.optional, 
-              [new Date().getTime()]: {
-                date: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`,
-                percentCorrectWords: `${([...arrCorrectFilter].length * 100) / size}%`,
-                level: knowWords ? 'learned words' : `${level + 1}`,
-                round: knowWords ? 'learned words' : `${round + 1}`,
-              }
-             },
+              ...statistic.optional,
+              audioCall: {
+                ...statistic.optional?.audioCall,
+                [new Date().getTime()]: {
+                  date: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`,
+                  percentCorrectWords: `${Math.round(
+                    ([...arrCorrectFilter].length * 100) / size,
+                  )}%`,
+                  level: knowWords ? 'learned words' : `${level + 1}`,
+                  round: knowWords ? 'learned words' : `${round + 1}`,
+                },
+              },
+            },
           }),
         },
-      )
+      );
     }
   }, [statistic]);
 

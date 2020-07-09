@@ -29,7 +29,7 @@ const StatisticDetaile = ({
         .then((data) => {
           setLoader(false);
           // eslint-disable-next-line no-unused-expressions
-          data.optional && setStattistic(Object.values(data.optional));
+          data.optional && setStattistic(Object.values(data.optional.audioCall));
         });
     }
   }, [showStatisticDetaile]);
