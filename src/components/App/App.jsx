@@ -30,6 +30,8 @@ import useAuth from '../../hooks/auth.hook';
 import Team from '../Team/Team';
 import Header from '../Header/Header';
 import Settings from '../Settings/Settings';
+import Sprint from '../Sprint/Sprint';
+import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
@@ -85,8 +87,8 @@ const App = () => {
                 <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
                   <StartPageAudioChallenge />
                 </Route>
-                <Route exact path={MINI_GAMES_URL + SPRINT_URL}>
-                  <div>sprint</div>
+                <Route path={MINI_GAMES_URL + SPRINT_URL}>
+                  <Sprint />
                 </Route>
                 <Route exact path={PROMO_URL}>
                   <div>promo</div>
@@ -97,7 +99,7 @@ const App = () => {
                 <Route path={ERROR}>
                   <ErrorIndicator />
                 </Route>
-              <Redirect to={BASE_URL} />
+                <Redirect to={BASE_URL} />
               </Switch>
             </>
           )}
