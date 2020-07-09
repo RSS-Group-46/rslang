@@ -4,7 +4,6 @@ import React from 'react';
 // import { selectShowAssociationPicture } from '../../redux/selectors/settings.selectors';
 
 import AssociationPicture from './components/AssociationPicture';
-import Word from './components/Word';
 import TextExample from './components/TextExample';
 import TextMeaning from './components/TextMeaning';
 import Transcription from './components/Transcription';
@@ -40,8 +39,15 @@ const wordJSONfromBack =
       }`
 
   const wordObj = JSON.parse(wordJSONfromBack)
+  
 
 const MainGame = () => {
+  let  isShowAnswear = false;
+
+  function showAnswear () {
+    isShowAnswear = true;
+  }
+
     return (
       <div className="maingame  container">
         <div className="container__wrap">
@@ -51,11 +57,12 @@ const MainGame = () => {
               <AssociationPicture srcAssociationPicture={image} />
             </div>
             <div className="card-body">
-              <Word wordObj={wordObj}/>
+                <h4 className="card-title">
+                  <TextExample wordObj={wordObj} isShowAnswear={isShowAnswear}/>
+                </h4>
                 <Transcription wordObj={wordObj}/>
-                <TextExample wordObj={wordObj}/>
-                <TextMeaning wordObj={wordObj}/>
-              <p className="card-text maingame__line">__________________________________</p>
+                <TextMeaning wordObj={wordObj} isShowAnswear={isShowAnswear}/>
+                <p className="card-text maingame__line">__________________________________</p>
                 <TextExampleTranslate wordObj={wordObj}/>
                 <TextMeaningTranslate wordObj={wordObj}/>
                 <WordTranslate wordObj={wordObj}/>
@@ -63,7 +70,7 @@ const MainGame = () => {
           </div>
           <button type="button" className="maingame__button">&#62;</button>
         </div>
-        <button type="button" className="btn btn-info">
+        <button type="button" className="btn btn-info" onClick={()=>showAnswear ()}>
           Показать ответ
         </button>
       </div>

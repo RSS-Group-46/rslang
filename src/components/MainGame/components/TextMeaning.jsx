@@ -12,49 +12,67 @@ const TextMeaning = (props) => {
       } else {
         textClassName = 'none';
       }
-     const  isShowAnswear = false;
 
-      function replaceString (word) {
-          let tire = '';
-          if (isShowAnswear) {
-            tire = word
-          } else {
-              for (let i=0;i< word.length ; i +=1 ) {
-                tire += "_";
-              }
-          }
-          return tire;
-      }
-
-      function deleteTegs (string, seatchtSring, replaceWord){
-
-        return string.replace(seatchtSring, replaceWord);
-
+     function replaceString (word) {
+        let tire = '';
+        if (props.isShowAnswear) {
+          tire = word
+        } else {
+            for (let i=0;i< word.length ; i +=1 ) {
+              tire += "_";
+            }
+        }
+        return tire;
     }
 
-    function textShow () {
-        let word;
-        let textMeaning;
-        let seatchtSring;
-        let textShowString;
-        let replaceWord;
 
+function firstPartSentens (){
+    let textMeaning;
+    let textShowString
+    if (props.wordObj) {
+        textMeaning = props.wordObj.textMeaning;
+        const [seatchtSring] =  textMeaning.split('<i>')
+        textShowString =  seatchtSring;
+    } else {
+        textShowString = '';
+    }
+    return textShowString;
+}
+
+function secondPartSentens (){
+    let textMeaning;
+   
+    let textShowString
+    if (props.wordObj) {
+        textMeaning = props.wordObj.textMeaning;
+        const [, seatchtSring] =  textMeaning.split('</i>')
+        textShowString =  seatchtSring;
+       
+    } else {
+        textShowString = '';
+    }
+    return textShowString;
+}
+
+
+     function wordShow () {
+        let textMeaning;
+        let textShowString
         if (props.wordObj) {
-            textMeaning = props.wordObj.textMeaning;
-            word = props.wordObj.word;
-            seatchtSring = `/${word}/gi`;
-            replaceWord = replaceString (word, isShowAnswear)
-            textShowString = deleteTegs (textMeaning, seatchtSring, replaceWord)
+            textMeaning = props.wordObj.word;
+            textShowString =  replaceString (textMeaning);
            
         } else {
             textShowString = '';
         }
-        return textShowString
-    }
-console.log(textShow ())
+        return textShowString;
+     }
+
     return (
         <p  className={textClassName}>
-            {textShow ()}
+            <span>{firstPartSentens ()}</span>
+            <span className="maingame__pasteWord">{wordShow ()}</span>
+            <span>{secondPartSentens ()}</span>
         </p>
     );
   };

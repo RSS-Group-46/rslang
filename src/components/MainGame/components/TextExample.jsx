@@ -2,31 +2,52 @@ import React  from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectShowExample } from '../../../redux/selectors/settings.selectors';
+import Word from './Word';
 
 let textClassName
 
 const TextExample = (props) => {
     const showExample = useSelector(selectShowExample);
     if (showExample) {
-        textClassName = 'card-title';
+        textClassName = '';
       } else {
         textClassName = 'none';
       }
 
-    function textExampleShow () {
-        let word;
+    function firstPartSentens (){
+        let textMeaning;
+        let textShowString
         if (props.wordObj) {
-            word = props.wordObj.textExample;
+            textMeaning = props.wordObj.textExample;
+            const [seatchtSring] =  textMeaning.split('<b>')
+            textShowString =  seatchtSring;
         } else {
-            word = '';
+            textShowString = '';
         }
-        return word
+        return textShowString;
+    }
+    
+    function secondPartSentens (){
+        let textMeaning;
+       
+        let textShowString
+        if (props.wordObj) {
+            textMeaning = props.wordObj.textExample;
+            const [, seatchtSring] =  textMeaning.split('</b>')
+            textShowString =  seatchtSring;
+           
+        } else {
+            textShowString = '';
+        }
+        return textShowString;
     }
 
     return (
-        <h4  className={textClassName}>
-            {textExampleShow ()}
-        </h4>
+        <>
+            <span className={textClassName}>{firstPartSentens ()}</span>
+            <Word wordObj={props.wordObj} isShowAnswear={props.isShowAnswear}/>
+            <span className={textClassName}>{secondPartSentens ()}</span>
+        </>
     );
   };
   

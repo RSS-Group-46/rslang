@@ -11,10 +11,20 @@ function wordPlaceholder () {
     }
     return word
     }
+    function ShowWordPlaceholder () {
+        let show
+        if (!props.isShowAnswear) {
+            show = '';
+        } else {
+            show =  wordPlaceholder ();
+        }
+        return show;
+    }
+    console.log(props.isShowAnswear)
     return (
-        <h4 className="card-title">
-                <input type="text" className="maingame__pasteWord maingame__pasteWord_placeholder" placeholder={wordPlaceholder()} size={wordPlaceholder().length}/>
-        </h4>
+        <>
+            <input type="text" className="maingame__pasteWord maingame__pasteWord_placeholder" placeholder={ShowWordPlaceholder ()} size={wordPlaceholder().length}/>
+        </>
     );
   };
   
