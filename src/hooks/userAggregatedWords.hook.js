@@ -13,7 +13,7 @@ import errors from '../constants/errorConstants';
  */
 const useUserAggregatedWords = (params) => {
   const { userId, token, group, wordsPerPage, filter } = params;
-
+  
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const { loading, request } = useHttp();
@@ -43,7 +43,6 @@ const useUserAggregatedWords = (params) => {
 
     fetchWords();
   }, [url, token, request]);
-
 
   return { loading, data, error };
 };
