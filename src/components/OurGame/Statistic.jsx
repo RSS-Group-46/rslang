@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { METHODS } from '../../constants/apiConstants';
 
-const Statistic = ({ userId, token }) => {
-  const [statistic, setStatistic] = useState(null);
+const Statistic = ({ userId, token, level, round }) => {
+  const [statistic, setStatistic] = useState();
+  const [arrStatistic, setArrStatistic] = useState(null);
   useEffect(() => {
     fetch(
       `https://pacific-castle-12388.herokuapp.com/users/${userId}/statistics`,
@@ -18,6 +19,8 @@ const Statistic = ({ userId, token }) => {
       .then((response) => response.json())
       .then((data) => {
         setStatistic(data);
+        // eslint-disable-next-line no-unused-expressions
+        data.optional && setArrStatistic(Object.values(data.optional.ourGame))
       });
   }, []);
 
@@ -43,6 +46,8 @@ const Statistic = ({ userId, token }) => {
                 [new Date().getTime()]: {
                   date: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`,
                   percentCorrectWords: `${3333}%`,
+                  levelGame: level,
+                  roundGame: round, 
                 },
               },
             },
@@ -59,6 +64,23 @@ const Statistic = ({ userId, token }) => {
             <span type="button" className="close" data-dismiss="alert">
               ×
             </span>
+            <ul>
+              <li>
+                <span>date</span>
+                <span>level</span>
+                <span>round</span>
+                <span>correct answers, %</span>
+              </li>
+              {arrStatistic && arrStatistic.map(({ date, percentCorrectWords, levelGame, roundGame }) => {
+                return <li>
+                  <span>{date}</span>
+                  <span>{levelGame + 1}</span>
+                  <span>{roundGame + 1}</span>
+                  <span>{percentCorrectWords}</span>
+                </li>
+              })
+              }
+            </ul>
           </div>
         </div>
       </div>

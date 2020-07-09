@@ -142,7 +142,7 @@ const OurGame = (props) => {
           </button>
         </div>
       )}
-      {statistic && <Statistic userId={userId} token={token}/>}
+      {statistic && <Statistic userId={userId} token={token} level={level} round={round}/>}
     </div>
   );
 };
