@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
+  // Redirect,
 } from 'react-router-dom';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
 import {
@@ -23,6 +23,7 @@ import {
   TEAM_URL,
   AUTH_URL,
   ERROR,
+  PLAY,
 } from '../../constants/urlConstants';
 import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
@@ -34,6 +35,7 @@ import Settings from '../Settings/Settings';
 import './App.scss';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import Savannah from '../Savannah/Savannah';
+import SavannahWelcome from '../Savannah/UI/SvannahWelcome';
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
@@ -71,8 +73,11 @@ const App = () => {
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
                   <div>puzzle</div>
                 </Route>
-                <Route exact path={MINI_GAMES_URL + SAVANNAH_URL}>
+                <Route exact path={MINI_GAMES_URL + SAVANNAH_URL + PLAY}>
                   <Savannah />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + SAVANNAH_URL}>
+                  <SavannahWelcome />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
                   <div>audiocall</div>
@@ -89,7 +94,7 @@ const App = () => {
                 <Route path={ERROR}>
                   <ErrorIndicator />
                 </Route>
-                <Redirect to={BASE_URL} />
+                {/* <Redirect to={BASE_URL} /> */}
               </Switch>
             </>
           )}
@@ -99,7 +104,7 @@ const App = () => {
               <Route exact path={AUTH_URL}>
                 <Authorization />
               </Route>
-              <Redirect to={AUTH_URL} />
+              {/* <Redirect to={AUTH_URL} /> */}
             </Switch>
           )}
         </AuthContext.Provider>

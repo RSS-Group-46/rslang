@@ -16,15 +16,7 @@ const Authorization = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  const handleRegister = async () => {
-    try {
-      setError('');
-      setMessage('');
-      const VALID = /(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[+-_@$!%*?&#.,;:[\]{}])[a-zA-Z0-9+-_@$!%*?&#.,;:[\]{}]{8,16}/.test(
-        form.password,
-      );
-
+const handleRegister = async () => { try { setError(''); setMessage(''); const VALID = /(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[+-_@$!%*?&#.,;:[\]{}])[a-zA-Z0-9+-_@$!%*?&#.,;:[\]{}]{8,16}/.test( form.password,);
       if (VALID) {
         await request(
           'https://afternoon-falls-25894.herokuapp.com/users',
