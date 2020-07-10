@@ -35,13 +35,14 @@ import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
+
+import Statistic from '../Statistic/Statistic';
+
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
 
 import './App.scss';
-
-
 
 const App = () => {
   const { token, userId, logIn, logOut } = useAuth();
@@ -59,7 +60,7 @@ const App = () => {
                   <div>Hello Group 46 !</div>
                 </Route>
                 <Route exact path={STATISTICS_URL}>
-                  <div>statistics</div>
+                  <Statistic />
                 </Route>
                 <Route exact path={VOCABULARY_URL + LEARNED_URL}>
                   <div>learned</div>

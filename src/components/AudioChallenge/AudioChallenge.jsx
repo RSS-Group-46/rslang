@@ -11,7 +11,7 @@ import { API_SIMILAR_WORDS } from '../../constants/audioChallenge';
 import { EVENT_TYPES } from '../../constants/actionTypeConstants';
 import Picture from './picture';
 import ProgressRound from './ProgressRound';
-import '@fortawesome/fontawesome-free/js/all';
+// import '@fortawesome/fontawesome-free/js/all';
 
 const AudioChallenge = ({
   words,

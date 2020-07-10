@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import '@fortawesome/fontawesome-free/js/all';
+// import '@fortawesome/fontawesome-free/js/all';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
 import { METHODS } from '../../constants/apiConstants';
 
