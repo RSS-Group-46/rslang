@@ -9,25 +9,44 @@ import { VOCABULARY_URL, LEARNED_URL, COMPLICATED_URL, DELETED_URL } from '../..
 import AuthContext from '../../contexts/auth.context';
 import useUserAggregatedWords from "../../hooks/userAggregatedWords.hook";
 import useWord from "../../hooks/word.hook";
-import { ONLY_USER_WORDS, WORDS_PER_PAGE } from "../../constants/apiConstants";
+import {
+  ONLY_USER_HARD_WORDS,
+  ONLY_USER_TRASH_WORDS,
+  WORDS_PER_PAGE,
+  ONLY_USER_WORDS
+} from "../../constants/apiConstants";
 import './Vocabulary.scss';
 
-function Vocabulary() {
+function Vocabulary({ path }) {
   const [words, setWords] = useState([]);
   const [page, setPage] = useState(0);
   const [maxWordsToDisplay, setMaxWordsToDisplay] = useState(WORDS_PER_PAGE);
   const { userId, token } = useContext(AuthContext);
-  const { deleteUserWord } = useWord();
+  const { deleteUserWord, updateUserWord } = useWord();
+  const [filter, setFilter] = useState(ONLY_USER_WORDS);
 
-  const { loading, data } = useUserAggregatedWords({ userId, token, group: page, wordsPerPage: WORDS_PER_PAGE, filter: ONLY_USER_WORDS })
+  useEffect(() => {
+    setPage(0);
+    if (path === COMPLICATED_URL) {
+      setFilter({...ONLY_USER_HARD_WORDS});
+    } else if (path === DELETED_URL) {
+      setFilter({...ONLY_USER_TRASH_WORDS});
+    } else {
+      setFilter({...ONLY_USER_WORDS});
+    }
+  }, [path]);
+
+  const { loading, data } = useUserAggregatedWords({ userId, token, group: page, wordsPerPage: WORDS_PER_PAGE, filter })
+
+  function deleteWord(id) {
+    setWords(words.filter(word => word._id !== id));
+  }
 
   useEffect(() => {
     if (!loading && data && data[0]) {
       const { paginatedResults, totalCount } = data[0];
-      if (paginatedResults.length && totalCount[0]) {
-        setWords(paginatedResults);
-        setMaxWordsToDisplay(totalCount[0].count);
-      }
+      setWords(paginatedResults);
+      setMaxWordsToDisplay(totalCount[0] ? totalCount[0].count : 1);
     }
   }, [loading, data]);
 
@@ -37,12 +56,62 @@ function Vocabulary() {
     audio.play();
   }
 
-  function deleteWord(word) {
+  function deleteWordButton(word) {
     if (word.hasAttribute('data-id')) {
       const wordId = word.getAttribute('data-id');
-      if (deleteUserWord({ userId, wordId, token })) {
-        word.remove();
+      const toTrash = path !== DELETED_URL;
+      if (toTrash) {
+        const updateWord = {
+          optional: {
+            trash: true,
+          },
+        };
+        updateUserWord({ userId, wordId, token, word: updateWord });
+        deleteWord(wordId);
+      } else {
+        deleteUserWord({ userId, wordId, token });
+        deleteWord(wordId);
       }
+    }
+  }
+
+  function isWordDifficultForUser(isDifficult) {
+    return isDifficult ? 'In difficult words' : 'Move to difficult words';
+  }
+
+  function handleDifficultWordsForUser(button) {
+    const isDifficult = button.hasAttribute('data-difficult')
+      && button.getAttribute('data-difficult') === 'true';
+    if (button.closest('.word') && button.closest('.word').hasAttribute('data-id')) {
+      button.setAttribute('data-difficult', !isDifficult);
+      const wordId = button.closest('.word').getAttribute('data-id');
+      const word = {
+        optional: {
+          difficult: !isDifficult,
+        },
+      };
+      updateUserWord({ userId, wordId, token, word });
+
+      if (path !== COMPLICATED_URL) {
+        button.classList.toggle('btn-info');
+        button.classList.toggle('btn-primary');
+        button.innerText = isWordDifficultForUser(!isDifficult);
+      } else {
+        deleteWord(wordId);
+      }
+    }
+  }
+
+  function recoverWordForUser(word) {
+    const wordId = word.hasAttribute('data-id') && word.getAttribute('data-id');
+    if (wordId) {
+      const wordBody = {
+        optional: {
+          trash: false,
+        },
+      };
+      updateUserWord({ userId, wordId, token, word: wordBody });
+      deleteWord(wordId);
     }
   }
 
@@ -51,7 +120,13 @@ function Vocabulary() {
       playPronunciation(target);
     } else if (target.closest('.word__delete')
       && target.closest('.word__delete').parentNode.classList.contains('word')) {
-      deleteWord(target.closest('.word__delete').parentNode);
+      deleteWordButton(target.closest('.word__delete').parentNode);
+    } else if (target.classList.contains('word__user-controller')) {
+      if (path !== DELETED_URL) {
+        handleDifficultWordsForUser(target);
+      } else if (target.closest('.word')) {
+        recoverWordForUser(target.closest('.word'));
+      }
     }
   }
 
@@ -116,6 +191,23 @@ function Vocabulary() {
                   alt={word.word}
                 />
                 <div className="word__difficulty">{renderWordDifficulty(3)}</div>
+                {word.userWord && (
+                  <button
+                    className={
+                      `word__user-controller mt-2 btn btn-block
+                       ${(word.userWord.optional && word.userWord.optional.difficult)
+                        ? 'btn-info'
+                        : 'btn-primary'}`
+                    }
+                    type="button"
+                    data-difficult={word.userWord.optional && word.userWord.optional.difficult}
+                  >
+                    {path !== DELETED_URL
+                      ? isWordDifficultForUser(word.userWord.optional && word.userWord.optional.difficult)
+                      : 'Move to learning words'
+                    }
+                  </button>
+                )}
               </div>
               <div className="col pr-0">
                 <h4>{word.word}</h4>
@@ -136,13 +228,20 @@ function Vocabulary() {
                 </div>
               </div>
               <div className="word__delete">
-                <button type="button" className="close position-absolute" aria-label="Close">
+                <button
+                  type="button"
+                  className="close position-absolute"
+                  aria-label="Close"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title={path !== DELETED_URL ? 'Move to the trash' : 'Delete the word'}
+                >
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
             </div>
         ))}
-        {!loading && !!words.length && renderPagination()}
+        {!loading && words.length > 3 && renderPagination()}
       </div>
     </div>
   );

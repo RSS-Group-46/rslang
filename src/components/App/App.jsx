@@ -23,7 +23,6 @@ import {
   TEAM_URL,
   AUTH_URL,
   ERROR,
-  PLAY_URL,
 } from '../../constants/urlConstants';
 import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
@@ -43,6 +42,8 @@ import Statistic from '../Statistic/Statistic';
 import MiniGamesStatistics from '../Statistic/Components/MiniGamesStatistics';
 
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
+import Vocabulary from "../Vocabulary/Vocabulary";
+
 import MainGame from '../MainGame/MainGame';
 
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
@@ -73,16 +74,16 @@ const App = () => {
                   <MiniGamesStatistics />
                 </Route>
                 <Route exact path={VOCABULARY_URL + LEARNED_URL}>
-                  <div>learned</div>
+                  <Vocabulary path={LEARNED_URL} />
                 </Route>
                 <Route exact path={VOCABULARY_URL + COMPLICATED_URL}>
-                  <div>complicated</div>
+                  <Vocabulary path={COMPLICATED_URL} />
                 </Route>
                 <Route exact path={VOCABULARY_URL + DELETED_URL}>
-                  <div>deleted</div>
+                  <Vocabulary path={DELETED_URL} />
                 </Route>
                 <Route exact path={MINI_GAMES_URL}>
-                <MiniGames />
+                  <MiniGames />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
                   <SpeakItWelcome />

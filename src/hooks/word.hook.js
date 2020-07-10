@@ -1,3 +1,6 @@
+/* eslint consistent-return: 0 */
+/* eslint no-unused-vars: 0 */
+
 import { useState } from 'react';
 import useHttp from './http.hook';
 import { METHODS } from "../constants/apiConstants";
@@ -17,10 +20,8 @@ const useWord = () => {
           "Authorization": `Bearer ${token}`
         };
         const result = await request(wordURL, METHODS.GET, null, headers);
-        return result;
       } catch (err) {
         setError(err.message || 'Error to get word from API');
-        return false;
       }
     };
     getWord();
@@ -36,10 +37,8 @@ const useWord = () => {
           "Accept": "application/json"
         };
         const result = await request(userWordsURL, METHODS.GET, null, headers);
-        return result;
       } catch (err) {
         setError(err.message || 'Error to delete word from API');
-        return false;
       }
     };
     getWords();
@@ -50,16 +49,13 @@ const useWord = () => {
 
     const createWord = async () => {
       try {
-        const body = JSON.stringify(word);
         const headers = {
           "Authorization": `Bearer ${token}`,
           "Accept": "application/json"
         };
-        const result = await request(createWordUrl, METHODS.POST, body, headers );
-        return result;
+        const result = await request(createWordUrl, METHODS.POST, word, headers );
       } catch (err) {
         setError(err.message || 'Error to get word from API');
-        return false;
       }
     };
     createWord();
@@ -74,16 +70,30 @@ const useWord = () => {
           "Authorization": `Bearer ${token}`
         };
         const result = await request(deleteURL, METHODS.DELETE, null, headers);
-        return result;
       } catch (err) {
         setError(err.message || 'Error to delete word from API');
-        return false;
       }
     };
     deleteWord();
   };
 
-  return { getUserWord, getUserWords, deleteUserWord, createUserWord, loading, error };
+  const updateUserWord = ({ userId, wordId, token, word }) => {
+    const updateURL = `${URL}${userId}/words/${wordId}`;
+
+    const updateWord = async () => {
+      try {
+        const headers = {
+          Authorization: `Bearer ${token}`,
+        };
+        const result = await request(updateURL, METHODS.PUT, word, headers);
+      } catch (err) {
+        setError(err.message || 'Error to update word from API');
+      }
+    };
+    updateWord();
+  };
+
+  return { getUserWord, getUserWords, deleteUserWord, createUserWord, updateUserWord, loading, error };
 }
 
 export default useWord;
