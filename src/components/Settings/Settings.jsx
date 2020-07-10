@@ -8,6 +8,7 @@ import { pushUserSettings, pullUserSettings, prepareSettingsForApp } from '../..
 import { USER_DATA_STORAGE_NAME } from '../../constants/commonConstants';
 import { WORDS_PER_DAY_DEFAULT_VALUE, SETTINGS_INITIAL_STATE } from '../../constants/settingsConstants';
 import General from './Cards/GeneralSettings';
+import useAuth from '../../hooks/auth.hook';
 
 const gearSize = 40;
 const headerPadding = 10;
@@ -26,12 +27,16 @@ const Settings = () => {
   const formInput = createRef();
   const userData = localStorage.getItem(USER_DATA_STORAGE_NAME);
 
+  const { logOut } = useAuth();
+
   useEffect(() => {
     if (userData) {
       pullUserSettings(JSON.parse(userData))
         .then(data => {
-          if (data) {
-            const prepared = prepareSettingsForApp(data);
+          if (data.tokenExpired) {
+            logOut();
+          } else if (data.settings) {
+            const prepared = prepareSettingsForApp(data.settings);
             dispatch(changeOptions(prepared))
           }
         })

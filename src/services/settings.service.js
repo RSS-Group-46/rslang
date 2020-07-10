@@ -1,3 +1,5 @@
+const notFoundCode = 404;
+
 const prepareSettingsForServer = (settings) => {
   const { wordsPerDay, ...optional } = settings;
   return JSON.stringify({
@@ -38,8 +40,11 @@ export const pullUserSettings = async (userData) => {
     }
   );
   if (response.ok) {
-    return response.json();
+    return { settings: response.json() };
   }
-  // settings for user is not present;
-  return null;
+  if (response.status === notFoundCode) {
+    // settings for user is not present;
+    return {};
+  }
+  return { tokenExpired: true };
 }
