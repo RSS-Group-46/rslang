@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export const API_SIMILAR_WORDS = '37331ef2-0879-4e7e-934d-f2beddbb54e4';
+export const API_SIMILAR_WORDS = '56f55fed-8a95-4c5d-83a5-229923ca5e37	';

@@ -6,11 +6,11 @@ const ListWord = (props) => {
   
   useEffect(() => {
     if (listSimilarWors) {
-      const arr = listSimilarWors[numberWord].similarWords.concat({
+      const arr = listSimilarWors[numberWord]?.similarWords.concat({
         item: listSimilarWors[numberWord].word,
       });
       const randomSort = () => {
-        return arr.sort(() => Math.random() - 0.5);
+        return arr?.sort(() => Math.random() - 0.5);
       };
       setRondomWords(randomSort());
     }

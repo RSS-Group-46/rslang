@@ -5,6 +5,8 @@ import ButtonLevel from './ButtonLevel';
 import ButtonRound from './ButtonRound';
 import Statistic from './Statistic';
 import ListWord from './ListWord';
+import BtnNextRepeat from './BtnNextRepeat';
+import StatisticGame from './StatisticGame';
 import { cleaningSentence } from './utils';
 import { API_SIMILAR_WORDS } from './constants';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
@@ -27,10 +29,15 @@ const OurGame = (props) => {
   const [numberWord, setNumberWord] = useState(0);
   const [selectWord, setSelectWord] = useState([]);
   const [statistic, setStatistic] = useState(false);
+  const [numberWordRound, setNumberWordRound] = useState(0);
+  const [statisticRound, setStatisticRound] = useState(false);
+  const [arrCorrectAnswer, setArrCorrectAnswer] = useState([]);
+  const [arrErrorAnswer, setArrErrorAnswer] = useState([]);
+  let currentError = 0;
 
   const handleAudio = () => {
     const audio = new Audio(
-      `https://raw.githubusercontent.com/irinainina/rslang-data/master/${sentence[0].audioExample}`,
+      `https://raw.githubusercontent.com/irinainina/rslang-data/master/${sentence[numberWordRound].audioExample}`,
     );
     audio.play();
   };
@@ -52,15 +59,42 @@ const OurGame = (props) => {
     setSelectWord([]);
   };
 
+  const handleNext = () => {
+    if (numberWordRound < sentence.length - 1) {
+      setResultRound(false);
+      setNumberWord(0);
+      setSelectWord([]);
+      setNumberWordRound(numberWordRound + 1);
+
+      selectWord.forEach((item) => {
+        if (!correctSentence.includes(item)) {
+          currentError += 1;
+        }
+      });
+      // eslint-disable-next-line no-unused-expressions
+      if (currentError > 0) {
+        setArrErrorAnswer([...arrErrorAnswer, sentence[numberWordRound]]);
+      } else {
+        setArrCorrectAnswer([...arrCorrectAnswer, sentence[numberWordRound]]);
+      }
+    } else {
+      setStatisticRound(true);
+    }
+  };
+
   const handleStatistic = () => {
+    enableLoader();
     setStatistic(true);
-  }
+  };
+  const closeStatistic = () => {
+    setStatistic(false);
+  };
 
   useEffect(() => {
     if (sentence) {
-      setCorrectSentence(cleaningSentence(sentence[0]));
+      setCorrectSentence(cleaningSentence(sentence[numberWordRound]));
     }
-  }, [sentence]);
+  }, [sentence, numberWordRound]);
 
   useEffect(() => {
     if (correctSentence) {
@@ -94,7 +128,13 @@ const OurGame = (props) => {
         <div>
           <ButtonLevel handleLevel={handleLevel} level={level} />
           <ButtonRound handleRound={handleRound} round={round} />
-          <button type='button' className='btn-statistic__our-game' onClick={handleStatistic}>Statistic</button>
+          <button
+            type="button"
+            className="btn-statistic__our-game"
+            onClick={handleStatistic}
+          >
+            Statistic
+          </button>
         </div>
         {resultRound && (
           <NavLink
@@ -129,20 +169,31 @@ const OurGame = (props) => {
           />
         </div>
       )}
-      {!resultRound  ? (
+      {!resultRound ? (
         <div className="btn-listen__our-game">
           <button type="button" onClick={handleAudio}>
             LISTEN
           </button>
         </div>
       ) : (
-        <div className="btn-listen__our-game">
-          <button type="button" onClick={handleRepeat}>
-            REPEAT
-          </button>
-        </div>
+        <BtnNextRepeat handleRepeat={handleRepeat} handleNext={handleNext} />
       )}
-      {statistic && <Statistic userId={userId} token={token} level={level} round={round}/>}
+      {statistic && (
+        <Statistic
+          userId={userId}
+          token={token}
+          level={level}
+          round={round}
+          closeStatistic={closeStatistic}
+          offLoader={offLoader}
+        />
+      )}
+      {statisticRound && (
+        <StatisticGame
+          arrCorrectAnswer={arrCorrectAnswer}
+          arrErrorAnswer={arrErrorAnswer}
+        />
+      )}
     </div>
   );
 };
