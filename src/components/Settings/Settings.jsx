@@ -29,12 +29,17 @@ const Settings = () => {
 
   const { logOut } = useAuth();
 
+  const doLogOut = () => {
+    logOut();
+    window.location.reload(false);
+  }
+
   useEffect(() => {
     if (userData) {
       pullUserSettings(JSON.parse(userData))
         .then(data => {
           if (data.tokenExpired) {
-            logOut();
+            doLogOut();
           } else if (data.settings) {
             const prepared = prepareSettingsForApp(data.settings);
             dispatch(changeOptions(prepared))
