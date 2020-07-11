@@ -4,11 +4,9 @@ import '@fortawesome/fontawesome-free/js/all';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
 import { METHODS } from '../../constants/apiConstants';
 
-
 const StatisticAudioChallenge = ({
   arrCorrectAnswers,
   arrErrorAnswers,
-
   token,
   userId,
 }) => {
@@ -71,7 +69,6 @@ const StatisticAudioChallenge = ({
         },
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statistic]);
 
   return (

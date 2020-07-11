@@ -101,7 +101,6 @@ const StartPageAudioChallenge = ({ settings }) => {
           }
         });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [start, knowWords]);
 
   return (

@@ -159,7 +159,6 @@ const AudioChallenge = ({
     } else {
       setLoader(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [words[numberWord]]);
 
   return (
