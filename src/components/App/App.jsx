@@ -23,6 +23,7 @@ import {
   TEAM_URL,
   AUTH_URL,
   ERROR,
+  PLAY_URL,
 } from '../../constants/urlConstants';
 import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
@@ -30,6 +31,8 @@ import useAuth from '../../hooks/auth.hook';
 import Team from '../Team/Team';
 import Header from '../Header/Header';
 import Settings from '../Settings/Settings';
+import Puzzle from '../EnglishPuzzle/Puzzle';
+import PuzzleWelcomePage from '../EnglishPuzzle/PuzzleWelcomePage';
 import Sprint from '../Sprint/Sprint';
 import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
@@ -88,7 +91,10 @@ const App = () => {
                   <SpeakItTrain />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
-                  <div>puzzle</div>
+                  <PuzzleWelcomePage />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + PUZZLE_URL + PLAY_URL}>
+                  <Puzzle />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SAVANNAH_URL}>
                 <div>Savannah</div>
@@ -118,7 +124,7 @@ const App = () => {
               <Route exact path={AUTH_URL}>
                 <Authorization />
               </Route>
-             <Redirect to={AUTH_URL} />
+              <Redirect to={AUTH_URL} />
             </Switch>
           )}
         </AuthContext.Provider>

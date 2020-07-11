@@ -38,34 +38,34 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarColor03">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <NavLink className="nav-link" to={BASE_URL}>
+                <NavLink exact className="nav-link" to={BASE_URL}>
                   Home <span className="sr-only">(current)</span>
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to={STATISTICS_URL}>
+                <NavLink exact className="nav-link" to={STATISTICS_URL}>
                   Statistics
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to={VOCABULARY_URL}>
+                <NavLink exact className="nav-link" to={VOCABULARY_URL}>
                   Vocabulary
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to={MINI_GAMES_URL}>
+                <NavLink exact className="nav-link" to={MINI_GAMES_URL}>
                   Mini-Games
                 </NavLink>
               </li>
 
               <li className="nav-item">
-                <NavLink className="nav-link" to={PROMO_URL}>
+                <NavLink exact className="nav-link" to={PROMO_URL}>
                   Promo
                 </NavLink>
               </li>
 
               <li className="nav-item">
-                <NavLink className="nav-link" to={TEAM_URL}>
+                <NavLink exact className="nav-link" to={TEAM_URL}>
                   About Team
                 </NavLink>
               </li>

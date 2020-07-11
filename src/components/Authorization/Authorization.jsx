@@ -67,15 +67,15 @@ const Authorization = () => {
           {error}
         </div>
       ) : (
-        ''
-      )}
+          ''
+        )}
       {message.length > 0 ? (
         <div className="alert alert-dark" role="alert">
           {message}
         </div>
       ) : (
-        ''
-      )}
+          ''
+        )}
       <form
         className="card"
         onSubmit={(e) => {
