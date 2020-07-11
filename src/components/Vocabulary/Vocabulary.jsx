@@ -173,22 +173,20 @@ function Vocabulary({ path }) {
 
   function renderPagination() {
     return (
-      <div className="pagination">
-        <Pagination
-          activePage={page}
-          itemsCountPerPage={WORDS_PER_PAGE}
-          totalItemsCount={maxWordsToDisplay}
-          pageRangeDisplayed={5}
-          onChange={setPage}
-          itemClass="page-item"
-          linkClass="page-link"
-        />
-      </div>
+      <Pagination
+        activePage={page}
+        itemsCountPerPage={WORDS_PER_PAGE}
+        totalItemsCount={maxWordsToDisplay}
+        pageRangeDisplayed={5}
+        onChange={setPage}
+        itemClass="page-item"
+        linkClass="page-link"
+      />
     );
   }
 
   return (
-    <div className="vocabulary container pt-1" onClick={handleClick} role="article">
+    <div className="vocabulary container pt-4 pb-5" onClick={handleClick} role="article">
       <div className="vocabulary-controls d-flex justify-content-between mb-2">
         <div className="links d-flex">
           <NavLink to={VOCABULARY_URL + LEARNED_URL} className="nav-link btn btn-secondary btn-sm px-3">
@@ -236,73 +234,75 @@ function Vocabulary({ path }) {
           </div>
         </div>
       </div>
-      <div className="dictionary-cards container">
+      <div className="dictionary-cards pt-4 pb-5 container">
         {renderPagination()}
-        {words && words.map((word) => (
-            <div key={word._id} data-id={word._id} className="word row mb-5 container">
-              <div className="col-sm-auto flex-column">
-                <img
-                  className="word__image img-thumbnail"
-                  src={`https://raw.githubusercontent.com/shevv920/rslang-data/master/${word.image}`}
-                  alt={word.word}
-                />
-                <div
-                  className="word__difficulty"
-                  data-toggle="tooltip"
-                  data-placement="bottom"
-                  title="Word difficulty"
-                >
-                  {renderWordDifficulty(word.group)}
-                </div>
-                {word.userWord && (
-                  <button
-                    className={
-                      `word__user-controller mt-2 btn btn-block
-                       ${(word.userWord.optional && word.userWord.optional.difficult)
-                        ? 'btn-info'
-                        : 'btn-primary'}`
-                    }
-                    type="button"
-                    data-difficult={word.userWord.optional && word.userWord.optional.difficult}
-                  >
-                    {path !== DELETED_URL
-                      ? isWordDifficultForUser(word.userWord.optional && word.userWord.optional.difficult)
-                      : 'Move to learning words'}
-                  </button>
-                )}
-              </div>
-              <div className="col pr-0">
-                <h4>{word.word}</h4>
-                <div className="mb-2">
-                  <span className="mr-2">{word.wordTranslate} {word.transcription}</span>
-                  <button
-                    className="word__audio"
-                    type="button"
-                    data-audio={word.audio}
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Click to listen the pronunciation"
+        <div className="dictionary-cards__container pt-4">
+          {words && words.map((word) => (
+              <div key={word._id} data-id={word._id} className="word row mb-5 container">
+                <div className="col-sm-auto flex-column">
+                  <img
+                    className="word__image img-thumbnail"
+                    src={`https://raw.githubusercontent.com/shevv920/rslang-data/master/${word.image}`}
+                    alt={word.word}
                   />
+                  <div
+                    className="word__difficulty"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title="Word difficulty"
+                  >
+                    {renderWordDifficulty(word.group)}
+                  </div>
+                  {word.userWord && (
+                    <button
+                      className={
+                        `word__user-controller mt-2 btn btn-block
+                         ${(word.userWord.optional && word.userWord.optional.difficult)
+                          ? 'btn-info'
+                          : 'btn-primary'}`
+                      }
+                      type="button"
+                      data-difficult={word.userWord.optional && word.userWord.optional.difficult}
+                    >
+                      {path !== DELETED_URL
+                        ? isWordDifficultForUser(word.userWord.optional && word.userWord.optional.difficult)
+                        : 'Move to learning words'}
+                    </button>
+                  )}
                 </div>
-                <div>
-                  {renderWordExample(word.textMeaning, word.textMeaningTranslate, word._id + 1)}
-                  {renderWordExample(word.textExample, word.textExampleTranslate, word._id + 2)}
+                <div className="col pr-0">
+                  <h4>{word.word}</h4>
+                  <div className="mb-2">
+                    <span className="mr-2">{word.wordTranslate} {word.transcription}</span>
+                    <button
+                      className="word__audio"
+                      type="button"
+                      data-audio={word.audio}
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Click to listen the pronunciation"
+                    />
+                  </div>
+                  <div>
+                    {renderWordExample(word.textMeaning, word.textMeaningTranslate, word._id + 1)}
+                    {renderWordExample(word.textExample, word.textExampleTranslate, word._id + 2)}
+                  </div>
+                </div>
+                <div className="word__delete">
+                  <button
+                    type="button"
+                    className="close position-absolute"
+                    aria-label="Close"
+                    data-toggle="tooltip"
+                    data-placement="bottom"
+                    title={path !== DELETED_URL ? 'Move to the trash' : 'Delete the word'}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
               </div>
-              <div className="word__delete">
-                <button
-                  type="button"
-                  className="close position-absolute"
-                  aria-label="Close"
-                  data-toggle="tooltip"
-                  data-placement="bottom"
-                  title={path !== DELETED_URL ? 'Move to the trash' : 'Delete the word'}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </div>
-        ))}
+          ))}
+        </div>
         {!loading && words.length > 3 && renderPagination()}
       </div>
     </div>

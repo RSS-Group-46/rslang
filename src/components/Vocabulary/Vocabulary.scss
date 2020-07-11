@@ -22,7 +22,7 @@
 
       &__difficulty {
         display: flex;
-        margin: 6px 0 0 4px;
+        margin: 12px 0;
 
         > * {
           margin-right: 3px;
@@ -58,16 +58,6 @@
         &--5 {
           background-color: darken($success, $koef);
         }
-      }
-    }
-
-    .pagination {
-      &:first-child {
-        margin: 20px 0;
-      }
-
-      &:last-child {
-        margin: 20px 0 100px 0;
       }
     }
   }
