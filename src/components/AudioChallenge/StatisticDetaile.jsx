@@ -32,7 +32,7 @@ const StatisticDetaile = ({
           data.optional && setStattistic(Object.values(data.optional.audioCall));
         });
     }
-  }, [showStatisticDetaile]);
+  }, [showStatisticDetaile, token, userId]);
 
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * Math.floor(max));
