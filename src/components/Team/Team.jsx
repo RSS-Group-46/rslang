@@ -8,10 +8,18 @@ const dataTeam = require('../../data/dataTeam.json');
 
 const Team = () => {
   return (
-    <div className="team">
+    <div className="container team">
       <h2 className="team__title">Team members</h2>
       <p className="team__greeting">Best regards, development team!</p>
-      <p className="team__text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae nemo nulla praesentium unde alias vero omnis animi vel corporis totam harum iusto nesciunt, ipsa eveniet accusamus officia optio. Voluptate, accusantium. Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae nemo nulla praesentium unde alias vero omnis animi vel corporis totam harum iusto nesciunt, ipsa eveniet accusamus officia optio. Voluptate, accusantium.</p>
+      <p className="team__text">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
+        nemo nulla praesentium unde alias vero omnis animi vel corporis totam
+        harum iusto nesciunt, ipsa eveniet accusamus officia optio. Voluptate,
+        accusantium. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Repudiandae nemo nulla praesentium unde alias vero omnis animi vel
+        corporis totam harum iusto nesciunt, ipsa eveniet accusamus officia
+        optio. Voluptate, accusantium.
+      </p>
 
       <section className="team__list">
         {dataTeam.map((info) => {
@@ -39,8 +47,6 @@ const Team = () => {
                 <h5>{`${info.name} ${info.surname}`}</h5>
                 <ul>
                   <li />
-                   - project
-                  <li />
                   - project
                   <li />
                   - project
@@ -48,6 +54,7 @@ const Team = () => {
                   - project
                   <li />
                   - project
+                  <li />- project
                 </ul>
               </div>
             </article>
