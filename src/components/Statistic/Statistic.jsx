@@ -1,5 +1,6 @@
 import React, { useState, useEffect  } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { saveStatistic, loadStatistic, deleteStatistic } from '../../redux/actions/statistic.actions';
 import { selectStatistic, selectPassedCards, selectProcentCorrectAnswers, selectNewWords, selectLongSeriesCorrectAnswers } from '../../redux/selectors/statistic.selectors';
@@ -8,6 +9,7 @@ import { USER_DATA_STORAGE_NAME } from '../../constants/commonConstants';
 import { pushUserStatistic, pullUserStatistic, prepareStatisticForApp } from '../../services/statistic.service';
 
 import { STATISTIC_INITIAL_STATE } from '../../constants/statisticConstants';
+import { STATISTICS_URL, MINI_GAMES_URL } from '../../constants/urlConstants';
 
 import './Statistic.scss';
 
@@ -78,6 +80,7 @@ const Statistic = () => {
 
     const [shortStatistic, setShortStatisticClassName] = useState(show);
     const [longStatistic, setLongStatisticClassName] = useState(none);
+    const [goToMiniGamesStatistic, setGoToMiniGamesStatistic] = useState(false);
 
     function showShortStatistic () {
         setShortStatisticClassName (show);
@@ -87,6 +90,10 @@ const Statistic = () => {
     function showLongStatistic () {
         setShortStatisticClassName(none);
         setLongStatisticClassName(show);
+    }
+
+    if (goToMiniGamesStatistic) {
+      return <Redirect to={STATISTICS_URL + MINI_GAMES_URL} />
     }
 
     return (
@@ -125,6 +132,13 @@ const Statistic = () => {
                     className="btn btn-info" 
                     onClick={() => showLongStatistic ()}
                 >Долгосрочная статистика</button>
+                <button 
+                    type="button" 
+                    className="btn btn-info" 
+                    onClick={() => setGoToMiniGamesStatistic(true)}
+                >
+                  Статистика мини-игр
+                </button>
                 <button
                     type="button" 
                     className="btn btn-danger" 
