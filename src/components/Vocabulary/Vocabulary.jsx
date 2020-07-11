@@ -19,6 +19,7 @@ import './Vocabulary.scss';
 
 function Vocabulary({ path }) {
   const [words, setWords] = useState([]);
+  const [group] = useState(null);
   const [page, setPage] = useState(1);
   const [maxWordsToDisplay, setMaxWordsToDisplay] = useState(WORDS_PER_PAGE);
   const { userId, token } = useContext(AuthContext);
@@ -36,7 +37,7 @@ function Vocabulary({ path }) {
     }
   }, [path]);
 
-  const { loading, data } = useUserAggregatedWords({ userId, token, group: 0, page: page - 1, wordsPerPage: WORDS_PER_PAGE, filter });
+  const { loading, data } = useUserAggregatedWords({ userId, token, group, page: page - 1, wordsPerPage: WORDS_PER_PAGE, filter });
 
   function deleteWord(id) {
     setWords(words.filter(word => word._id !== id));
@@ -147,10 +148,6 @@ function Vocabulary({ path }) {
     );
   }
 
-  function handlePageChange(pageNumber) {
-    setPage(pageNumber);
-  }
-
   function renderPagination() {
     return (
       <div className="pagination">
@@ -159,7 +156,7 @@ function Vocabulary({ path }) {
           itemsCountPerPage={WORDS_PER_PAGE}
           totalItemsCount={maxWordsToDisplay}
           pageRangeDisplayed={5}
-          onChange={handlePageChange}
+          onChange={setPage}
           itemClass="page-item"
           linkClass="page-link"
         />
@@ -190,7 +187,14 @@ function Vocabulary({ path }) {
                   src={`https://raw.githubusercontent.com/shevv920/rslang-data/master/${word.image}`}
                   alt={word.word}
                 />
-                <div className="word__difficulty">{renderWordDifficulty(3)}</div>
+                <div
+                  className="word__difficulty"
+                  data-toggle="tooltip"
+                  data-placement="bottom"
+                  title="Word difficulty"
+                >
+                  {renderWordDifficulty(word.group)}
+                </div>
                 {word.userWord && (
                   <button
                     className={
@@ -204,8 +208,7 @@ function Vocabulary({ path }) {
                   >
                     {path !== DELETED_URL
                       ? isWordDifficultForUser(word.userWord.optional && word.userWord.optional.difficult)
-                      : 'Move to learning words'
-                    }
+                      : 'Move to learning words'}
                   </button>
                 )}
               </div>

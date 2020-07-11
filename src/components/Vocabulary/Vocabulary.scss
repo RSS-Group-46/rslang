@@ -54,6 +54,10 @@
         &--4 {
           background-color: $success;
         }
+
+        &--5 {
+          background-color: darken($success, $koef);
+        }
       }
     }
 
