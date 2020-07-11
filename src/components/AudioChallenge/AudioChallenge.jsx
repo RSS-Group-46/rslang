@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Loader from '../Loader/Loader';
 import ButtonNextWords from './ButtonDontKnowWords';
@@ -102,12 +102,12 @@ const AudioChallenge = ({
     }
   };
 
-  const handleAudio = useCallback(() => {
+  const handleAudio = () => {
     const audio = new Audio(
       `https://raw.githubusercontent.com/irinainina/rslang-data/master/${words[numberWord].audio}`,
     );
     audio.play();
-  }, [numberWord, words]);
+  };
 
   const handleStatisticDetaile = () =>
     setShowStatisticDetaile(!showStatisticDetaile);
@@ -159,7 +159,8 @@ const AudioChallenge = ({
     } else {
       setLoader(false);
     }
-  }, [handleAudio, numberWord, offLoader, partsSpeech, wordId, words]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [words[numberWord]]);
 
   return (
     <>

@@ -73,7 +73,8 @@ const StatisticAudioChallenge = ({
         },
       );
     }
-  }, [arrCorrectFilter, knowWords, level, round, size, statistic, token, userId]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statistic]);
 
   return (
     <div className="statistic__audio-challenge">

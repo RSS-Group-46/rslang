@@ -101,7 +101,8 @@ const StartPageAudioChallenge = ({ settings }) => {
           }
         });
     }
-  }, [start, knowWords, filter, settings.wordsPerDay, userId, token]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [start, knowWords]);
 
   return (
     <div className="start-page__audio-challenge">
