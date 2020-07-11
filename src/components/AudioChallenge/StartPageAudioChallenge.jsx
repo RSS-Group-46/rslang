@@ -74,7 +74,7 @@ const StartPageAudioChallenge = ({ settings }) => {
           setWords(data);
         });
     }
-  }, [level, round, knowWords, start]);
+  }, [level, round, knowWords]);
 
   useEffect(() => {
     if (start && knowWords) {

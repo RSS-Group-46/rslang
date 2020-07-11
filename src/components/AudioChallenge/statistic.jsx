@@ -34,7 +34,7 @@ const StatisticAudioChallenge = ({
     )
       .then((response) => response.json())
       .then((data) => setStatistic(data));
-  }, [token, userId]);
+  }, []);
 
   useEffect(() => {
     if (statistic) {
