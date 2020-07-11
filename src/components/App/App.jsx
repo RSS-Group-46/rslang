@@ -33,10 +33,19 @@ import Header from '../Header/Header';
 import Settings from '../Settings/Settings';
 import Puzzle from '../EnglishPuzzle/Puzzle';
 import PuzzleWelcomePage from '../EnglishPuzzle/PuzzleWelcomePage';
+import Sprint from '../Sprint/Sprint';
 import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
+
+import Statistic from '../Statistic/Statistic';
+
+import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
+import MainGame from '../MainGame/MainGame';
+
+import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
+import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
 
 import './App.scss';
 
@@ -54,9 +63,10 @@ const App = () => {
               <Switch>
                 <Route exact path={BASE_URL}>
                   <div>Hello Group 46 !</div>
+                  <MainGame />
                 </Route>
                 <Route exact path={STATISTICS_URL}>
-                  <div>statistics</div>
+                  <Statistic />
                 </Route>
                 <Route exact path={VOCABULARY_URL + LEARNED_URL}>
                   <div>learned</div>
@@ -68,10 +78,13 @@ const App = () => {
                   <div>deleted</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL}>
-                  <MiniGames />
+                <MiniGames />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
                   <SpeakItWelcome />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + SPEAKIT_URL + PATH_SPEAKIT_TRAIN}>
+                  <SpeakItTrain />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
                   <PuzzleWelcomePage />
@@ -80,13 +93,13 @@ const App = () => {
                   <Puzzle />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SAVANNAH_URL}>
-                  <div>savannah</div>
+                <div>Savannah</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
-                  <div>audiocall</div>
+                  <StartPageAudioChallenge />
                 </Route>
-                <Route exact path={MINI_GAMES_URL + SPRINT_URL}>
-                  <div>sprint</div>
+                <Route path={MINI_GAMES_URL + SPRINT_URL}>
+                  <Sprint />
                 </Route>
                 <Route exact path={PROMO_URL}>
                   <div>promo</div>

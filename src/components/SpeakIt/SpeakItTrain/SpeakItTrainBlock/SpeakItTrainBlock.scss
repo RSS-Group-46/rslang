@@ -1,0 +1,135 @@
+@import '../../../../styles/variables';
+
+:root {
+  --blue-color: #048bc2;
+  --white-color: #ffffff;
+  --gray-color: grey;
+  --lightyellow-color: #fbe898;
+  --lightgreen-color: #ccf4d3;
+}
+
+.train {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &__img {
+    display: block;
+    margin-bottom: 20px;
+
+    width: 400px;
+    max-width: 400px;
+    max-height: 270px;
+    min-height: 270px;
+  }
+
+  &-word {
+    display: flex;
+    width: 400px;
+    height: 60px;
+    margin-bottom: 20px;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 20px;
+  }
+
+  &-buttons__restart,
+  &-buttons__speak,
+  &-buttons__results {
+    width: 200px;
+    margin: 30px 10px;
+
+    font-size: 18px;
+    background-color: var(--blue-color);
+    color: var(--white-color);
+
+    &:hover,
+    &:hover,
+    &:hover {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    &:active,
+    &:active,
+    &:active {
+      box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.4),
+        inset 2px 2px 3px rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+.word-cards {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  width: 1000px;
+
+  &__card {
+    position: relative;
+    display: flex;
+    min-width: 180px;
+    margin-bottom: 20px;
+
+    flex-direction: column;
+    justify-content: space-around;
+
+    border: 2px solid var(--gray-color);
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:before {
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 10px;
+
+      display: block;
+      width: 20px;
+      height: 20px;
+
+      transform: translateY(-50%);
+
+      background-image: url('../../assets/icons/sound.png');
+      background-repeat: no-repeat;
+      background-color: var(--white-color);
+      background-size: cover;
+    }
+
+    &:hover {
+      box-shadow: 1px 1px 3px 3px var(--gray-color);
+    }
+
+    &--active {
+      background-color: var(--lightyellow-color);
+
+      &:before {
+        background-color: var(--lightyellow-color);
+      }
+    }
+
+    &--guessed {
+      background-color: --lightgreen-color;
+
+      &:before {
+        background-color: --lightgreen-color;
+      }
+    }
+
+    p {
+      margin: 10px;
+
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+  &__transcription {
+    color: --gray-color;
+  }
+}

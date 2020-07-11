@@ -1,20 +1,53 @@
 export const WORDS_PER_DAY_DEFAULT_VALUE = 5;
+
+export const SETTINGS_NAMES = {
+  wordsPerDay: 'wordsPerDay',
+  difficulty: 'difficulty',
+  soundsAutoPlay: 'soundsAutoPlay',
+
+  showTranslation: 'showTranslation',
+  showDescribe: 'showDescribe',
+  showExample: 'showExample',
+
+  showTranscription: 'showTranscription',
+  showAssociationPicture: 'showAssociationPicture',
+
+  showAnswerButton: 'showAnswerButton',
+  showDeleteButton: 'showDeleteButton',
+  showMoveToComplicatedButton: 'showMoveToComplicatedButton',
+
+  volume: 'volume',
+};
+
+Object.freeze(SETTINGS_NAMES); // prevent mutation
+
 export const SETTINGS_INITIAL_STATE = {
-  wordsPerDay: WORDS_PER_DAY_DEFAULT_VALUE,
+  [SETTINGS_NAMES.wordsPerDay]: WORDS_PER_DAY_DEFAULT_VALUE,
+  [SETTINGS_NAMES.difficulty]: 0, // from 0 to 5 inclusive
+  [SETTINGS_NAMES.soundsAutoPlay]: true,
 
   // info on cards (at least one must be choosed)
-  showTranslation: true,
-  showDescribe: false,
-  showExample: false,
+  [SETTINGS_NAMES.showTranslation]: true,
+  [SETTINGS_NAMES.showDescribe]: false,
+  [SETTINGS_NAMES.showExample]: false,
 
   // additional info
-  showTranscription: false,
-  showAssociationPicture: false,
+  [SETTINGS_NAMES.showTranscription]: false,
+  [SETTINGS_NAMES.showAssociationPicture]: false,
 
   // buttons
-  showAnswerButton: false,
-  showDeleteButton: false,
-  showMoveToComplicatedButton: false,
+  [SETTINGS_NAMES.showAnswerButton]: false,
+  [SETTINGS_NAMES.showDeleteButton]: false,
+  [SETTINGS_NAMES.showMoveToComplicatedButton]: false,
 
-  volume: 0.5, // some stuff like mini-games have sounds, should not be at 100% volume I guess
+  [SETTINGS_NAMES.volume]: 0.5, // some stuff like mini-games have sounds, should not be at 100% volume I guess
+};
+
+export const DIFFICULTY_DESCRIPTIONS = {
+  0: 'very easy',
+  1: 'easy',
+  2: 'normal',
+  3: 'hard',
+  4: 'very hard',
+  5: 'expert',
 };

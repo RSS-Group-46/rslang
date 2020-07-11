@@ -11,6 +11,7 @@ import {
   TEAM_URL,
 } from '../../constants/urlConstants';
 import AuthContext from '../../contexts/auth.context';
+import './Header.scss';
 
 const Header = () => {
   const auth = useContext(AuthContext);
