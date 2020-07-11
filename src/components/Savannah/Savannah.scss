@@ -3,13 +3,45 @@ body {
   height: 100vh;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+.savannah__overlay {
+  position: relative;
+  height: 90vh;
+  width: 100%;
+  z-index: 0;
+  background-color: #000000;
+  display: grid;
+  place-items: center;
+  background-image: url('./assets/bg.jpg');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  &::before {
+    position: fixed;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.5;
+  }
+}
+
+.savannah__container {
+  position: relative;
+  display: grid;
+  place-content: center;
   height: 90vh !important;
+}
+.savannah-game,
+.savannah-gameover {
+  z-index: 15;
+  position: relative;
+  display: grid;
+  place-content: center;
+  height: 90vh !important;
+  color: #ffffff;
 }
 
 .btn {
@@ -26,12 +58,11 @@ body {
   user-select: none;
 }
 
-.savannah-window {
-  width: 100%;
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.lifes {
+  position: fixed;
+  right: 0;
+  font-size: 25pt;
+  color: #b8860b;
 }
 
 @keyframes drop {
