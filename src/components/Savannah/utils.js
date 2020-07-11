@@ -1,9 +1,6 @@
-/* eslint-disable */
 import Queue from '../../utils/Queue';
 
 export default function savannahUtils() {
-  const value = localStorage.getItem('userData');
-  const { userId, token } = JSON.parse(value === null ? '{}' : value);
   let timer;
 
   const setKey = (key) => {
@@ -78,12 +75,14 @@ export default function savannahUtils() {
   };
 
   const resetAnimation = (className = '.drop') => {
-    let timer;
-    if (document.querySelector(`${className}`).innerText.length <= 0) {
+    const target = document.querySelector(`${className}`);
+    if (target) {
       timer = setTimeout(() => {
-        document.querySelector(`${className}`).style.webkitAnimation = '';
-      }, 200);
-      document.querySelector(`${className}`).style.webkitAnimation = 'none';
+        if (target && target.innerText.length > 0) {
+          target.style.webkitAnimation = '';
+        }
+      }, 500);
+      target.style.webkitAnimation = 'none';
     } else {
       clearInterval(timer);
     }
@@ -101,8 +100,6 @@ export default function savannahUtils() {
     wrongAnswers: 0,
     isMounted: false,
     isGameOver: false,
-    userId,
-    token,
   };
 
   const getMountedState = (words, translatedWords, lifes) => {
@@ -120,52 +117,28 @@ export default function savannahUtils() {
     };
   };
 
-  const getLearnedWords = async (id, tkn) => {
+  const getWords = async () => {
+    const words = new Queue([]);
+    const translatedWords = new Queue([]);
+
     try {
-      const resposne = await fetch(
-        `https://afternoon-falls-25894.herokuapp.com/users/${id}/statistics`,
-        {
-          method: 'GET',
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${tkn}`,
-            Accept: 'application/json',
-          },
-        },
+      const response = await fetch(
+        `https://afternoon-falls-25894.herokuapp.com/words?page=${Math.round(
+          Math.random() * 29,
+        )}&group=${Math.round(Math.random() * 5)}`,
       );
 
-      const data = await resposne.json();
+      const data = await response.json();
+
+      data.forEach((el) => {
+        words.add(el.word);
+        translatedWords.add(el.wordTranslate);
+      });
     } catch (e) {
       // TODO: add toast notification
     }
-  };
 
-  const getWords = async (id, tkn) => {
-    const haveLearnedWords = getLearnedWords(id, tkn);
-    const words = new Queue([]);
-    const translatedWords = new Queue([]);
-    const ids = new Queue([]);
-    if (haveLearnedWords) {
-      try {
-        const response = await fetch(
-          `https://afternoon-falls-25894.herokuapp.com/words?page=${Math.round(
-            Math.random() * 29,
-          )}&group=${Math.round(Math.random() * 5)}`,
-        );
-
-        const data = await response.json();
-
-        data.forEach((el) => {
-          words.add(el.word);
-          translatedWords.add(el.wordTranslate);
-          ids.add(el.id);
-        });
-      } catch (e) {
-        // TODO: add toast notification
-      }
-    }
-
-    return { words, translatedWords, ids };
+    return { words, translatedWords };
   };
 
   const getNewState = (
