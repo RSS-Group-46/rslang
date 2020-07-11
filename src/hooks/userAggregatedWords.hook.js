@@ -8,18 +8,19 @@ import errors from '../constants/errorConstants';
  * @param userId authorized user id
  * @param token logged in user token  
  * @param group words difficulty group from 0 to 5 inclusive
+ * @param page page of the group
  * @param wordsPerPage aggregated result pagination, how many words per page
  * @param filter filter - object corresponding MongoDB document queries
  */
 const useUserAggregatedWords = (params) => {
-  const { userId, token, group, wordsPerPage, filter } = params;
-  
+  const { userId, token, group, page, wordsPerPage, filter } = params;
+
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const { loading, request } = useHttp();
 
   const filterEncoded = encodeURIComponent(JSON.stringify(filter));
-  const paramsStr = `group=${group}&wordsPerPage=${wordsPerPage}&filter=${filterEncoded}`;
+  const paramsStr = `${page ? `page=${page}&` : ''}group=${group}&wordsPerPage=${wordsPerPage}&filter=${filterEncoded}`;
   const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?${paramsStr}`;
 
   useEffect(() => {

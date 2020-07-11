@@ -19,14 +19,14 @@ import './Vocabulary.scss';
 
 function Vocabulary({ path }) {
   const [words, setWords] = useState([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [maxWordsToDisplay, setMaxWordsToDisplay] = useState(WORDS_PER_PAGE);
   const { userId, token } = useContext(AuthContext);
   const { deleteUserWord, updateUserWord } = useWord();
   const [filter, setFilter] = useState(ONLY_USER_WORDS);
 
   useEffect(() => {
-    setPage(0);
+    setPage(1);
     if (path === COMPLICATED_URL) {
       setFilter({...ONLY_USER_HARD_WORDS});
     } else if (path === DELETED_URL) {
@@ -36,7 +36,7 @@ function Vocabulary({ path }) {
     }
   }, [path]);
 
-  const { loading, data } = useUserAggregatedWords({ userId, token, group: page, wordsPerPage: WORDS_PER_PAGE, filter })
+  const { loading, data } = useUserAggregatedWords({ userId, token, group: 0, page: page - 1, wordsPerPage: WORDS_PER_PAGE, filter });
 
   function deleteWord(id) {
     setWords(words.filter(word => word._id !== id));
@@ -148,14 +148,14 @@ function Vocabulary({ path }) {
   }
 
   function handlePageChange(pageNumber) {
-    setPage(pageNumber - 1);
+    setPage(pageNumber);
   }
 
   function renderPagination() {
     return (
       <div className="pagination">
         <Pagination
-          activePage={page + 1}
+          activePage={page}
           itemsCountPerPage={WORDS_PER_PAGE}
           totalItemsCount={maxWordsToDisplay}
           pageRangeDisplayed={5}
@@ -183,7 +183,7 @@ function Vocabulary({ path }) {
       <div className="dictionary-cards container">
         {renderPagination()}
         {words && words.map((word) => (
-            <div key={word._id} data-id={word._id} className="word row mb-2 container">
+            <div key={word._id} data-id={word._id} className="word row mb-5 container">
               <div className="col-sm-auto flex-column">
                 <img
                   className="word__image img-thumbnail"
