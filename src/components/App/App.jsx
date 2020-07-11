@@ -48,6 +48,9 @@ import MainGame from '../MainGame/MainGame';
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
 
+import Savannah from '../Savannah/Savannah';
+import SavannahWelcome from '../Savannah/UI/SavannahWelcome';
+
 import './App.scss';
 
 const App = () => {
@@ -82,12 +85,15 @@ const App = () => {
                   <div>deleted</div>
                 </Route>
                 <Route exact path={MINI_GAMES_URL}>
-                <MiniGames />
+                  <MiniGames />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
                   <SpeakItWelcome />
                 </Route>
-                <Route exact path={MINI_GAMES_URL + SPEAKIT_URL + PATH_SPEAKIT_TRAIN}>
+                <Route
+                  exact
+                  path={MINI_GAMES_URL + SPEAKIT_URL + PATH_SPEAKIT_TRAIN}
+                >
                   <SpeakItTrain />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
@@ -97,7 +103,10 @@ const App = () => {
                   <Puzzle />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SAVANNAH_URL}>
-                <div>Savannah</div>
+                  <SavannahWelcome />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + SAVANNAH_URL + PLAY_URL}>
+                  <Savannah />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
                   <StartPageAudioChallenge />
