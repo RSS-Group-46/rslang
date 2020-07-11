@@ -10,6 +10,7 @@ import { getPlayData, correctWordUrls } from './utils';
 import { roundTime, wordsPerRound, scoreStep, streakToBonus, PLAY_PATH, ROUND_END_PATH, ROOT_PATH } from './constants';
 
 import './Sprint.scss';
+import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 
 export default () => {
   const [currentScore, setScore] = useState(0);
@@ -83,7 +84,8 @@ export default () => {
 
   return (
     <div className="container ml-5">
-      <div className="game">
+      {wordsLoadError && <ErrorIndicator handleCloseError={() => { }} />}
+      {!wordsLoadError && <div className="game">
         <Switch>
           <Route path={PLAY_PATH}>
             <div className="game__title">{currentScore}</div>
@@ -111,7 +113,7 @@ export default () => {
             <StartPage />
           </Route>
         </Switch>
-      </div>
+      </div>}
     </div >
   )
 };
