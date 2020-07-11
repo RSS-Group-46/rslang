@@ -4,13 +4,11 @@ import '@fortawesome/fontawesome-free/js/all';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
 import { METHODS } from '../../constants/apiConstants';
 
+
 const StatisticAudioChallenge = ({
   arrCorrectAnswers,
   arrErrorAnswers,
-  size,
-  level,
-  round,
-  knowWords,
+
   token,
   userId,
 }) => {
@@ -57,23 +55,23 @@ const StatisticAudioChallenge = ({
             learnedWords: 13,
             optional: {
               ...statistic.optional,
-              audioCall: {
-                ...statistic.optional?.audioCall,
-                [new Date().getTime()]: {
-                  date: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`,
-                  percentCorrectWords: `${Math.round(
-                    ([...arrCorrectFilter].length * 100) / size,
-                  )}%`,
-                  level: knowWords ? 'learned words' : `${level + 1}`,
-                  round: knowWords ? 'learned words' : `${round + 1}`,
-                },
+              miniGames: {
+                ...(statistic.optional?.miniGames || {}),
+                audioCall: [
+                  ...(statistic.optional?.miniGames?.audioCall || []),
+                  {
+                    "time": `${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`,
+                    "correct": arrCorrectAnswers.length,
+                    "wrong": arrErrorAnswers.length,
+                  },
+                ],
               },
             },
           }),
         },
       );
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statistic]);
 
   return (
