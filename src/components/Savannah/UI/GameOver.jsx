@@ -1,78 +1,91 @@
-/* eslint-disable */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-prototype-builtins */
 import React, { useEffect, useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSmile, faFrown } from '@fortawesome/free-solid-svg-icons';
 import AuthContext from '../../../contexts/auth.context';
-import { PLAY } from '../../../constants/urlConstants';
 
-const GameOver = ({ correct, wrong, stats }) => {
+const GameOver = ({ correct, wrong }) => {
   const sum = correct + wrong;
   const correctPercents = Math.floor((correct / sum) * 100);
   const wrongPercents = 100 - correctPercents;
   const [statistics, setStatistics] = useState({});
   const { token, userId } = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   try {
-  //     fetch(
-  //       `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
-  //       {
-  //         method: 'GET',
-  //         withCredentials: true,
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           Accept: 'application/json',
-  //         },
-  //       },
-  //     )
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setStatistics(data);
-  //       });
-  //   } catch (e) {
-  //     //  TODO: add toast norification
-  //   }
-  // }, [statistics]);
+  useEffect(() => {
+    try {
+      fetch(
+        `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
+        {
+          method: 'GET',
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+          },
+        },
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setStatistics(data);
+        });
+    } catch (e) {
+      //  TODO: add toast norification
+    }
+    // eslint-disable-next-line
+  }, [setStatistics]);
 
-  // useEffect(() => {
-  //   const optional = statistics.optional;
-  //   const date = new Date();
-  //   const time = `${date.toLocaleString()}`;
-  //   if (optional) {
-  //     const allGames = optional.savannah.allGames;
-  //     if (allGames.length === 29) {
-  //       const allGames = [];
-  //       const lastGame = { time, correct, wrong, stats };
-  //       allGames.push(lastGame);
-  //       statistics.optional.savannah = { allGames };
-  //     } else {
-  //       const lastGame = { time, correct, wrong, stats };
-  //       allGames.push(lastGame);
-  //       statistics.optional.savannah = { allGames };
-  //     }
-  //   }
-  // }, [correct, wrong, stats, statistics]);
+  useEffect(() => {
+    const { optional } = statistics;
+    const date = new Date();
+    const time = date.toLocaleString();
+    delete statistics.id;
+    if (optional) {
+      const { miniGames } = optional;
 
-  // useEffect(() => {
-  //   console.log(statistics);
-  //   fetch(
-  //     `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
-  //     {
-  //       method: 'PUT',
-  //       body: JSON.stringify(statistics),
-  //       headers: {
-  //         'Content-type': 'application/json',
-  //         Authorization: `Bearer ${token}`,
-  //         Accept: 'application/json',
-  //       },
-  //     },
-  //   );
-  // }, [statistics]);
+      if (miniGames) {
+        const { savannah } = miniGames;
+        const lastGame = { time, correct, wrong };
+        savannah.push(lastGame);
+        statistics.optional.miniGames.savannah = savannah;
+      } else {
+        const savannah = [];
+        const lastGame = { time, correct, wrong };
+        savannah.push(lastGame);
+        statistics.optional.miniGames.savannah = savannah;
+      }
+    } else {
+      setStatistics({
+        learnedWords: 0,
+        optional: {
+          miniGames: {
+            savannah: [],
+          },
+        },
+      });
+    }
+    // eslint-disable-next-line
+  }, [statistics]);
+
+  useEffect(() => {
+    fetch(
+      `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(statistics),
+        headers: {
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      },
+    );
+    // eslint-disable-next-line
+  }, [statistics]);
 
   return (
-    <div className="container">
+    <div className="container savannah__container savannah-gameover">
       <h1>
         Game Over{' '}
         {correct > wrong ? (
@@ -82,16 +95,16 @@ const GameOver = ({ correct, wrong, stats }) => {
         )}
       </h1>
       <div className="stats">
-        <h2>stats</h2>
+        <h2>Stats:</h2>
         <p>
-          {correctPercents} % ({correct})
+          Correct: {correctPercents} % ({correct})
         </p>
         <p>
-          {wrongPercents} % ({wrong})
+          Wrong: {wrongPercents} % ({wrong})
         </p>
       </div>
       <button
-        className="btn btn-outline-primary"
+        className="btn btn-secondary"
         type="button"
         onClick={() => {
           window.location.reload();
@@ -99,7 +112,7 @@ const GameOver = ({ correct, wrong, stats }) => {
       >
         Play again
       </button>
-      <NavLink className="btn btn-outline-primary" type="buttom" to="/">
+      <NavLink className="btn btn-primary" to="/">
         Back to home page
       </NavLink>
     </div>
