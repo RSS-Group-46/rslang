@@ -1,6 +1,6 @@
 import React  from 'react';
 
-const Word = (props) => {
+const WordReadonly = (props) => {
 
 function wordPlaceholder () {
     let word;
@@ -23,9 +23,9 @@ function wordPlaceholder () {
 
     return (
         <>
-            <input type="text" className="maingame__pasteWord maingame__pasteWord_placeholder" placeholder={ShowWordPlaceholder ()} size={wordPlaceholder().length}/>
+            <input type="text" readOnly='readOnly' className="maingame__pasteWord maingame__pasteWord_placeholder" placeholder={ShowWordPlaceholder ()} size={wordPlaceholder().length}/>
         </>
     );
   };
   
-  export default Word;
+  export default WordReadonly;

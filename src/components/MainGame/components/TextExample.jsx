@@ -40,7 +40,7 @@ const TextExample = (props) => {
             textShowString = '';
         }
         return textShowString;
-    }
+    } 
 
     return (
         <>

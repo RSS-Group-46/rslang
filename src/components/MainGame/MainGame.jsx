@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 // import { useSelector } from 'react-redux';
 
 // import { selectShowAssociationPicture } from '../../redux/selectors/settings.selectors';
@@ -18,34 +18,32 @@ import image from './img/sun.jpg'
 
 const wordJSONfromBack = 
       `{
-        "_id": "5e9f5ee35eb9e72bc21af4a0",
+        "_id": "5e9f5ee35eb9e72bc21af4a3",
         "group": 0,
         "page": 0,
-        "word": "alcohol",
-        "image": "files/01_0002.jpg",
-        "audio": "files/01_0002.mp3",
-        "audioMeaning": "files/01_0002_meaning.mp3",
-        "audioExample": "files/01_0002_example.mp3",
-        "textMeaning": "<i>Alcohol</i> is a type of drink that can make people drunk.",
-        "textExample": "A person should not drive a car after he or she has been drinking <b>alcohol</b>.",
-        "transcription": "[ǽlkəhɔ̀ːl]",
-        "textExampleTranslate": "Человек не должен водить машину после того, как он выпил алкоголь",
-        "textMeaningTranslate": "Алкоголь - это тип напитка, который может сделать людей пьяными",
-        "wordTranslate": "алкоголь",
-        "wordsPerExampleSentence": 15,
-        "userWord": {
-          "difficulty": "strong"
-        }
+        "word": "arrive",
+        "image": "files/01_0003.jpg",
+        "audio": "files/01_0003.mp3",
+        "audioMeaning": "files/01_0003_meaning.mp3",
+        "audioExample": "files/01_0003_example.mp3",
+        "textMeaning": "To <i>arrive</i> is to get somewhere.",
+        "textExample": "They <b>arrived</b> at school at 7 a.m.",
+        "transcription": "[əráiv]",
+        "textExampleTranslate": "Они прибыли в школу в 7 часов утра",
+        "textMeaningTranslate": "Приехать значит попасть куда-то",
+        "wordTranslate": "прибыть",
+        "wordsPerExampleSentence": 7
       }`
 
   const wordObj = JSON.parse(wordJSONfromBack)
   
 
 const MainGame = () => {
-  let  isShowAnswear = false;
+
+  const [isShowAnswear, setShowAnswear] = useState(false);
 
   function showAnswear () {
-    isShowAnswear = true;
+    setShowAnswear (true);
   }
 
     return (
@@ -60,7 +58,7 @@ const MainGame = () => {
                 <h4 className="card-title">
                   <TextExample wordObj={wordObj} isShowAnswear={isShowAnswear}/>
                 </h4>
-                <Transcription wordObj={wordObj}/>
+                <Transcription wordObj={wordObj} isShowAnswear={isShowAnswear}/>
                 <TextMeaning wordObj={wordObj} isShowAnswear={isShowAnswear}/>
                 <p className="card-text maingame__line">__________________________________</p>
                 <TextExampleTranslate wordObj={wordObj}/>

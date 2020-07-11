@@ -2,6 +2,7 @@ import React  from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectShowDescribe } from '../../../redux/selectors/settings.selectors';
+import WordReadonly from './WordReadonly';
 
 let textClassName
 
@@ -12,7 +13,7 @@ const TextMeaning = (props) => {
       } else {
         textClassName = 'none';
       }
-
+/*
      function replaceString (word) {
         let tire = '';
         if (props.isShowAnswear) {
@@ -24,7 +25,7 @@ const TextMeaning = (props) => {
         }
         return tire;
     }
-
+*/
 
 function firstPartSentens (){
     let textMeaning;
@@ -54,7 +55,7 @@ function secondPartSentens (){
     return textShowString;
 }
 
-
+/*
      function wordShow () {
         let textMeaning;
         let textShowString
@@ -67,14 +68,20 @@ function secondPartSentens (){
         }
         return textShowString;
      }
-
+*/
     return (
         <p  className={textClassName}>
             <span>{firstPartSentens ()}</span>
-            <span className="maingame__pasteWord">{wordShow ()}</span>
+            <WordReadonly wordObj={props.wordObj} isShowAnswear={props.isShowAnswear}/>
             <span>{secondPartSentens ()}</span>
         </p>
     );
   };
   
   export default TextMeaning;
+
+
+  /*
+  
+  <span className="maingame__pasteWord" size={wordShow ().length}>{wordShow ()}</span>
+  */
