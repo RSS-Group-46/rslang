@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  // Redirect,
+  Redirect,
 } from 'react-router-dom';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
 import {
@@ -123,7 +123,7 @@ const App = () => {
                 <Route path={ERROR}>
                   <ErrorIndicator />
                 </Route>
-                {/* <Redirect to={BASE_URL} /> */}
+                <Redirect to={BASE_URL} />
               </Switch>
             </>
           )}
@@ -133,7 +133,7 @@ const App = () => {
               <Route exact path={AUTH_URL}>
                 <Authorization />
               </Route>
-              {/* <Redirect to={AUTH_URL} /> */}
+              <Redirect to={AUTH_URL} />
             </Switch>
           )}
         </AuthContext.Provider>
