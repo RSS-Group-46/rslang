@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 import Queue from '../../utils/Queue';
 
 export default function savannahUtils() {
@@ -134,9 +135,7 @@ export default function savannahUtils() {
         words.add(el.word);
         translatedWords.add(el.wordTranslate);
       });
-    } catch (e) {
-      // TODO: add toast notification
-    }
+    } catch (e) {}
 
     return { words, translatedWords };
   };

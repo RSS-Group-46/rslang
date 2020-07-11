@@ -1,6 +1,5 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-prototype-builtins */
-/* eslint-disable */
 import React, { useEffect, useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
