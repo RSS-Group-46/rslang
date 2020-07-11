@@ -15,11 +15,12 @@ import {
   WORDS_PER_PAGE,
   ONLY_USER_WORDS
 } from "../../constants/apiConstants";
+import { DIFFICULTY_DESCRIPTIONS } from "../../constants/settingsConstants";
 import './Vocabulary.scss';
 
 function Vocabulary({ path }) {
   const [words, setWords] = useState([]);
-  const [group] = useState(null);
+  const [difficulty, setDifficulty] = useState(null);
   const [page, setPage] = useState(1);
   const [maxWordsToDisplay, setMaxWordsToDisplay] = useState(WORDS_PER_PAGE);
   const { userId, token } = useContext(AuthContext);
@@ -37,7 +38,10 @@ function Vocabulary({ path }) {
     }
   }, [path]);
 
-  const { loading, data } = useUserAggregatedWords({ userId, token, group, page: page - 1, wordsPerPage: WORDS_PER_PAGE, filter });
+  const {
+    loading,
+    data,
+  } = useUserAggregatedWords({ userId, token, group: difficulty, page: page - 1, wordsPerPage: WORDS_PER_PAGE, filter });
 
   function deleteWord(id) {
     setWords(words.filter(word => word._id !== id));
@@ -116,6 +120,23 @@ function Vocabulary({ path }) {
     }
   }
 
+  function handleDropdown(dropdownButton) {
+    const dropdown = dropdownButton.closest('.dropdown');
+    const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+    const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+    if (dropdownToggle && dropdownMenu) {
+      dropdown.classList.toggle('show');
+      dropdownMenu.classList.toggle('show');
+      const isExpanded = dropdownToggle.getAttribute('aria-expanded') === 'true';
+      dropdownToggle.setAttribute('aria-expanded', String(!isExpanded));
+
+      if (dropdownButton.classList.contains('dropdown-item') && dropdownButton.hasAttribute('data-difficulty')) {
+        const difficultyValue = dropdownButton.getAttribute('data-difficulty');
+        setDifficulty(difficultyValue >= 0 ? difficultyValue : null);
+      }
+    }
+  }
+
   function handleClick({ target }) {
     if (target.classList.contains('word__audio') && target.hasAttribute('data-audio')) {
       playPronunciation(target);
@@ -128,13 +149,15 @@ function Vocabulary({ path }) {
       } else if (target.closest('.word')) {
         recoverWordForUser(target.closest('.word'));
       }
+    } else if (target.closest('.dropdown') && target.closest('.dropdown').parentNode.classList.contains('filters')) {
+      handleDropdown(target);
     }
   }
 
-  function renderWordDifficulty(difficulty) {
+  function renderWordDifficulty(wordDifficulty) {
     const result = [];
-    for (let i = 0; i <= difficulty; i += 1) {
-      result.push(<div key={i} className={`word__difficulty--${difficulty}`} />)
+    for (let i = 0; i <= wordDifficulty; i += 1) {
+      result.push(<div key={i} className={`word__difficulty--${wordDifficulty}`} />)
     }
     return result;
   }
@@ -166,16 +189,52 @@ function Vocabulary({ path }) {
 
   return (
     <div className="vocabulary container pt-1" onClick={handleClick} role="article">
-      <div className="vocabulary-controls d-flex mb-2">
-        <NavLink to={VOCABULARY_URL + LEARNED_URL} className="nav-link btn btn-secondary btn-sm px-3">
-          Learning
-        </NavLink>
-        <NavLink to={VOCABULARY_URL + COMPLICATED_URL} className="nav-link btn btn-secondary btn-sm px-2">
-          Difficult words
-        </NavLink>
-        <NavLink to={VOCABULARY_URL + DELETED_URL} className="nav-link btn btn-secondary btn-sm px-2">
-          Trash
-        </NavLink>
+      <div className="vocabulary-controls d-flex justify-content-between mb-2">
+        <div className="links d-flex">
+          <NavLink to={VOCABULARY_URL + LEARNED_URL} className="nav-link btn btn-secondary btn-sm px-3">
+            Learning
+          </NavLink>
+          <NavLink to={VOCABULARY_URL + COMPLICATED_URL} className="nav-link btn btn-secondary btn-sm px-2">
+            Difficult words
+          </NavLink>
+          <NavLink to={VOCABULARY_URL + DELETED_URL} className="nav-link btn btn-secondary btn-sm px-2">
+            Trash
+          </NavLink>
+        </div>
+        <div className="filters">
+          <div className="dropdown">
+            <button
+              className="btn btn-secondary dropdown-toggle"
+              type="button"
+              data-toggle="dropdown tooltip"
+              aria-haspopup="true"
+              aria-expanded="false"
+              data-placement="top"
+              title="Filter words difficulty"
+            >
+              Difficulty: {DIFFICULTY_DESCRIPTIONS[difficulty] ? DIFFICULTY_DESCRIPTIONS[difficulty] : 'All'}
+            </button>
+            <div className="dropdown-menu">
+              <button
+                className={`dropdown-item${difficulty === null ? ' active' : ''}`}
+                type="button"
+                data-difficulty="all"
+              >
+                All
+              </button>
+              {Object.entries(DIFFICULTY_DESCRIPTIONS).map(([key, difficultyValue]) => (
+                <button
+                  key={key}
+                  className={`dropdown-item${difficulty === key ? ' active' : ''}`}
+                  type="button"
+                  data-difficulty={key}
+                >
+                  {difficultyValue}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
       <div className="dictionary-cards container">
         {renderPagination()}

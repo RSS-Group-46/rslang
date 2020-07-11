@@ -20,12 +20,7 @@ const useUserAggregatedWords = (params) => {
   const { loading, request } = useHttp();
 
   const filterEncoded = encodeURIComponent(JSON.stringify(filter));
-  const paramsStr = `
-    ${page ? `page=${page}&` : ''}
-    ${group ? `group=${group}&` : ''}
-    &wordsPerPage=${wordsPerPage}
-    &filter=${filterEncoded}
-  `;
+  const paramsStr = `${page ? `page=${page}&` : ''}${group ? `group=${group}&` : ''}wordsPerPage=${wordsPerPage}&filter=${filterEncoded}`;
   const url = `https://afternoon-falls-25894.herokuapp.com/users/${userId}/aggregatedWords?${paramsStr}`;
 
   useEffect(() => {
