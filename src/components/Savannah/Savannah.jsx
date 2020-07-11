@@ -1,5 +1,4 @@
 /* eslint-disable react/no-did-update-set-state */
-/* eslint-disable */
 import React, { Component } from 'react';
 import Loader from '../Loader/Loader';
 import GameOver from './UI/GameOver';
@@ -33,8 +32,7 @@ class Savannah extends Component {
   }
 
   async componentDidMount() {
-    const { userId, token } = this.state;
-    const { words, translatedWords, ids } = await getWords(userId, token);
+    const { words, translatedWords } = await getWords();
     const lifes = new Queue(['*', '*', '*', '*', '*']);
     const mountedState = getMountedState(words, translatedWords, lifes);
 
@@ -140,6 +138,7 @@ class Savannah extends Component {
         ...state,
       });
       this.randomizeWords(translatedWord);
+      this.resetTimer();
     }
   }
 
@@ -188,7 +187,7 @@ class Savannah extends Component {
     } = this.state;
 
     return (
-      <>
+      <div className="savannah__overlay">
         {!isMounted && <Loader />}
         {isMounted && !isGameOver && (
           <Game lifes={lifes} buttons={translatedButtons} word={word} />
@@ -200,7 +199,7 @@ class Savannah extends Component {
             stats={this.stats}
           />
         )}
-      </>
+      </div>
     );
   }
 }
