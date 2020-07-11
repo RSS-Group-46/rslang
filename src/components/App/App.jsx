@@ -37,6 +37,7 @@ import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Footer from '../Footer/Footer';
 
 import Statistic from '../Statistic/Statistic';
+import MiniGamesStatistics from '../Statistic/Components/MiniGamesStatistics';
 
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
 import MainGame from '../MainGame/MainGame';
@@ -64,6 +65,9 @@ const App = () => {
                 </Route>
                 <Route exact path={STATISTICS_URL}>
                   <Statistic />
+                </Route>
+                <Route exact path={STATISTICS_URL + MINI_GAMES_URL}>
+                  <MiniGamesStatistics />
                 </Route>
                 <Route exact path={VOCABULARY_URL + LEARNED_URL}>
                   <div>learned</div>
