@@ -38,7 +38,7 @@ const StatisticAudioChallenge = ({
     )
       .then((response) => response.json())
       .then((data) => setStatistic(data));
-  }, []);
+  }, [token, userId]);
 
   useEffect(() => {
     if (statistic) {
@@ -73,7 +73,7 @@ const StatisticAudioChallenge = ({
         },
       );
     }
-  }, [statistic]);
+  }, [arrCorrectFilter, knowWords, level, round, size, statistic, token, userId]);
 
   return (
     <div className="statistic__audio-challenge">
