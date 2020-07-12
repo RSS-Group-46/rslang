@@ -60,6 +60,11 @@
   
       filter: invert(100%);
     }
+
+    .card-body {
+      max-height: 65vh;
+      overflow: auto;
+    }
   }
 
   &__countdown {
