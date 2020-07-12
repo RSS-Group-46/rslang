@@ -8,7 +8,6 @@ import { pushUserSettings, pullUserSettings, prepareSettingsForApp } from '../..
 import { USER_DATA_STORAGE_NAME } from '../../constants/commonConstants';
 import { WORDS_PER_DAY_DEFAULT_VALUE, SETTINGS_INITIAL_STATE } from '../../constants/settingsConstants';
 import General from './Cards/GeneralSettings';
-import useAuth from '../../hooks/auth.hook';
 
 const gearSize = 40;
 const headerPadding = 10;
@@ -27,21 +26,13 @@ const Settings = () => {
   const formInput = createRef();
   const userData = localStorage.getItem(USER_DATA_STORAGE_NAME);
 
-  const { logOut } = useAuth();
-
-  const doLogOut = () => {
-    logOut();
-    window.location.reload(false);
-  }
-
   useEffect(() => {
     if (userData) {
       pullUserSettings(JSON.parse(userData))
         .then(data => {
-          if (data.tokenExpired) {
-            doLogOut();
-          } else if (data.settings) {
-            const prepared = prepareSettingsForApp(data.settings);
+          if (data) {
+            const prepared = prepareSettingsForApp(data);
+            console.log(prepared)
             dispatch(changeOptions(prepared))
           }
         })
@@ -64,7 +55,7 @@ const Settings = () => {
   }
 
   const toLearn = (
-    <button 
+    <button
       type="button"
       className="badge badge-pill badge-success"
       onClick={() => setUpdateWordsAmount(true)}
@@ -101,7 +92,7 @@ const Settings = () => {
       <div className="card mb-3 settings" style={{ left: `-${getSettingsShift(showSettings)}px`, width: `${containerWidth}px` }}>
         <div className="card-header" style={{ padding: `${headerPadding}px` }}>
           <div>Settings</div>
-          <div 
+          <div
             className="header_gear-logo"
             role="button"
             tabIndex={0}
@@ -113,7 +104,7 @@ const Settings = () => {
         <div className={getSettingsBodyClassNames(showSettings)}>
           <form>
             <h2 className="settings_to-learn"><div>To learn per day: </div>{updateWordsAmount ? wordsAmountForm : toLearn}</h2>
-            <General/>
+            <General />
             <CardsSettings />
           </form>
         </div>

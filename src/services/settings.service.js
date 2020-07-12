@@ -1,5 +1,3 @@
-const notFoundCode = 404;
-
 const prepareSettingsForServer = (settings) => {
   const { wordsPerDay, ...optional } = settings;
   return JSON.stringify({
@@ -16,7 +14,7 @@ export const prepareSettingsForApp = (settings) => {
 export const pushUserSettings = (settings, userData) => {
   const normalizedSettings = prepareSettingsForServer(settings);
   const { userId, token } = userData;
-  
+
   fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`,
     {
       method: 'PUT',
@@ -41,11 +39,8 @@ export const pullUserSettings = async (userData) => {
     }
   );
   if (response.ok) {
-    return { settings: response.json() };
+    return response.json();
   }
-  if (response.status === notFoundCode) {
-    // settings for user is not present;
-    return {};
-  }
-  return { tokenExpired: true };
+  // settings for user is not present;
+  return null;
 }
