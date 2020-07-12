@@ -33,6 +33,11 @@ body {
   display: grid;
   place-content: center;
   height: 90vh !important;
+
+  & h1,
+  p {
+    color: #ffffff;
+  }
 }
 .savannah-game,
 .savannah-gameover {
