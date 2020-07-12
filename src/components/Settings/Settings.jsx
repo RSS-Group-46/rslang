@@ -32,7 +32,6 @@ const Settings = () => {
         .then(data => {
           if (data) {
             const prepared = prepareSettingsForApp(data);
-            console.log(prepared)
             dispatch(changeOptions(prepared))
           }
         })

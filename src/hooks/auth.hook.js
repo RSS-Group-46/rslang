@@ -4,7 +4,7 @@ import { USER_DATA_STORAGE_NAME } from '../constants/commonConstants';
 const tokenTimeModificator = 1000;
 
 const getIsTokenExpired = (token) => {
-  const tokenObj = JSON.parse(atob(token.split('.')[1]));;
+  const tokenObj = JSON.parse(atob(token.split('.')[1]));
   return new Date() > new Date(tokenObj.exp * tokenTimeModificator);
 }
 
