@@ -13,7 +13,7 @@ const showDescribe = useSelector(selectShowDescribe);
 
 const [isAudioPlau, setAudioPlau] = useState(true);
 
-console.log (isAudioPlau)
+
  
 useImperativeHandle(ref, () => ({
 

@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef, } from 'react';
+import React, {useState, useContext, useRef  } from 'react';
 import { useSelector } from 'react-redux';
 
 // import { selectShowAssociationPicture } from '../../redux/selectors/settings.selectors';
@@ -32,6 +32,7 @@ const MainGame = () => {
   const { userId, token } = useContext(AuthContext);
   const [currentGroup] = useState(0);
   const [currentPage] = useState(0);
+  const [wordImput, setUserWord] = useState('');
 
   const childRef = useRef();
 
@@ -65,10 +66,13 @@ function imageUrl (){
     setShowAnswear (true);
   }
 
-
+  
+  console.log(setUserWord)
 
   function enterAnswear () {
     childRef.current.playAudio()
+    console.log(wordImput)
+    
   }
 
   function eventKeyupEnter (event) {
@@ -90,16 +94,16 @@ function imageUrl (){
           <button type="button" className="maingame__button">&#60;</button>
           <div className="card bg-light mb-3" >
             <div className="card-header maingame__header">
-              <AssociationPicture srcAssociationPicture={ imageUrl() } />
+              <AssociationPicture srcAssociationPicture={ imageUrl() } setUserWord={setUserWord}/>
             </div>
             <div className="card-body">
                 <h4 className="card-title">
-                  <TextExample wordObj={wordObj} isShowAnswear={isShowAnswear}/>
+                  <TextExample wordObj={wordObj} isShowAnswear={isShowAnswear}  />
                 </h4>
                 <Transcription wordObj={wordObj} isShowAnswear={isShowAnswear}/>
                 <TextMeaning wordObj={wordObj} isShowAnswear={isShowAnswear}/>
                 <p className="card-text maingame__line">__________________________________</p>
-                <TextExampleTranslate wordObj={wordObj}/>
+                <TextExampleTranslate wordObj={wordObj} />
                 <TextMeaningTranslate wordObj={wordObj}/>
                 <WordTranslate wordObj={wordObj}/>
                 <Audio wordObj={wordObj} ref={childRef} />
