@@ -8,3 +8,5 @@ export const streakToBonus = 4;
 export const ROOT_PATH = `${MINI_GAMES_URL}${SPRINT_URL}`;
 export const PLAY_PATH = `${MINI_GAMES_URL}${SPRINT_URL}/play`;
 export const ROUND_END_PATH = `${MINI_GAMES_URL}${SPRINT_URL}/end`;
+
+export const SPRINT_NAME = 'sprint';
