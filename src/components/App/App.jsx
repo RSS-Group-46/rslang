@@ -23,6 +23,7 @@ import {
   TEAM_URL,
   AUTH_URL,
   ERROR,
+  OURGAME_URL,
   PLAY_URL,
 } from '../../constants/urlConstants';
 import Authorization from '../Authorization/Authorization';
@@ -43,8 +44,8 @@ import Statistic from '../Statistic/Statistic';
 import MiniGamesStatistics from '../Statistic/Components/MiniGamesStatistics';
 
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
+import StartPageOurGame from '../OurGame/StartPageOurGame';
 import MainGame from '../MainGame/MainGame';
-
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
 
@@ -66,7 +67,6 @@ const App = () => {
               <Settings />
               <Switch>
                 <Route exact path={BASE_URL}>
-                  <div>Hello Group 46 !</div>
                   <MainGame />
                 </Route>
                 <Route exact path={STATISTICS_URL}>
@@ -113,6 +113,9 @@ const App = () => {
                 </Route>
                 <Route path={MINI_GAMES_URL + SPRINT_URL}>
                   <Sprint />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + OURGAME_URL}>
+                  <StartPageOurGame />
                 </Route>
                 <Route exact path={PROMO_URL}>
                   <div>promo</div>

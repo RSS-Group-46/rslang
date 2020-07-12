@@ -57,11 +57,11 @@ const resultsInitialState = {
 const puzzleGameName = 'puzzle';
 
 const normalizeSentences = (sentences) => sentences.map((w) => ({
-      sentence: removeHtml(w.textExample),
-      translate: w.textExampleTranslate,
-      audioExample: w.audioExample
-    }))
-    .filter((s) => s.sentence.split(' ').length <= MAX_WORDS);
+  sentence: removeHtml(w.textExample),
+  translate: w.textExampleTranslate,
+  audioExample: w.audioExample
+}))
+  .filter((s) => s.sentence.split(' ').length <= MAX_WORDS);
 
 const Puzzle = () => {
   const [sentences, setSentences] = useState([]);
@@ -351,7 +351,6 @@ const Puzzle = () => {
   }
 
   return (
-    // TODO delete wrapper when the main wrapper will be done
     <div className="puzzle_wrapper">
       <div className="puzzle_background" />
       <div className="puzzle_container" style={{ minWidth: getContentWidth(screenWidth) }}>
