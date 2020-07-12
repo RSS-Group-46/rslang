@@ -21,3 +21,5 @@ export const PUZZLE_URL = '/puzzle';
 export const SAVANNAH_URL = '/savannah';
 export const AUDIOCALL_URL = '/audiocall';
 export const SPRINT_URL = '/sprint';
+
+export const PLAY_URL = '/play';

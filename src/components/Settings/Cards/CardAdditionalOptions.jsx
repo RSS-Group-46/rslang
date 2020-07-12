@@ -9,7 +9,7 @@ const CardAdditionalOptions = () => {
   const showTranscription = useSelector(selectShowTranscription);
   const showAssociationPicture = useSelector(selectShowAssociationPicture);
   const dispatch = useDispatch();
-
+ 
   const doChangeOption = (optionName, value) => dispatch(changeOption(optionName, value));
 
   return (

@@ -8,7 +8,7 @@ import {
 } from '../../../redux/selectors/settings.selectors';
 import { SETTINGS_NAMES } from '../../../constants/settingsConstants';
 
-const optionNames = [SETTINGS_NAMES.showTranscription, SETTINGS_NAMES.showDescribe, SETTINGS_NAMES.showExample];
+const optionNames = [SETTINGS_NAMES.showTranslation, SETTINGS_NAMES.showDescribe, SETTINGS_NAMES.showExample];
 
 const getRandomNameToChoose = (toExclude) => {
   const excludingIndex = optionNames.indexOf(toExclude);
@@ -45,7 +45,7 @@ const CardInfoOptions = () => {
             className="custom-control-input"
             id="translationButton"
             checked={showTranslation}
-            onChange={() => doChangeOption(SETTINGS_NAMES.showTranscription, !showTranslation)}
+            onChange={() => doChangeOption(SETTINGS_NAMES.showTranslation, !showTranslation)}
           />
           <label htmlFor="translationButton" className="custom-control-label">
             Word translation

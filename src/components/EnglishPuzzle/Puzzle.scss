@@ -1,0 +1,371 @@
+.puzzle_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+
+.puzzle_background {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-image: url('/backgrounds/wall.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+.puzzle_container {
+  .row-number {
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 0 1rem;
+    font-size: 2rem;
+    height: 100%;
+    background-color: black;
+    position: absolute;
+    opacity: 0.5;
+    left: 0;
+    top: 0;
+    z-index: 1;
+
+    &.active {
+      background-color: #0310ff;
+    }
+  }
+}
+
+.welcome_background {
+  width: 100vw;
+  height: calc(100vh - 60px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+    font-size: 2.2rem;
+    text-align: center;
+  }
+
+  .overlay_description {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+
+  button {
+    width: 15rem;
+    font-size: 1.2rem;
+  }
+}
+
+.welcome_overlay {
+  width: 30vw;
+  height: 20vh;
+  background-color: black;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.puzzle-options_container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  form {
+    display: flex;
+    flex-direction: row;
+
+    .puzzle-options__level-page-dropdowns {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
+
+.puzzle-options__element {
+  display: flex;
+  align-items: flex-end;
+
+  label,
+  .element_label {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+  }
+
+  & > * {
+    margin-right: 0.5rem;
+  }
+}
+
+.puzzle-prompt_container {
+  display: flex;
+  flex-direction: row;
+}
+
+.puzzle-prompt {
+  height: 40px;
+  width: 40px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-right: 1rem;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover:not(.disable) {
+      cursor: pointer;
+      transform: scale(1.2);
+  }
+
+  &.disable {
+      opacity: 0.1;
+  }
+}
+
+.prompt_translate {
+  background-image: url('/icons/translate.png');
+}
+
+.prompt_image {
+  background-image: url('/icons/image.png');
+}
+
+.prompt_voice {
+  background-image: url('/icons/voice.png');
+}
+
+.prompt_speaker {
+  background-image: url('/icons/speaker.png');
+}
+
+.puzzle-prompt-show__prompts {
+  font-size: 2rem;
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .prompts_element {
+    height: 3rem;
+  }
+}
+
+.puzzle__unsetted_container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.puzzle-element {
+  color: white;
+  background-color: #ae17ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: 1400px;
+  background-repeat: no-repeat;
+  position: relative;
+  font-size: 2.2rem;
+  text-shadow: 0px 0px 8px #000000;
+
+  &.middle {
+    clip-path: polygon(0 30%, 4% 30%, 8% 38%, 9% 50%, 8% 62%, 4% 70%, 0 70%, 0% 100%, 91% 100%, 91% 70%, 95% 70%, 99% 62%, 100% 50%, 99% 38%, 95% 30%, 91% 30%, 91% 0, 0% 0%);
+  }
+
+  &.start {
+    clip-path: polygon(0% 100%, 91% 100%, 91% 70%, 95% 70%, 99% 62%, 100% 50%, 99% 38%, 95% 30%, 91% 30%, 91% 0, 0% 0%);
+  }
+
+  &.end {
+    clip-path: polygon(0 30%, 4% 30%, 8% 38%, 9% 50%, 8% 62%, 4% 70%, 0 70%, 0% 100%, 100% 100%, 100% 0%, 0% 0%);
+  }
+}
+
+.puzzle-element_word {
+  width: 100%;
+  text-align: center;
+}
+
+.puzzle__picture-row-placeholder {
+  border: 1px dashed black;
+  border-radius: 5px;
+  position: absolute;
+}
+
+.puzzle__picture-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1rem;
+
+  &.round-end {
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+  }
+}
+
+.freezed_row {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.puzzle__button-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  
+  & > * {
+    margin-right: 0.5rem;
+  }
+}
+
+.puzzle__image-container {
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+}
+
+.puzzle-results-modal__picture-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  .puzzle-results-modal__picture {
+    height: 150px;
+    width: 200px;
+    border-radius: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .puzzle-results-modal__picture-name {
+    font-style: italic;
+    font-weight: bold;
+  }
+}
+
+.hide {
+  visibility: hidden;
+}
+
+@media screen and (max-width: 1400px) {
+  .puzzle-element {
+    font-size: 2rem;
+  }
+  
+  .puzzle_container {
+    .row-number {
+      font-size: 1.5rem;
+    }
+  }
+
+  .puzzle-options__element {
+    label, .element_label {
+      font-size: 1.2rem;
+    }
+  }
+
+  .puzzle-prompt-show__prompts {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .puzzle-element {
+    font-size: 1.5rem;
+  }
+
+  .puzzle_container {
+    .row-number {
+      font-size: 1.2rem;
+      padding: 0 0.5rem;
+    }
+  }
+
+  .puzzle-prompt-show__prompts {
+    font-size: 1rem;
+  }
+
+  .puzzle__picture-row.round-end {
+    font-size: 2rem;
+  }
+
+  .welcome_background {
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+  
+    .overlay_description, button {
+      font-size: 1rem;
+    }
+
+    button {
+      width: 10rem;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .puzzle-element {
+    font-size: 1rem;
+  }
+
+  .puzzle_container {
+    .row-number {
+      font-size: 1rem;
+      padding: 0 0.3rem;
+    }
+  }
+
+  .puzzle-options__element {
+    label, .element_label {
+      font-size: 0.9rem;
+    }
+  }
+
+  .puzzle-options_container {
+    form {
+      flex-direction: column;
+    }
+  }
+
+  .puzzle__picture-row.round-end {
+    font-size: 1rem;
+    margin-bottom: 0;
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .welcome_background {
+    h1 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+  
+    .overlay_description, button {
+      font-size: 0.8rem;
+    }
+
+    button {
+      width: 3rem;
+    }
+  }
+}
