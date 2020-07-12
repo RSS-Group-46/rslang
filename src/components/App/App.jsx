@@ -66,7 +66,6 @@ const App = () => {
               <Settings />
               <Switch>
                 <Route exact path={BASE_URL}>
-                  <div>Hello Group 46 !</div>
                   <MainGame />
                 </Route>
                 <Route exact path={STATISTICS_URL}>
