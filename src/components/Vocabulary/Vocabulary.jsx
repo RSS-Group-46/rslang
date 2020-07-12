@@ -1,14 +1,17 @@
 /* eslint no-underscore-dangle: 0 */
 /* eslint jsx-a11y/click-events-have-key-events: 0 */
 /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
+/* eslint react/no-danger: 0 */
 
 import React, { useContext, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { NavLink } from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import { VOCABULARY_URL, LEARNED_URL, COMPLICATED_URL, DELETED_URL } from '../../constants/urlConstants';
 import AuthContext from '../../contexts/auth.context';
 import useUserAggregatedWords from "../../hooks/userAggregatedWords.hook";
 import useWord from "../../hooks/word.hook";
+import Loader from "../Loader/Loader";
 import {
   ONLY_USER_HARD_WORDS,
   ONLY_USER_TRASH_WORDS,
@@ -18,7 +21,15 @@ import {
 import { DIFFICULTY_DESCRIPTIONS } from "../../constants/settingsConstants";
 import './Vocabulary.scss';
 
-function Vocabulary({ path }) {
+function Vocabulary({ path, settings }) {
+  const {
+    showAssociationPicture,
+    showDeleteButton,
+    showDescribe,
+    showExample,
+    showTranscription,
+  } = settings;
+
   const [words, setWords] = useState([]);
   const [difficulty, setDifficulty] = useState(null);
   const [page, setPage] = useState(1);
@@ -186,7 +197,9 @@ function Vocabulary({ path }) {
   }
 
   return (
-    <div className="vocabulary container pt-4 pb-5" onClick={handleClick} role="article">
+    <>
+      {loading && <Loader />}
+      <div className="vocabulary container pt-4 pb-5" onClick={handleClick} role="article">
       <div className="vocabulary-controls d-flex justify-content-between mb-2">
         <div className="links d-flex">
           <NavLink to={VOCABULARY_URL + LEARNED_URL} className="nav-link btn btn-secondary btn-sm px-3">
@@ -240,11 +253,13 @@ function Vocabulary({ path }) {
           {words && words.map((word) => (
               <div key={word._id} data-id={word._id} className="word row mb-5 container">
                 <div className="col-sm-auto flex-column">
-                  <img
-                    className="word__image img-thumbnail"
-                    src={`https://raw.githubusercontent.com/shevv920/rslang-data/master/${word.image}`}
-                    alt={word.word}
-                  />
+                  {showAssociationPicture && (
+                    <img
+                      className="word__image img-thumbnail"
+                      src={`https://raw.githubusercontent.com/shevv920/rslang-data/master/${word.image}`}
+                      alt={word.word}
+                    />
+                  )}
                   <div
                     className="word__difficulty"
                     data-toggle="tooltip"
@@ -273,7 +288,7 @@ function Vocabulary({ path }) {
                 <div className="col pr-0">
                   <h4>{word.word}</h4>
                   <div className="mb-2">
-                    <span className="mr-2">{word.wordTranslate} {word.transcription}</span>
+                    <span className="mr-2">{word.wordTranslate} {showTranscription && word.transcription}</span>
                     <button
                       className="word__audio"
                       type="button"
@@ -284,29 +299,36 @@ function Vocabulary({ path }) {
                     />
                   </div>
                   <div>
-                    {renderWordExample(word.textMeaning, word.textMeaningTranslate, word._id + 1)}
-                    {renderWordExample(word.textExample, word.textExampleTranslate, word._id + 2)}
+                    {showDescribe && renderWordExample(word.textMeaning, word.textMeaningTranslate, word._id + 1)}
+                    {showExample && renderWordExample(word.textExample, word.textExampleTranslate, word._id + 2)}
                   </div>
                 </div>
-                <div className="word__delete">
-                  <button
-                    type="button"
-                    className="close position-absolute"
-                    aria-label="Close"
-                    data-toggle="tooltip"
-                    data-placement="bottom"
-                    title={path !== DELETED_URL ? 'Move to the trash' : 'Delete the word'}
-                  >
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
+                {(showDeleteButton || path === DELETED_URL) && (
+                  <div className="word__delete">
+                    <button
+                      type="button"
+                      className="close position-absolute"
+                      aria-label="Close"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      title={path !== DELETED_URL ? 'Move to the trash' : 'Delete the word'}
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                )}
               </div>
           ))}
         </div>
         {!loading && words.length > 3 && renderPagination()}
       </div>
     </div>
+    </>
   );
 }
 
-export default Vocabulary;
+const mapStateToProps = ({ settings }) => ({
+  settings,
+});
+
+export default connect(mapStateToProps)(Vocabulary);

@@ -17,7 +17,7 @@ const useWord = () => {
     const getWord = async () => {
       try {
         const headers = {
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         };
         const result = await request(wordURL, METHODS.GET, null, headers);
       } catch (err) {
@@ -33,8 +33,8 @@ const useWord = () => {
     const getWords = async () => {
       try {
         const headers = {
-          "Authorization": `Bearer ${token}`,
-          "Accept": "application/json"
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json"
         };
         const result = await request(userWordsURL, METHODS.GET, null, headers);
       } catch (err) {
@@ -50,8 +50,8 @@ const useWord = () => {
     const createWord = async () => {
       try {
         const headers = {
-          "Authorization": `Bearer ${token}`,
-          "Accept": "application/json"
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json"
         };
         const result = await request(createWordUrl, METHODS.POST, word, headers );
       } catch (err) {
@@ -67,7 +67,7 @@ const useWord = () => {
     const deleteWord = async () => {
       try {
         const headers = {
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`
         };
         const result = await request(deleteURL, METHODS.DELETE, null, headers);
       } catch (err) {
