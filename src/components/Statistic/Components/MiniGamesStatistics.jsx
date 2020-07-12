@@ -40,6 +40,7 @@ class MiniGamesStatistics extends Component {
     if (goToMiniGames) {
       return <Redirect to={MINI_GAMES_URL} />
     }
+
     return (
       <div className="statistics__mini-games-wrapper">
         <div className="statistics__mini-games">
@@ -52,8 +53,8 @@ class MiniGamesStatistics extends Component {
         </button>
           {!miniGames.length &&
             <div className="alert alert-success">
-              <div>Здесь пока ничего нет!</div>
-              <button type="button" className="btn btn-info" onClick={() => this.setState({ goToMiniGames: true })}>Поиграть в мини-игры</button>
+              <div>Still nothing here!</div>
+              <button type="button" className="btn btn-info" onClick={() => this.setState({ goToMiniGames: true })}>Play mini-games</button>
             </div>
           }
           {miniGames.map((game) => <MiniGameComponent key={game.name} game={game} />)}
