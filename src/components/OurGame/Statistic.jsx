@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { METHODS } from '../../constants/apiConstants';
 
-const Statistic = ({ userId, token, level, round, closeStatistic, offLoader }) => {
-  const [statistic, setStatistic] = useState();
+const Statistic = ({ userId, token, closeStatistic, offLoader}) => {
   const [arrStatistic, setArrStatistic] = useState(null);
 
   useEffect(() => {
@@ -19,47 +18,14 @@ const Statistic = ({ userId, token, level, round, closeStatistic, offLoader }) =
     )
       .then((response) => response.json())
       .then((data) => {
-        setStatistic(data);
         // eslint-disable-next-line no-unused-expressions
-        data.optional && setArrStatistic(Object.values(data.optional.ourGame));
+        data.optional && setArrStatistic(Object.values(data.optional.miniGames.ourGame));
         offLoader();
       });
   }, []);
 
-  useEffect(() => {
-    if (statistic) {
-      const date = new Date();
-      fetch(
-        `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
-        {
-          method: METHODS.PUT,
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            learnedWords: 13,
-            optional: {
-              ...statistic.optional,
-              ourGame: {
-                ...statistic.optional?.ourGame,
-                [new Date().getTime()]: {
-                  date: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`,
-                  percentCorrectWords: `${3333}%`,
-                  levelGame: level,
-                  roundGame: round,
-                },
-              },
-            },
-          }),
-        },
-      );
-    }
-  }, [statistic]);
   return (
-    <div className="statistic__our-game">
+    <div className="statistic__our-game" >
       <div className="col-lg-4">
         <div className="bs-component">
           <div className="alert alert-dismissible alert-success">
@@ -75,19 +41,17 @@ const Statistic = ({ userId, token, level, round, closeStatistic, offLoader }) =
             <ul>
               <li className='header__statistic'>
                 <span>date</span>
-                <span>level</span>
-                <span>round</span>
-                <span>correct answers, %</span>
+                <span>wrong answers</span>
+                <span>correct answers</span>
               </li>
               {arrStatistic &&
                 arrStatistic.map(
-                  ({ date, percentCorrectWords, levelGame, roundGame }) => {
+                  ({ time, correct, wrong }, index) => {
                     return (
-                      <li>
-                        <span>{date}</span>
-                        <span>{levelGame + 1}</span>
-                        <span>{roundGame + 1}</span>
-                        <span>{percentCorrectWords}</span>
+                      <li key={`${index.toString()}1`}>
+                        <span key={`${index.toString()}2`}>{time}</span>
+                        <span key={`${index.toString()}3`}>{wrong}</span>
+                        <span key={`${index.toString()}4`}>{correct}</span>
                       </li>
                     );
                   },
