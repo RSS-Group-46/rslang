@@ -23,7 +23,7 @@ function wordPlaceholder () {
         return show;
     }
 
-    console.log(dataInput)
+  console.log(dataInput)
 
     return (
         <>
