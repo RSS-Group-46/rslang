@@ -56,7 +56,7 @@ const ListWord = (props) => {
               </div>
             );
           })}
-        {(selectWord.length > 0 && !resultRound) && (
+        {(selectWord.length && !resultRound) && (
           <span
           key={Math.round(10000)}
             className="btn-remove__our-game"

@@ -7,13 +7,14 @@ const ButtonLevel = ({ handleLevel, level }) => {
   for (let i = 1; i <= TOTAL_GROUPS; i += 1) {
     arrLevel.push(i);
   }
+
   return (
     <div className='level__our-game'>
       <h3>Level</h3>
       <select name='level' value={level+1} onChange={handleLevel}>
         {
           arrLevel.map((item) => (
-            (level + 1) === item ? <option value={item} key={item}>{item}</option> : <option value={item} key={item}>{item}</option>
+            <option value={item} key={item}>{item}</option>
           ))
         }
       </select>

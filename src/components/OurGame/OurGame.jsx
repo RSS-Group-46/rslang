@@ -67,11 +67,11 @@ const OurGame = (props) => {
   };
 
   const handleNext = () => {
-    if (+numberWordRound !== +sentence.length) {
+    if (numberWordRound !== sentence.length) {
       setResultRound(false);
       setNumberWord(0);
       setSelectWord([]);
-      if (+numberWordRound !== +sentence.length - 1) {
+      if (numberWordRound !== sentence.length - 1) {
         setNumberWordRound(numberWordRound + 1);
       } else {
         setStatisticRound(true);
@@ -81,7 +81,7 @@ const OurGame = (props) => {
           currentError += 1;
         }
       });
-      if (currentError > 0) {
+      if (currentError) {
         setArrErrorAnswer([...arrErrorAnswer, sentence[numberWordRound]]);
       } else {
         setArrCorrectAnswer([...arrCorrectAnswer, sentence[numberWordRound]]);

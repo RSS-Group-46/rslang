@@ -36,16 +36,16 @@ const StartPageOurGame = ({ settings }) => {
   const offLoader = () => setLoader(false);
 
   const handleLevel = (e) => {
-    if (level !== +e.target.value - 1) {
-      setLevel(+e.target.value - 1);
-      localStorage.setItem(levelOurGame, +e.target.value - 1);
+    if (level !== e.target.value - 1) {
+      setLevel(e.target.value - 1);
+      localStorage.setItem(levelOurGame, e.target.value - 1);
     }
   };
 
   const handleRound = (e) => {
-    if (round !== +e.target.value - 1) {
-      setRound(+e.target.value - 1);
-      localStorage.setItem(roundOurGame, +e.target.value - 1);
+    if (round !== e.target.value - 1) {
+      setRound(e.target.value - 1);
+      localStorage.setItem(roundOurGame, e.target.value - 1);
     }
   };
 
