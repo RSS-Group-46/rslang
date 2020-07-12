@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import MiniGameComponent from './MiniGameComponent';
 import { pullUserStatistic } from '../../../services/statistic.service';
 import { USER_DATA_STORAGE_NAME } from '../../../constants/commonConstants';
-import { STATISTICS_URL } from '../../../constants/urlConstants';
+import { STATISTICS_URL, MINI_GAMES_URL } from '../../../constants/urlConstants';
 import './MiniGamesStatistics.scss';
 
 class MiniGamesStatistics extends Component {
@@ -12,14 +12,15 @@ class MiniGamesStatistics extends Component {
       return [];
     }
     const gameNames = Object.keys(statistics.optional.miniGames);
-    return gameNames.map(name => ({ name, rounds: statistics.optional.miniGames[name]}));
+    return gameNames.map(name => ({ name, rounds: statistics.optional.miniGames[name] }));
   }
 
   constructor(props) {
     super(props);
     this.state = {
       miniGames: [],
-      goBack: false
+      goBack: false,
+      goToMiniGames: false
     }
   }
 
@@ -30,23 +31,33 @@ class MiniGamesStatistics extends Component {
         .then(data => this.setState({ miniGames: MiniGamesStatistics.prepareMiniGameStatistics(data) }));
     }
   }
-  
+
   render() {
-    const { miniGames, goBack } = this.state;
+    const { miniGames, goBack, goToMiniGames } = this.state;
     if (goBack) {
       return <Redirect to={STATISTICS_URL} />
     }
+    if (goToMiniGames) {
+      return <Redirect to={MINI_GAMES_URL} />
+    }
     return (
-      // TODO delete style when wrapper will be implemented
-      <div className="statistics__mini-games" style={{ margin: "5rem" }}>
-        <button 
-          type="button" 
-          className="statistics__mini-games_back-button btn btn-success" 
-          onClick={() => this.setState({ goBack: true })}
-        >
-          Back
+      <div className="statistics__mini-games-wrapper">
+        <div className="statistics__mini-games">
+          <button
+            type="button"
+            className="statistics__mini-games_back-button btn btn-success"
+            onClick={() => this.setState({ goBack: true })}
+          >
+            Back
         </button>
-        {miniGames.map((game) => <MiniGameComponent key={game.name} game={game} />)}
+          {!miniGames.length &&
+            <div className="alert alert-success">
+              <div>Здесь пока ничего нет!</div>
+              <button type="button" className="btn btn-info" onClick={() => this.setState({ goToMiniGames: true })}>Поиграть в мини-игры</button>
+            </div>
+          }
+          {miniGames.map((game) => <MiniGameComponent key={game.name} game={game} />)}
+        </div>
       </div>
     );
   }
