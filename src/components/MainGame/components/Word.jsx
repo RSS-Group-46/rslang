@@ -2,9 +2,11 @@ import React  from 'react';
 
 const Word = (props) => {
 
+    let dataInput = null;
+
 function wordPlaceholder () {
     let word;
-    if (props.wordObj) {
+    if (props.wordObj.word) {
         word = props.wordObj.word;
     } else {
         word = '';
@@ -21,9 +23,16 @@ function wordPlaceholder () {
         return show;
     }
 
+    console.log(dataInput)
+
     return (
         <>
-            <input type="text" className="maingame__pasteWord maingame__pasteWord_placeholder" placeholder={ShowWordPlaceholder ()} size={wordPlaceholder().length}/>
+            <input type="text" 
+                className="maingame__pasteWord maingame__pasteWord_placeholder" 
+                placeholder={ShowWordPlaceholder ()} 
+                size={wordPlaceholder().length}
+                ref={(ref) => (dataInput = ref)}
+            />
         </>
     );
   };

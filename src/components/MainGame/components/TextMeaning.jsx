@@ -13,27 +13,19 @@ const TextMeaning = (props) => {
       } else {
         textClassName = 'none';
       }
-/*
-     function replaceString (word) {
-        let tire = '';
-        if (props.isShowAnswear) {
-          tire = word
-        } else {
-            for (let i=0;i< word.length ; i +=1 ) {
-              tire += "_";
-            }
-        }
-        return tire;
-    }
-*/
 
 function firstPartSentens (){
     let textMeaning;
     let textShowString
+    const regexp = /<i>/i;
     if (props.wordObj) {
         textMeaning = props.wordObj.textMeaning;
-        const [seatchtSring] =  textMeaning.split('<i>')
-        textShowString =  seatchtSring;
+        if (regexp.test(textMeaning)) {
+            const [seatchtSring] =  textMeaning.split('<i>')
+            textShowString =  seatchtSring;
+        } else {
+        textShowString =  '';
+        }
     } else {
         textShowString = '';
     }
@@ -42,33 +34,22 @@ function firstPartSentens (){
 
 function secondPartSentens (){
     let textMeaning;
-   
+    const regexp = /<\/i>/i;
     let textShowString
     if (props.wordObj) {
         textMeaning = props.wordObj.textMeaning;
-        const [, seatchtSring] =  textMeaning.split('</i>')
-        textShowString =  seatchtSring;
-       
+        if (regexp.test(textMeaning)) {
+            const [, seatchtSring] =  textMeaning.split('</i>')
+            textShowString =  seatchtSring;
+        }else {
+            textShowString =  '';
+            }
     } else {
         textShowString = '';
     }
     return textShowString;
 }
 
-/*
-     function wordShow () {
-        let textMeaning;
-        let textShowString
-        if (props.wordObj) {
-            textMeaning = props.wordObj.word;
-            textShowString =  replaceString (textMeaning);
-           
-        } else {
-            textShowString = '';
-        }
-        return textShowString;
-     }
-*/
     return (
         <p  className={textClassName}>
             <span>{firstPartSentens ()}</span>
@@ -79,9 +60,3 @@ function secondPartSentens (){
   };
   
   export default TextMeaning;
-
-
-  /*
-  
-  <span className="maingame__pasteWord" size={wordShow ().length}>{wordShow ()}</span>
-  */

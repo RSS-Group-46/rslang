@@ -4,7 +4,7 @@ const WordReadonly = (props) => {
 
 function wordPlaceholder () {
     let word;
-    if (props.wordObj) {
+    if (props.wordObj.word) {
         word = props.wordObj.word;
     } else {
         word = '';

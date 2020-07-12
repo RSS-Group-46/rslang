@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-// import { useSelector } from 'react-redux';
+import React, {useState, useContext} from 'react';
+import { useSelector } from 'react-redux';
 
 // import { selectShowAssociationPicture } from '../../redux/selectors/settings.selectors';
 
@@ -12,38 +12,73 @@ import TextExampleTranslate from './components/TextExampleTranslate';
 import TextMeaningTranslate from './components/TextMeaningTranslate';
 import WordTranslate from './components/WordTranslate';
 
+import AuthContext from '../../contexts/auth.context';
 
+import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
+import { selectSettings } from '../../redux/selectors/settings.selectors';
+
+import { getPlayData, getDataUrl} from './utils';
 import './MainGame.scss';
-import image from './img/sun.jpg'
-
-const wordJSONfromBack = 
-      `{
-        "_id": "5e9f5ee35eb9e72bc21af4a3",
-        "group": 0,
-        "page": 0,
-        "word": "arrive",
-        "image": "files/01_0003.jpg",
-        "audio": "files/01_0003.mp3",
-        "audioMeaning": "files/01_0003_meaning.mp3",
-        "audioExample": "files/01_0003_example.mp3",
-        "textMeaning": "To <i>arrive</i> is to get somewhere.",
-        "textExample": "They <b>arrived</b> at school at 7 a.m.",
-        "transcription": "[əráiv]",
-        "textExampleTranslate": "Они прибыли в школу в 7 часов утра",
-        "textMeaningTranslate": "Приехать значит попасть куда-то",
-        "wordTranslate": "прибыть",
-        "wordsPerExampleSentence": 7
-      }`
-
-  const wordObj = JSON.parse(wordJSONfromBack)
-  
 
 const MainGame = () => {
+  let image = '';
+  const settings = useSelector(selectSettings);
 
+ const wordsPerRound = settings.wordsPerDay;
+  const { userId, token } = useContext(AuthContext);
+  const [currentGroup] = useState(0);
+  const [currentPage] = useState(0);
+
+  const wordsConfig = {
+    userId,
+    token,
+    group: currentGroup,
+    wordsPerPage: wordsPerRound,
+    filter: { "$or": [{ "page": currentPage }, { "page": currentPage + 1 }] },
+  };
+
+const { data } = useUserAggregatedWords(wordsConfig);
+const wordsRaw = data && data[0].paginatedResults || [];
+
+const currentWord=3;
+const wordObj = getPlayData(wordsRaw[currentWord]);
+
+
+function imageUrl (){
+  if (wordObj.image) {
+    image = getDataUrl (wordObj.image)
+  } else {
+    image = '';
+  }
+  return image;
+}
+
+/*
+const enteredWord ='hdfh'
+
+
+function enterAnswear () {
+  if (wordObj.word === enteredWord) {
+    console.log('ok')
+  } else {
+    console.log('error')
+  }
+}
+*/
   const [isShowAnswear, setShowAnswear] = useState(false);
 
   function showAnswear () {
     setShowAnswear (true);
+  }
+/*
+  const [enteredWord, setEnteredWord] = useState('');
+
+  dds= ()=>{
+
+  }
+*/
+  function enterAnswear () {
+    console.log('as')
   }
 
     return (
@@ -52,7 +87,7 @@ const MainGame = () => {
           <button type="button" className="maingame__button">&#60;</button>
           <div className="card bg-light mb-3" >
             <div className="card-header maingame__header">
-              <AssociationPicture srcAssociationPicture={image} />
+              <AssociationPicture srcAssociationPicture={ imageUrl() } />
             </div>
             <div className="card-body">
                 <h4 className="card-title">
@@ -66,7 +101,7 @@ const MainGame = () => {
                 <WordTranslate wordObj={wordObj}/>
             </div>
           </div>
-          <button type="button" className="maingame__button">&#62;</button>
+          <button type="button" className="maingame__button" onClick={()=>enterAnswear ()}>&#62;</button>
         </div>
         <button type="button" className="btn btn-info" onClick={()=>showAnswear ()}>
           Показать ответ

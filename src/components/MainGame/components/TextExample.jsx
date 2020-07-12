@@ -17,10 +17,15 @@ const TextExample = (props) => {
     function firstPartSentens (){
         let textMeaning;
         let textShowString
+        const regexp = /<b>/i;
         if (props.wordObj) {
             textMeaning = props.wordObj.textExample;
-            const [seatchtSring] =  textMeaning.split('<b>')
-            textShowString =  seatchtSring;
+            if (regexp.test(textMeaning)) {
+                const [seatchtSring] =  textMeaning.split('<b>')
+                textShowString =  seatchtSring;
+            } else {
+                textShowString =  '';
+                }
         } else {
             textShowString = '';
         }
@@ -29,13 +34,16 @@ const TextExample = (props) => {
     
     function secondPartSentens (){
         let textMeaning;
-       
+        const regexp = /<\/b>/i;
         let textShowString
         if (props.wordObj) {
             textMeaning = props.wordObj.textExample;
-            const [, seatchtSring] =  textMeaning.split('</b>')
-            textShowString =  seatchtSring;
-           
+            if (regexp.test(textMeaning)) {
+                const [, seatchtSring] =  textMeaning.split('</b>')
+                textShowString =  seatchtSring;
+            } else {
+                textShowString =  '';
+                }
         } else {
             textShowString = '';
         }
