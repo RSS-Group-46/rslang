@@ -55,16 +55,6 @@ const Team = () => {
     <div className="team  container">
       <h2 className="team__title">Team members</h2>
       <p className="team__greeting">Best regards, development team!</p>
-      <p className="team__text">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-        nemo nulla praesentium unde alias vero omnis animi vel corporis totam
-        harum iusto nesciunt, ipsa eveniet accusamus officia optio. Voluptate,
-        accusantium. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Repudiandae nemo nulla praesentium unde alias vero omnis animi vel
-        corporis totam harum iusto nesciunt, ipsa eveniet accusamus officia
-        optio. Voluptate, accusantium.
-      </p>
-
       <section className="team__list">{item()}</section>
     </div>
   );
