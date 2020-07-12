@@ -35,7 +35,7 @@ const Authorization = () => {
         setMessage('User Created');
       }
     } catch (e) {
-      setError('user with this email already existss');
+      setError('user with this email already exists');
     }
   };
 
@@ -63,12 +63,12 @@ const Authorization = () => {
 
   return (
     <>
-      {error.length > 0 ? (
+      {error && (
         <NotificationContainer notifications={[error]} delay={15} />
       ) : (
         ''
       )}
-      {message.length > 0 ? (
+      {message && (
         <NotificationContainer notifications={[message]} delay={15} />
       ) : (
         ''
@@ -138,7 +138,7 @@ const Authorization = () => {
               className="btn btn-secondary"
               onClick={handleRegister}
             >
-              Sing Up
+              Sign Up
             </button>
           </div>
         </form>
