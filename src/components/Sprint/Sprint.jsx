@@ -97,7 +97,7 @@ export default () => {
   }, [resetStates, history]);
 
   return (
-    <div className="container ml-5">
+    <div className="sprint-container">
       {wordsLoadError && <ErrorIndicator handleCloseError={() => { }} />}
       {!wordsLoadError && <div className="game">
         <Switch>
