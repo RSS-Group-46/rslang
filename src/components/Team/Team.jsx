@@ -42,7 +42,7 @@ const Team = () => {
             <h5>{`${info.name} ${info.surname}`}</h5>
             <ul>
               {tasks[index].map((task) => {
-                return <li>{task}</li>;
+                return <li key={Math.random()}>{task}</li>;
               })}
             </ul>
           </div>
