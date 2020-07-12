@@ -13,6 +13,7 @@ function wordPlaceholder () {
     }
     return word
     }
+
     function ShowWordPlaceholder () {
         let show
         if (!props.isShowAnswear) {
@@ -22,7 +23,10 @@ function wordPlaceholder () {
         }
         return show;
     }
+
+
     const { setUserWord } = props;
+
     return (
         <>
             <input type="text" 
@@ -30,6 +34,7 @@ function wordPlaceholder () {
                 placeholder={ShowWordPlaceholder ()} 
                 size={wordPlaceholder().length}
                 onChange={(e) => setUserWord(e.target.value)} 
+                value={props.wordImput}
             />
         </>
     );

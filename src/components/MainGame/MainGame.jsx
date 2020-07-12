@@ -1,7 +1,14 @@
 import React, {useState, useContext, useRef  } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // import { selectShowAssociationPicture } from '../../redux/selectors/settings.selectors';
+import { selectLearnedWords, selectStatistic, selectPassedCards, selectProcentCorrectAnswers, selectNewWords, selectLongSeriesCorrectAnswers } from '../../redux/selectors/statistic.selectors';
+import { saveStatistic } from '../../redux/actions/statistic.actions';
+import { pushUserStatistic } from '../../services/statistic.service';
+
+
+import { USER_DATA_STORAGE_NAME } from '../../constants/commonConstants';
+
 
 import AssociationPicture from './components/AssociationPicture';
 import TextExample from './components/TextExample';
@@ -21,9 +28,14 @@ import { selectSettings } from '../../redux/selectors/settings.selectors';
 import { getPlayData, getDataUrl} from './components/utils';
 import './MainGame.scss';  
 
+let userData = localStorage.getItem(USER_DATA_STORAGE_NAME);
+userData = JSON.parse(userData);
+
 const MainGame = () => {
  // const showExample = useSelector(selectShowExample);
  // const showDescribe = useSelector(selectShowDescribe);
+
+
 
   let image = '';
   const settings = useSelector(selectSettings);
@@ -33,6 +45,43 @@ const MainGame = () => {
   const [currentGroup] = useState(0);
   const [currentPage] = useState(0);
   const [wordImput, setUserWord] = useState('');
+  const [currentWord, setCurrentWord] = useState(0);
+  const [isShowAnswear, setShowAnswear] = useState(false);
+
+  const learnedWordsNumber = useSelector(selectLearnedWords);
+  const passedCardsNumber = useSelector(selectPassedCards);
+  const procentCorrectAnswersNumber = useSelector(selectProcentCorrectAnswers);
+  const newWordsNumber = useSelector(selectNewWords);
+  const longSeriesCorrectAnswersNumber = useSelector(selectLongSeriesCorrectAnswers);
+  let statistic = useSelector(selectStatistic);
+
+  console.log(passedCardsNumber, procentCorrectAnswersNumber, newWordsNumber, longSeriesCorrectAnswersNumber)
+
+  const dispatch = useDispatch();
+  function saveStatisticClick (gettingStatistic) {
+    statistic = gettingStatistic;
+    dispatch(saveStatistic(statistic))
+  }
+
+  function setStattisticNew() {
+      const learnedWords = currentWord+learnedWordsNumber;
+      const passedCards = currentWord;
+      const procentCorrectAnswers = currentWord;
+      const newWords = currentWord;
+      const longSeriesCorrectAnswers =currentWord;
+
+      const gettingStatistic = {
+      learnedWords, passedCards, procentCorrectAnswers, newWords, longSeriesCorrectAnswers
+    }
+    saveStatisticClick (gettingStatistic)
+  }
+
+
+
+  
+  function deleteImputValue (){
+    setUserWord('')
+  }
 
   const childRef = useRef();
 
@@ -47,7 +96,6 @@ const MainGame = () => {
 const { data } = useUserAggregatedWords(wordsConfig);
 const wordsRaw = data && data[0].paginatedResults || [];
 
-const currentWord=7;
 const wordObj = getPlayData(wordsRaw[currentWord]);
 
 
@@ -60,18 +108,28 @@ function imageUrl (){
   return image;
 }
 
-  const [isShowAnswear, setShowAnswear] = useState(false);
+  if (currentWord >= wordsPerRound) {
+    setStattisticNew()
+    pushUserStatistic(statistic, userData)
+  }
+
+  
 
   function showAnswear () {
     setShowAnswear (true);
   }
 
-  
-  console.log(setUserWord)
-
   function enterAnswear () {
     childRef.current.playAudio()
-    console.log(wordImput)
+    if (wordImput===wordObj.word) {
+      setShowAnswear (true);
+      setCurrentWord (currentWord +1);
+      setShowAnswear (false);
+      deleteImputValue ();
+      
+    }
+
+
     
   }
 
@@ -79,9 +137,6 @@ function imageUrl (){
     if (event.keyCode === 13) {
       enterAnswear ()
     }
-    document.removeEventListener("onclick", () => {
-      eventKeyupEnter (event)
-    });
   }
 
   document.addEventListener("onclick", (event) => {
@@ -94,11 +149,12 @@ function imageUrl (){
           <button type="button" className="maingame__button">&#60;</button>
           <div className="card bg-light mb-3" >
             <div className="card-header maingame__header">
-              <AssociationPicture srcAssociationPicture={ imageUrl() } setUserWord={setUserWord}/>
+              <AssociationPicture srcAssociationPicture={ imageUrl() } />
             </div>
             <div className="card-body">
                 <h4 className="card-title">
-                  <TextExample wordObj={wordObj} isShowAnswear={isShowAnswear}  />
+                  <TextExample wordObj={wordObj} isShowAnswear={isShowAnswear}
+                    setUserWord={setUserWord} wordImput={wordImput}/>
                 </h4>
                 <Transcription wordObj={wordObj} isShowAnswear={isShowAnswear}/>
                 <TextMeaning wordObj={wordObj} isShowAnswear={isShowAnswear}/>

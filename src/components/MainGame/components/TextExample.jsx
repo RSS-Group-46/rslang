@@ -49,11 +49,12 @@ const TextExample = (props) => {
         }
         return textShowString;
     } 
-console.log(props.setUserWord)
+
     return (
         <>
             <span className={textClassName}>{firstPartSentens ()}</span>
-            <Word wordObj={props.wordObj} isShowAnswear={props.isShowAnswear} setUserWord={props.setUserWord}/>
+            <Word wordObj={props.wordObj} isShowAnswear={props.isShowAnswear} 
+            setUserWord={props.setUserWord} wordImput={props.wordImput}/>
             <span className={textClassName}>{secondPartSentens ()}</span>
         </>
     );
