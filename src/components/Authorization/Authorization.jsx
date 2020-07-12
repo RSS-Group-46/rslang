@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import AuthContext from '../../contexts/auth.context';
 import useHttp from '../../hooks/http.hook';
 import './Authorization.scss';
+import NotificationContainer from '../NotificationContainer/NotificationContainer';
 
 const Authorization = () => {
   const auth = useContext(AuthContext);
@@ -34,7 +35,7 @@ const Authorization = () => {
         setMessage('User Created');
       }
     } catch (e) {
-      setError(e.message);
+      setError('user with this email already existss');
     }
   };
 
@@ -61,83 +62,88 @@ const Authorization = () => {
   };
 
   return (
-    <div className="container auth-container">
+    <>
       {error.length > 0 ? (
-        <div className="alert alert-danger" role="alert">
-          {error}
-        </div>
+        <NotificationContainer notifications={[error]} delay={15} />
       ) : (
-          ''
-        )}
+        ''
+      )}
       {message.length > 0 ? (
-        <div className="alert alert-dark" role="alert">
-          {message}
-        </div>
+        <NotificationContainer notifications={[message]} delay={15} />
       ) : (
-          ''
-        )}
-      <form
-        className="card"
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <div className="card-header text-center">Authorization</div>
-        <div className="card-body">
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text" id="email">
-                E-mail:
-              </span>
-            </div>
-            <input
-              type="email"
-              className="form-control"
-              placeholder="email@example.com"
-              aria-label="email"
-              aria-describedby="email"
-              name="email"
-              onChange={handleChange}
-              required
-            />
+        ''
+      )}
+      <div className="container auth-container">
+        <form
+          className="card"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <div className="card-header text-center">
+            <h1>Authorization</h1>
+            <p>
+              <strong>Tip: </strong>
+              Password must contain at least 8 characters, as well as a number
+              and one special character of + -_ @ $!% *? & #.,;: [] {}
+            </p>
           </div>
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text" id="password">
-                Password:
-              </span>
+          <div className="card-body">
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="email">
+                  E-mail:
+                </span>
+              </div>
+              <input
+                type="email"
+                className="form-control"
+                placeholder="email@example.com"
+                aria-label="email"
+                aria-describedby="email"
+                name="email"
+                onChange={handleChange}
+                required
+              />
             </div>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="your password"
-              aria-label="password"
-              aria-describedby="password"
-              name="password"
-              onChange={handleChange}
-              pattern="(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[+-_@$!%*?&#.,;:[\]{}])[a-zA-Z0-9+-_@$!%*?&#.,;:[\]{}]{8,16}"
-              required
-            />
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span className="input-group-text" id="password">
+                  Password:
+                </span>
+              </div>
+              <input
+                type="password"
+                className="form-control"
+                placeholder="your password"
+                aria-label="password"
+                aria-describedby="password"
+                name="password"
+                onChange={handleChange}
+                pattern="(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[+-_@$!%*?&#.,;:[\]{}])[a-zA-Z0-9+-_@$!%*?&#.,;:[\]{}]{8,16}"
+                required
+              />
+            </div>
           </div>
-        </div>
-        <div className="card-footer d-flex justify-content-center">
-          <button
-            type="submit"
-            className="btn btn-primary mr-4"
-            onClick={handleLogIn}
-          >
-            Log In
-          </button>
-          <button
-            type="submit"
-            className="btn btn-secondary"
-            onClick={handleRegister}
-          >
-            Sing Up
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="card-footer d-flex justify-content-center">
+            <button
+              type="submit"
+              className="btn btn-primary mr-4"
+              onClick={handleLogIn}
+            >
+              Log In
+            </button>
+            <button
+              type="submit"
+              className="btn btn-secondary"
+              onClick={handleRegister}
+            >
+              Sing Up
+            </button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 };
 
