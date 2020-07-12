@@ -29,9 +29,10 @@ const StatisticDetaile = ({
         .then((data) => {
           setLoader(false);
           // eslint-disable-next-line no-unused-expressions
-          data.optional && setStattistic(Object.values(data.optional.miniGames.audioCall));
+          data.optional.miniGames.audioCall && setStattistic(Object.values(data.optional.miniGames.audioCall));
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showStatisticDetaile]);
 
   const getRandomInt = (max) => {

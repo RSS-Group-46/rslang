@@ -34,6 +34,7 @@ const StatisticAudioChallenge = ({
     )
       .then((response) => response.json())
       .then((data) => setStatistic(data));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -69,6 +70,7 @@ const StatisticAudioChallenge = ({
         },
       );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statistic]);
 
   return (

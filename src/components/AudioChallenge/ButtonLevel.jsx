@@ -13,7 +13,7 @@ const ButtonLevel = ({ handleLevel, level }) => {
       <select name='level' value={level+1} onChange={handleLevel}>
         {
           arrLevel.map((item) => (
-            (level + 1) === item ? <option value={item} key={item}>{item}</option> : <option  value={item} key={item}>{item}</option>
+            <option  value={item} key={item}>{item}</option>
           ))
         }
       </select>
