@@ -99,7 +99,7 @@ const StartPageOurGame = ({ settings }) => {
       {loader && <Loader />}
       {!sentence ? (
         <div className="wrapper__button-start">
-          <h2>OUR GAME</h2>
+          <h2>AUDIO SENTENCE</h2>
           <h3>Collect the sentence.</h3>
           <button
             type="button"
