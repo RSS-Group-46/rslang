@@ -4,11 +4,12 @@ import linkedinImg from '../../assets/icons/linkedin.png';
 
 import './Team.scss';
 
-const dataTeam = require('../../data/dataTeam.json');
+import dataTeam from '../../data/dataTeam';
 
 const Team = () => {
+  const { data, tasks } = dataTeam;
   const item = () => {
-    return dataTeam.map((info) => {
+    return data.map((info, index) => {
       return (
         <article className="team__item border-primary" key={info.id}>
           <div className="team__icons">
@@ -19,11 +20,19 @@ const Team = () => {
             />
             <span className="team__location">{info.location}</span>
             <div className="team__social">
-              <a href={info.urlGitHub} target="_blank" rel="noopener noreferrer">
+              <a
+                href={info.urlGitHub}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={octocatImg} alt="github" />
               </a>
               {info.urlLinked && (
-                <a href={info.urlLinked} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={info.urlLinked}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <img src={linkedinImg} alt="linkedin" />
                 </a>
               )}
@@ -32,15 +41,9 @@ const Team = () => {
           <div className="team-item__skills">
             <h5>{`${info.name} ${info.surname}`}</h5>
             <ul>
-              <li />
-              - project
-              <li />
-              - project
-              <li />
-              - project
-              <li />
-              - project
-              <li />- project
+              {tasks[index].map((task) => {
+                return <li>{task}</li>;
+              })}
             </ul>
           </div>
         </article>
