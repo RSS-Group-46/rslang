@@ -1,1 +1,29 @@
 @import '../../styles/variables';
+
+.none {
+  display: none;
+}
+
+.statistic {
+    padding: 10px;
+  
+    &__title {
+      font-size: 43px;
+      font-weight: $font-weight-base;
+      text-align: center;
+      color: $purple;
+    }
+
+    &__text {
+        font-size: 16px;
+      }
+
+    &__button {
+        display: flex;
+        justify-content: space-around;
+        position: relative;
+        text-align: center;
+        margin: 15px auto;
+    }
+
+}

@@ -1,0 +1,42 @@
+.statistics__mini-games-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.statistics__mini-games {
+  margin: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 1400px;
+
+  .alert {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    align-items: center;
+  }
+}
+
+.statistics__mini-games_component {
+  width: 100%;
+
+  .card-body.hide {
+    display: none;
+  }
+}
+
+.statistics__mini-games_entity {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+
+  & > span {
+    margin-right: 1rem;
+  }
+}
+
+.statistics__mini-games_back-button {
+  margin-bottom: 1rem;
+}

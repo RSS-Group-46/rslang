@@ -6,11 +6,9 @@ import {
   selectShowDescribe,
   selectShowExample
 } from '../../../redux/selectors/settings.selectors';
+import { SETTINGS_NAMES } from '../../../constants/settingsConstants';
 
-const showTranscriptionOptionName = 'showTranslation';
-const showDescribeOptionName = 'showDescribe';
-const showExampleOptionName = 'showExample';
-const optionNames = [showTranscriptionOptionName, showDescribeOptionName, showExampleOptionName];
+const optionNames = [SETTINGS_NAMES.showTranslation, SETTINGS_NAMES.showDescribe, SETTINGS_NAMES.showExample];
 
 const getRandomNameToChoose = (toExclude) => {
   const excludingIndex = optionNames.indexOf(toExclude);
@@ -47,7 +45,7 @@ const CardInfoOptions = () => {
             className="custom-control-input"
             id="translationButton"
             checked={showTranslation}
-            onChange={() => doChangeOption(showTranscriptionOptionName, !showTranslation)}
+            onChange={() => doChangeOption(SETTINGS_NAMES.showTranslation, !showTranslation)}
           />
           <label htmlFor="translationButton" className="custom-control-label">
             Word translation
@@ -59,7 +57,7 @@ const CardInfoOptions = () => {
             className="custom-control-input"
             id="describeButton"
             checked={showDescribe}
-            onChange={() => doChangeOption(showDescribeOptionName, !showDescribe)}
+            onChange={() => doChangeOption(SETTINGS_NAMES.showDescribe, !showDescribe)}
           />
           <label htmlFor="describeButton" className="custom-control-label">
             Describe the word
@@ -71,7 +69,7 @@ const CardInfoOptions = () => {
             className="custom-control-input"
             id="exampleButton"
             checked={showExample}
-            onChange={() => doChangeOption(showExampleOptionName, !showExample)}
+            onChange={() => doChangeOption(SETTINGS_NAMES.showExample, !showExample)}
           />
           <label htmlFor="exampleButton" className="custom-control-label">
             Example sentence
