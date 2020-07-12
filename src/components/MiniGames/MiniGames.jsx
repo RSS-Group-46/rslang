@@ -13,7 +13,6 @@ const icons = {
   4: speakItImg,
   5: speakItImg,
   6: speakItImg,
-  7: speakItImg,
 };
 
 const MiniGames = () => {
