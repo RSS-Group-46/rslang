@@ -5,10 +5,8 @@ import puzzle from '../../assets/icons/puzzle.jpg';
 import savannah from '../../assets/icons/savannah.jpg';
 import audiocall from '../../assets/icons/audiocall.jpg';
 import sprint from '../../assets/icons/sprint.jpg';
-
+import dataMiniGames from '../../data/dataMiniGames.json';
 import './MiniGames.scss';
-
-const dataMiniGames = require('../../data/dataMiniGames.json');
 
 const icons = {
   1: speakIt,
