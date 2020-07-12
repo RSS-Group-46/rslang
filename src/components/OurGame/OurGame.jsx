@@ -11,6 +11,8 @@ import { cleaningSentence } from './utils';
 import { API_SIMILAR_WORDS } from './constants';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
 
+let numberCorrect = 0;
+let numberWrong = 0;
 const OurGame = (props) => {
   const {
     sentence,
@@ -22,6 +24,9 @@ const OurGame = (props) => {
     offLoader,
     userId,
     token,
+    handleLearnedWords,
+    learnedWords,
+    showTranslation,
   } = props;
   const [correctSentence, setCorrectSentence] = useState(null);
   const [similarWors, setSimilarWords] = useState(null);
@@ -34,6 +39,7 @@ const OurGame = (props) => {
   const [arrCorrectAnswer, setArrCorrectAnswer] = useState([]);
   const [arrErrorAnswer, setArrErrorAnswer] = useState([]);
   let currentError = 0;
+
 
   const handleAudio = () => {
     const audio = new Audio(
@@ -57,30 +63,36 @@ const OurGame = (props) => {
     setResultRound(false);
     setNumberWord(0);
     setSelectWord([]);
+    numberWrong -= 1;
   };
 
   const handleNext = () => {
-    if (numberWordRound < sentence.length - 1) {
+    if (+numberWordRound !== +sentence.length) {
       setResultRound(false);
       setNumberWord(0);
       setSelectWord([]);
-      setNumberWordRound(numberWordRound + 1);
-
+      if (+numberWordRound !== +sentence.length - 1) {
+        setNumberWordRound(numberWordRound + 1);
+      } else {
+        setStatisticRound(true);
+      }
       selectWord.forEach((item) => {
         if (!correctSentence.includes(item)) {
           currentError += 1;
         }
       });
-      // eslint-disable-next-line no-unused-expressions
       if (currentError > 0) {
         setArrErrorAnswer([...arrErrorAnswer, sentence[numberWordRound]]);
       } else {
         setArrCorrectAnswer([...arrCorrectAnswer, sentence[numberWordRound]]);
       }
-    } else {
-      setStatisticRound(true);
     }
   };
+
+  const handleRemoveWord = () =>
+    setSelectWord(
+      selectWord.filter((item, index) => index !== selectWord.length - 1),
+    );
 
   const handleStatistic = () => {
     enableLoader();
@@ -122,6 +134,18 @@ const OurGame = (props) => {
     }
   }, [correctSentence]);
 
+  useEffect(() => {
+    if (resultRound) {
+      const arrAnswer = selectWord.filter(
+        (item, index) => item !== correctSentence[index],
+      );
+      if (arrAnswer.length > 0) {
+        numberWrong += 1;
+      } else {
+        numberCorrect += 1;
+      }
+    }
+  }, [resultRound]);
   return (
     <div className="our-game">
       <div className="level-round__our-game">
@@ -135,6 +159,16 @@ const OurGame = (props) => {
           >
             Statistic
           </button>
+          <div className="wrapper__checkbox-ourgame">
+            <input
+              type="checkbox"
+              id="scales"
+              name="scales"
+              checked={learnedWords}
+              onChange={(e) => handleLearnedWords(e)}
+            />
+            <label htmlFor="scales">Using learned words</label>
+          </div>
         </div>
         {resultRound && (
           <NavLink
@@ -148,12 +182,10 @@ const OurGame = (props) => {
         )}
       </div>
       {!resultRound && (
-        <div
-          className="audio__our-game"
-          role="presentation"
-          onClick={handleAudio}
-        >
-          <i className="fas fa-volume-up fa-7x" />
+        <div className="audio__our-game">
+          <span role="presentation" onClick={handleAudio}>
+            <i className="fas fa-volume-up fa-7x" />
+          </span>
         </div>
       )}
       {similarWors && (
@@ -166,6 +198,9 @@ const OurGame = (props) => {
             handleWord={handleWord}
             numberWord={numberWord}
             selectWord={selectWord}
+            handleRemoveWord={handleRemoveWord}
+            showTranslation={showTranslation}
+            sentence={sentence[numberWordRound].textExampleTranslate}
           />
         </div>
       )}
@@ -186,12 +221,20 @@ const OurGame = (props) => {
           round={round}
           closeStatistic={closeStatistic}
           offLoader={offLoader}
+          numberWrong={numberWrong}
+          numberCorrect={numberCorrect}
+          resultRound={resultRound}
+          statisticRound={statisticRound}
+          sentence={sentence}
         />
       )}
       {statisticRound && (
         <StatisticGame
           arrCorrectAnswer={arrCorrectAnswer}
           arrErrorAnswer={arrErrorAnswer}
+          userId={userId}
+          token={token}
+          offLoader={offLoader}
         />
       )}
     </div>
