@@ -29,10 +29,11 @@ const StatisticDetaile = ({
         .then((data) => {
           setLoader(false);
           // eslint-disable-next-line no-unused-expressions
-          data.optional && setStattistic(Object.values(data.optional.audioCall));
+          data.optional.miniGames.audioCall && setStattistic(Object.values(data.optional.miniGames.audioCall));
         });
     }
-  }, [showStatisticDetaile, token, userId]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showStatisticDetaile]);
 
   const getRandomInt = (max) => {
     return Math.floor(Math.random() * Math.floor(max));
@@ -54,18 +55,16 @@ const StatisticDetaile = ({
             <ul>
               <li>GAME TIME</li>
               <li>CORRECT ANSWERS</li>
-              <li>LEVEL</li>
-              <li>ROUND</li>
+              <li>WRONG ANSWERS</li>
             </ul>
 
             {statistic &&
-              statistic.map(({ date, percentCorrectWords, level, round }) => {
+              statistic.map(({ time, correct, wrong }) => {
                 return (
                   <ul key={getRandomInt(10000)}>
-                    <li key={getRandomInt(10000)}>{date}</li>
-                    <li key={getRandomInt(10000)}>{percentCorrectWords}</li>
-                    <li key={getRandomInt(10000)}>{level}</li>
-                    <li key={getRandomInt(10000)}>{round}</li>
+                    <li key={getRandomInt(10000)}>{time}</li>
+                    <li key={getRandomInt(10000)}>{correct}</li>
+                    <li key={getRandomInt(10000)}>{wrong}</li>
                   </ul>
                 );
               })}
