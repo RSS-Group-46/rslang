@@ -54,7 +54,7 @@ const TextExample = (props) => {
         <>
             <span className={textClassName}>{firstPartSentens ()}</span>
             <Word wordObj={props.wordObj} isShowAnswear={props.isShowAnswear} 
-            setUserWord={props.setUserWord} wordImput={props.wordImput}/>
+            setUserWord={props.setUserWord} wordImput={props.wordImput} retfocus={props.retfocus}/>
             <span className={textClassName}>{secondPartSentens ()}</span>
         </>
     );

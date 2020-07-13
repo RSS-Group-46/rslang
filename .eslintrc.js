@@ -41,6 +41,7 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'no-return-assign': 'off',
     'no-const-assign' : 'off',
+    'jsx-a11y/no-noninteractive-element-interactions': 0,
     'jsx-a11y/label-has-associated-control': [2, {
       "assert": "either",
     }],

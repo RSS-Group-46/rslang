@@ -70,10 +70,16 @@ function goAudio(wordObj,showExample,showDescribe, isAudioPlay, setAudioPlau ) {
 
 }
 
+function progressBarProcent (x,y) {
+  if(y===0) {y=1}
+  return Math.round(x/y.length*100)
+ }
+
 export {
   randomFromArray,
   getDataUrl,
   correctWordUrls,
   getPlayData,
   goAudio,
+  progressBarProcent,
 };

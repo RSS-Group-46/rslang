@@ -1,5 +1,5 @@
 
-import React  from 'react';
+import React, {useRef, useEffect}  from 'react';
 
 const Word = (props) => {
 
@@ -23,9 +23,22 @@ function wordPlaceholder () {
         }
         return show;
     }
-
+    
 
     const { setUserWord } = props;
+
+    const focusRef = useRef();
+  
+    function returnfocus () {
+        focusRef.current.focus();
+    }
+    const {retfocus }= props;
+
+    useEffect(() => {
+        returnfocus ()
+      }, [retfocus]);
+
+    
 
     return (
         <>
@@ -35,6 +48,7 @@ function wordPlaceholder () {
                 size={wordPlaceholder().length}
                 onChange={(e) => setUserWord(e.target.value)} 
                 value={props.wordImput}
+                ref={focusRef}
             />
         </>
     );
