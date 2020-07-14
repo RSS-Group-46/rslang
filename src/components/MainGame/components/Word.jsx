@@ -1,32 +1,32 @@
-/* eslint-disable no-console */
-import React  from 'react';
+import React from 'react';
 
-const Word = (props) => {
-
-function wordPlaceholder () {
+const Word = props => {
+  function wordPlaceholder() {
     let word;
     if (props.wordObj) {
-        word = props.wordObj.word;
+      word = props.wordObj.word;
     } else {
-        word = '';
+      word = '';
     }
-    return word
+    return word;
+  }
+  function ShowWordPlaceholder() {
+    let show;
+    if (!props.isShowAnswear) {
+      show = '';
+    } else {
+      show = wordPlaceholder();
     }
-    function ShowWordPlaceholder () {
-        let show
-        if (!props.isShowAnswear) {
-            show = '';
-        } else {
-            show =  wordPlaceholder ();
-        }
-        return show;
-    }
-    console.log(props.isShowAnswear)
-    return (
-        <>
-            <input type="text" className="maingame__pasteWord maingame__pasteWord_placeholder" placeholder={ShowWordPlaceholder ()} size={wordPlaceholder().length}/>
-        </>
-    );
-  };
-  
-  export default Word;
+    return show;
+  }
+  return (
+    <input
+      type="text"
+      className="maingame__pasteWord maingame__pasteWord_placeholder"
+      placeholder={ShowWordPlaceholder()}
+      size={wordPlaceholder().length}
+    />
+  );
+};
+
+export default Word;
