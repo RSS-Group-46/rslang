@@ -8,21 +8,22 @@ import { STATIC_URL, TRANSLATE_URL } from '../../constants/speakItConstants';
 
 import './SpeakItTrainBlock.scss';
 
-const SpeakItTrainBlock = ({ currentTrainLevel }) => {
-  const [words, setWords] = useState([]);
+const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
   const [recognizedText, setRecognizedText] = useState('');
-  const [page] = useState(0);
+  const [page, setPage] = useState(0);
   const [image, setImage] = useState(`${defaultTrainImg}`);
   const [translate, setTranslate] = useState('');
   const { speak } = useSpeechSynthesis();
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result) => {
+      const normalizedWord = result.toLowerCase().trim();
       console.log('words: ', words);
-      setRecognizedText(result);
+      setRecognizedText(normalizedWord);
 
-      if (words.find((word) => word.word === result)) {
+
+      if (words.find((word) => word.word === normalizedWord)) {
         const newWords = words.map((word) => {
-          if (word.word === result) {
+          if (word.word === normalizedWord) {
             word.guessed = true;
           }
           return word;
@@ -39,11 +40,11 @@ const SpeakItTrainBlock = ({ currentTrainLevel }) => {
   useEffect(() => {
     if (words.every((word) => word.guessed)) {
       stop();
-      // and render new a bunch of words
+      setPage(page + 1);
     }
   }, [words]);
 
-  useEffect(() => {
+  const requestWords = () => {
     axios
       .get(wordsURL)
       .then((response) => {
@@ -51,6 +52,10 @@ const SpeakItTrainBlock = ({ currentTrainLevel }) => {
         setWords(responseResult);
       })
       .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    requestWords();
   }, [wordsURL]);
 
   const getWordHandler = (word) => {

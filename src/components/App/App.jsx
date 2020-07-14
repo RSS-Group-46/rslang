@@ -48,7 +48,7 @@ import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
 
 import StartPageOurGame from '../OurGame/StartPageOurGame';
 import MainGame from '../MainGame/MainGame';
-import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
+import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/constants/speakItConstants';
 import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
 
 import Savannah from '../Savannah/Savannah';

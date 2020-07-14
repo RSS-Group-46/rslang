@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import SpeakItTrainBlock from '../SpeakItTrainBlock/SpeakItTrainBlock';
+import React from 'react';
 
 import './SpeakItTrainLevel.scss';
 
@@ -12,9 +11,7 @@ const levels = [
   { id: 6 },
 ];
 
-const SpeakItTrainLevel = () => {
-  const [currentTrainLevel, setCurrentTrainLevel] = useState(1);
-
+const SpeakItTrainLevel = ({ currentTrainLevel, setCurrentTrainLevel }) => {
   const handleCheck = (event) => {
     const clickedElement = event.target;
 
@@ -50,12 +47,7 @@ const SpeakItTrainLevel = () => {
     });
   };
 
-  return (
-    <div className="train-page  container">
-      <ul className="train-levels">{createItem()}</ul>
-      <SpeakItTrainBlock currentTrainLevel={currentTrainLevel} />
-    </div>
-  );
+  return <ul className="train-levels">{createItem()}</ul>;
 };
 
 export default SpeakItTrainLevel;

@@ -1,12 +1,22 @@
 import React from 'react';
+import shortid from 'shortid';
 import answerImg from '../../assets/icons/done.png';
 
 import './SpeakItTrainAnswers.scss';
 
-const SpeakItTrainAnswers = () => {
+const SpeakItTrainAnswers = ({ words }) => {
+  const marks = words.filter((word) => word.guessed);
+
   return (
     <div className="train-answers">
-      <img className="train-answers__img" src={answerImg} alt="answer" />
+      {marks.map(() => (
+        <img
+          key={shortid.generate()}
+          className="train-answers__img"
+          src={answerImg}
+          alt="answer"
+        />
+      ))}
     </div>
   );
 };
