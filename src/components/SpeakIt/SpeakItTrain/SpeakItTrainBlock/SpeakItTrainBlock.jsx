@@ -17,9 +17,8 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result) => {
       const normalizedWord = result.toLowerCase().trim();
-      console.log('words: ', words);
+      // console.log('words: ', words);
       setRecognizedText(normalizedWord);
-
 
       if (words.find((word) => word.word === normalizedWord)) {
         const newWords = words.map((word) => {
@@ -112,7 +111,15 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
       </div>
       <ul className="word-cards">{wordItem()}</ul>
       <div className="train-buttons">
-        <Button classes={classesRestart}>Restart</Button>
+        <Button
+          classes={classesRestart}
+          onClick={() => {
+            requestWords()
+            stop();
+          }}
+        >
+          Restart
+        </Button>
         {listening ? (
           <Button classes={classesSpeak} onClick={stop}>
             Stop listening
