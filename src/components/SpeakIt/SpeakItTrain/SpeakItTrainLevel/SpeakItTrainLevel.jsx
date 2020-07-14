@@ -29,7 +29,6 @@ const SpeakItTrainLevel = () => {
       clickedElement.classList.add('train-levels__level--active');
 
       setCurrentTrainLevel(event.target.id);
-      console.log('currentTrainLevel ', currentTrainLevel)
     }
   };
 

@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import shortid from 'shortid';
+// import { useSpeechRecognition, useSpeechSynthesis } from 'react-speech-kit';
+import { useSpeechSynthesis } from 'react-speech-kit';
 import Button from '../../UI/Button/Button';
 import defaultTrainImg from '../../assets/images/train-img.jpg';
+import { STATIC_URL, TRANSLATE_URL } from '../../constants/speakItConstants';
 
 import './SpeakItTrainBlock.scss';
-import { STATIC_URL, TRANSLATE_URL } from '../constants/speakItConstants';
 
 const SpeakItTrainBlock = ({ currentTrainLevel }) => {
   const [words, setWords] = useState([]);
   const [page] = useState(0);
   const [image, setImage] = useState(`${defaultTrainImg}`);
   const [translate, setTranslate] = useState('');
+  const [value, setValue] = useState('');
+  const { speak } = useSpeechSynthesis();
 
   const wordsURL = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${
     currentTrainLevel - 1
@@ -39,6 +43,8 @@ const SpeakItTrainBlock = ({ currentTrainLevel }) => {
 
     const imgUrl = `${STATIC_URL}${word.image}`;
     setImage(imgUrl);
+
+    setValue(word.word);
   };
 
   const wordItem = () => {
@@ -47,7 +53,10 @@ const SpeakItTrainBlock = ({ currentTrainLevel }) => {
         <li
           key={shortid.generate()}
           className="word-cards__card"
-          onClick={() => getWordHandler(word)}
+          onClick={() => {
+            getWordHandler(word);
+            speak({ text: value });
+          }}
           role="presentation"
         >
           <p className="word-cards__text">{word.word}</p>
