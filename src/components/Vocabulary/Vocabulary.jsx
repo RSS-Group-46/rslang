@@ -250,7 +250,9 @@ function Vocabulary({ path, settings }) {
       <div className="dictionary-cards pt-4 pb-5 container">
         {renderPagination()}
         <div className="dictionary-cards__container pt-4">
-          {words && words.map((word) => (
+          {!words.length
+            ? <h3>You do not have any words</h3>
+            : words.map((word) => (
               <div key={word._id} data-id={word._id} className="word row mb-5 container">
                 <div className="col-sm-auto flex-column">
                   {showAssociationPicture && (

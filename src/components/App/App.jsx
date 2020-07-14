@@ -73,14 +73,14 @@ const App = () => {
                 <Route exact path={STATISTICS_URL + MINI_GAMES_URL}>
                   <MiniGamesStatistics />
                 </Route>
-                <Route exact path={VOCABULARY_URL + LEARNED_URL}>
-                  <Vocabulary path={LEARNED_URL} />
-                </Route>
                 <Route exact path={VOCABULARY_URL + COMPLICATED_URL}>
                   <Vocabulary path={COMPLICATED_URL} />
                 </Route>
                 <Route exact path={VOCABULARY_URL + DELETED_URL}>
                   <Vocabulary path={DELETED_URL} />
+                </Route>
+                <Route path={VOCABULARY_URL}>
+                  <Vocabulary path={LEARNED_URL} />
                 </Route>
                 <Route exact path={MINI_GAMES_URL}>
                   <MiniGames />
