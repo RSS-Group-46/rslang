@@ -49,7 +49,12 @@ import MiniGamesStatistics from '../Statistic/Components/MiniGamesStatistics';
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
 
 import MainGamePlay from '../MainGame/MainGamePlay';
+
 import MainGame from '../MainGame/MainGame';
+
+
+import StartPageOurGame from '../OurGame/StartPageOurGame';
+
 
 
 import StartPageOurGame from '../OurGame/StartPageOurGame';
