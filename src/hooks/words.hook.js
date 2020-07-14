@@ -9,7 +9,7 @@ export const getDataUrl = (item) => `https://raw.githubusercontent.com/shevv920/
 const useWords = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
-  const [group, setGroup] = useState(0);
+  const [group, setGroup] = useState(0); 
   const [error, setError] = useState(null);
   const [curWordIndex, setCurWordIndex] = useState(0);
   const { loading: wordsLoading, request } = useHttp();

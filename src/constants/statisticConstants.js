@@ -5,4 +5,5 @@ export  const STATISTIC_INITIAL_STATE = {
   procentCorrectAnswers: 0,
   newWords: 0,
   longSeriesCorrectAnswers: 0,
+  currentPageFor: 0,
 };

@@ -17,10 +17,15 @@ const TextExample = (props) => {
     function firstPartSentens (){
         let textMeaning;
         let textShowString
+        const regexp = /<b>/i;
         if (props.wordObj) {
             textMeaning = props.wordObj.textExample;
-            const [seatchtSring] =  textMeaning.split('<b>')
-            textShowString =  seatchtSring;
+            if (regexp.test(textMeaning)) {
+                const [seatchtSring] =  textMeaning.split('<b>')
+                textShowString =  seatchtSring;
+            } else {
+                textShowString =  '';
+                }
         } else {
             textShowString = '';
         }
@@ -29,26 +34,41 @@ const TextExample = (props) => {
     
     function secondPartSentens (){
         let textMeaning;
-       
+        const regexp = /<\/b>/i;
         let textShowString
         if (props.wordObj) {
             textMeaning = props.wordObj.textExample;
-            const [, seatchtSring] =  textMeaning.split('</b>')
-            textShowString =  seatchtSring;
-           
+            if (regexp.test(textMeaning)) {
+                const [, seatchtSring] =  textMeaning.split('</b>')
+                textShowString =  seatchtSring;
+            } else {
+                textShowString =  '';
+                }
         } else {
             textShowString = '';
         }
         return textShowString;
-    }
+    } 
 
     return (
         <>
             <span className={textClassName}>{firstPartSentens ()}</span>
-            <Word wordObj={props.wordObj} isShowAnswear={props.isShowAnswear}/>
+            <Word wordObj={props.wordObj} isShowAnswear={props.isShowAnswear} 
+            setUserWord={props.setUserWord} wordImput={props.wordImput} retfocus={props.retfocus}/>
             <span className={textClassName}>{secondPartSentens ()}</span>
         </>
     );
   };
   
   export default TextExample;
+
+  /*
+  useEffect(() => {
+  
+  document.addEventListenet('keydown', (e) => {
+    if (e.key === 'Enter') {
+      enterAnswear();
+    };  
+  });
+}, []);
+*/

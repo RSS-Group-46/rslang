@@ -63,15 +63,11 @@ const Authorization = () => {
 
   return (
     <>
-      {error ? (
+      {error && (
         <NotificationContainer notifications={[error]} delay={15} />
-      ) : (
-        ''
       )}
-      {message ? (
+      {message && (
         <NotificationContainer notifications={[message]} delay={15} />
-      ) : (
-        ''
       )}
       <div className="container auth-container">
         <form
