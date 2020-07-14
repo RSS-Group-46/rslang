@@ -7,6 +7,7 @@ import { selectSettings } from '../../redux/selectors/settings.selectors';
 import { pushUserSettings, pullUserSettings, prepareSettingsForApp } from '../../services/settings.service';
 import { USER_DATA_STORAGE_NAME } from '../../constants/commonConstants';
 import { WORDS_PER_DAY_DEFAULT_VALUE, SETTINGS_INITIAL_STATE } from '../../constants/settingsConstants';
+import General from './Cards/GeneralSettings';
 
 const gearSize = 40;
 const headerPadding = 10;
@@ -53,7 +54,7 @@ const Settings = () => {
   }
 
   const toLearn = (
-    <button 
+    <button
       type="button"
       className="badge badge-pill badge-success"
       onClick={() => setUpdateWordsAmount(true)}
@@ -90,7 +91,7 @@ const Settings = () => {
       <div className="card mb-3 settings" style={{ left: `-${getSettingsShift(showSettings)}px`, width: `${containerWidth}px` }}>
         <div className="card-header" style={{ padding: `${headerPadding}px` }}>
           <div>Settings</div>
-          <div 
+          <div
             className="header_gear-logo"
             role="button"
             tabIndex={0}
@@ -102,6 +103,7 @@ const Settings = () => {
         <div className={getSettingsBodyClassNames(showSettings)}>
           <form>
             <h2 className="settings_to-learn"><div>To learn per day: </div>{updateWordsAmount ? wordsAmountForm : toLearn}</h2>
+            <General />
             <CardsSettings />
           </form>
         </div>

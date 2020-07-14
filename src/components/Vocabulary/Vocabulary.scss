@@ -1,0 +1,64 @@
+@import "../../styles/variables";
+
+.vocabulary {
+  $koef: 10%;
+
+  .dictionary-cards {
+    > *:not(h1-h6) {
+      font-size: 1.3rem;
+    }
+
+    .word {
+      &__image {
+        width: 250px;
+      }
+
+      &__audio {
+        height: 25px;
+        width: 25px;
+        background: url("../../assets/icons/sound-speaker.jpg") no-repeat center;
+        background-size: cover;
+      }
+
+      &__difficulty {
+        display: flex;
+        margin: 12px 0;
+
+        > * {
+          margin-right: 3px;
+          height: 18px;
+          width: 18px;
+          border-radius: 50%;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+
+        &--0 {
+          background-color: darken($warning, $koef);
+        }
+
+        &--1 {
+          background-color: lighten($info, $koef);
+        }
+
+        &--2 {
+          background-color: $info;
+        }
+
+        &--3 {
+          background-color: darken($info, $koef);
+        }
+
+        &--4 {
+          background-color: $success;
+        }
+
+        &--5 {
+          background-color: darken($success, $koef);
+        }
+      }
+    }
+  }
+}

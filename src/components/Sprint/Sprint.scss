@@ -1,0 +1,79 @@
+@import '../../styles/variables';
+@import '../../styles/body';
+
+.loader {
+  background-color: $gray-400;
+  opacity: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-sprint {
+  min-width: 500px !important;
+  max-width: 800px !important;
+}
+
+.word-image {
+  height: 260px !important;
+}
+
+.sprint-container {
+  margin-left: 4rem;
+  display: grid;
+  place-content: center;
+  height: 90vh !important;
+  background-image: url('../../assets/images/sprint_bg.jpg');
+  background-size: cover;
+}
+
+.game {
+  display: grid;
+  grid-template-areas: 
+    ". title ."
+    ". main countdown"
+    ". footer .";
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 50px auto 64px;
+
+  &__title {
+    grid-area: title;
+    justify-self: center;
+    color: $success;
+    font-size: 42px;
+    font-weight: 500;
+  }
+
+  &__stars {
+    grid-area: stars;
+    justify-self: center;
+    align-self: center;
+    margin-bottom: 1.2rem;
+  }
+
+  &__main {
+    grid-area: main;
+    font-size: 20px;
+
+    .play-icon {
+      width: 32px;
+      height: 32px;
+  
+      filter: invert(100%);
+    }
+
+    .card-body {
+      max-height: 65vh;
+      overflow: auto;
+    }
+  }
+
+  &__countdown {
+    grid-area: countdown;
+  }
+
+  &__footer {
+    grid-area: footer;
+  }
+  
+}
