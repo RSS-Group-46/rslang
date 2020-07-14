@@ -1,9 +1,14 @@
 import React, {useState, useContext, useRef, useEffect  } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { MAIN_GAME_PLAY_URL,  BASE_URL,} from '../../constants/urlConstants';
 
 import { selectLearnedWords, selectStatistic, selectPassedCards, selectProcentCorrectAnswers, selectNewWords, selectLongSeriesCorrectAnswers } from '../../redux/selectors/statistic.selectors';
 import { saveStatistic } from '../../redux/actions/statistic.actions';
 import { pushUserStatistic, pullUserStatistic, prepareStatisticForApp } from '../../services/statistic.service';
+
+import Statistic from '../Statistic/Statistic';
 
 import AssociationPicture from './components/AssociationPicture';
 import TextExample from './components/TextExample';
@@ -29,9 +34,6 @@ const MainGame = () => {
 
   const { userId, token } = useContext(AuthContext);
   const userData = { userId, token };
- // const showExample = useSelector(selectShowExample);
- // const showDescribe = useSelector(selectShowDescribe);
- 
 
 
   let image = '';
@@ -40,7 +42,7 @@ const MainGame = () => {
  const wordsPerRound = settings.wordsPerDay;
 
   const [currentGroup] = useState(0);
- // const [currentPage, setCurrentPage] = useState(0);
+
   const [wordImput, setUserWord] = useState('');
   const [currentWord, setCurrentWord] = useState(0);
   const [isShowAnswear, setShowAnswear] = useState(false);
@@ -84,7 +86,7 @@ const MainGame = () => {
       const gettingStatistic = {
       learnedWords, passedCards, procentCorrectAnswers, newWords, longSeriesCorrectAnswers, currentPageFor 
     }
-    console.log(gettingStatistic)
+   
     saveStatisticClick (gettingStatistic)
   }
 
@@ -104,10 +106,9 @@ const MainGame = () => {
 
 const { data } = useUserAggregatedWords(wordsConfig);
 const wordsRaw = data && data[0].paginatedResults || [];
-console.log(data)
+
 const wordObj = getPlayData(wordsRaw[countArrWord]);
 
- console.log(loadedStatistic)
 
 useEffect(() => {
   if (userData) {
@@ -119,10 +120,6 @@ useEffect(() => {
       })
   }
 }, [isWordGuessed]);
-
-
-
-console.log(pullUserStatistic,prepareStatisticForApp,setLoadedStatistic )
 
 
 function imageUrl (){
@@ -177,8 +174,11 @@ function imageUrl (){
     setProgressBarValue(progressBarProcent(currentWord,wordsRaw))
   }, [currentWord]);
 
-
-  function enterAnswear () {
+  const [isShowStatistic,setShowStatistic]= useState(false);
+  function enterAnswer () {
+    if(currentWord >=wordsRaw.length && (succesClasseName === 'text-success')){
+      setShowStatistic(true)
+  }
     setProgressBarValue(progressBarProcent(currentWord,wordsRaw))
     removeDangerClasseName ()
     removeSuccesClasseName ()
@@ -186,7 +186,6 @@ function imageUrl (){
 
     if (wordImput===wordObj.word && isWordGuessed) {
       setCountArrWord (countArrWord+1)
-   
       deleteImputValue ();
       setIsWordGuessed(false);
       setShowAnswear (false);
@@ -215,21 +214,47 @@ function imageUrl (){
       getDangerClasseName ();
     }
     if (currentWord >=wordsRaw.length){
+      setStattisticNew();
       
-      setStattisticNew()
     } 
-    console.log('current',currentWord,wordsRaw.length)
+
   }
-  console.log(progressBarValue,correctResponse,badResponse,lineCorrectResponse,maxLineCorrectResponse)
+
 
  
   const ariaValuenow = 50;
   const ariaValuemin = 0;
   const ariaValuemax = 100;
-    
+
+  const [key, setKey] = useState('');
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      setKey(e.key);  console.log('SSSSS jhjhgjgh')
+    }
+  });
+  
+  useEffect(() => {
+      if (key === 'Enter') {
+        enterAnswer();console.log('jhjhgjgh')
+      };
+  }, [key]);
+  
+/*
+ useEffect(() => {
+  
+  document.addEventListener('keydown', (e) => {console.log('jhjhgjgh')
+    if (e.key === 'Enter') {
+      enterAnswer();
+    };  
+  });
+}, []);
+*/
+
   const styleWidth = {width: `${progressBarValue}%`}
     return (
-      <div className="maingame  container" >
+      <>
+      <div className={ !isShowStatistic ? "maingame  container" : "none"} >
         <p className="card-title maingame__translation">
         <span className="badge badge-pill badge-light">Выучено слов -</span>
           <span className="badge badge-pill badge-success">{correctResponse}</span>
@@ -267,7 +292,7 @@ function imageUrl (){
           </div>
           <button type="button" 
           className="maingame__button" 
-          onClick={()=>enterAnswear ()}
+          onClick={()=>enterAnswer ()}
           
           >&#62;</button>
         </div>
@@ -275,11 +300,22 @@ function imageUrl (){
           <button type="button" className="btn btn-info" onClick={()=>showAnswear ()}>
             Показать ответ
           </button>
-          <button type="button" className="btn btn-success" onClick={()=>enterAnswear ()}>
-            Проверить ответ
+          <button type="button" className="btn btn-success" onClick={()=>enterAnswer ()}>
+            {succesClasseName === 'text-success' ? "Далее...":"Проверить"}
           </button>
         </div>
       </div>
+      <div className={ isShowStatistic ? "maingame  container" : "none"} >
+        <div>
+          <Statistic />
+        </div>
+        <div className="d-flex flex-row justify-content-around">
+          <Link className="btn btn-success" to={MAIN_GAME_PLAY_URL}>Продолжить</Link>
+          <Link className="btn btn-info" to={BASE_URL}>На главную</Link>
+      </div>
+
+      </div>
+      </>
     );
   };
   

@@ -61,3 +61,14 @@ const TextExample = (props) => {
   };
   
   export default TextExample;
+
+  /*
+  useEffect(() => {
+  
+  document.addEventListenet('keydown', (e) => {
+    if (e.key === 'Enter') {
+      enterAnswear();
+    };  
+  });
+}, []);
+*/

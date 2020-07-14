@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import 'bootstrap/js/src/collapse';
 import 'jquery';
 import {
+  MAIN_GAME_PLAY_URL,
   BASE_URL,
   STATISTICS_URL,
   VOCABULARY_URL,
@@ -40,6 +41,11 @@ const Header = () => {
               <li className="nav-item active">
                 <NavLink className="nav-link" to={BASE_URL}>
                   Home <span className="sr-only">(current)</span>
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to={MAIN_GAME_PLAY_URL}>
+                  Main game
                 </NavLink>
               </li>
               <li className="nav-item">
