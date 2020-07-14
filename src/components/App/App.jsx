@@ -52,11 +52,6 @@ import MainGamePlay from '../MainGame/MainGamePlay';
 
 import MainGame from '../MainGame/MainGame';
 
-
-import StartPageOurGame from '../OurGame/StartPageOurGame';
-
-
-
 import StartPageOurGame from '../OurGame/StartPageOurGame';
 
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';

@@ -86,7 +86,7 @@ const Header = () => {
         </div>
       )}
     </nav>
-  </header>  
+   </header>  
   );
 };
 
