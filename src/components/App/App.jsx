@@ -53,7 +53,7 @@ import MainGame from '../MainGame/MainGame';
 
 
 import StartPageOurGame from '../OurGame/StartPageOurGame';
-import MainGame from '../MainGame/MainGame';
+
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
 
