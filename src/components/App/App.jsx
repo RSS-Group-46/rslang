@@ -38,12 +38,14 @@ import Sprint from '../Sprint/Sprint';
 import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
+import Vocabulary from "../Vocabulary/Vocabulary";
 import Footer from '../Footer/Footer';
 
 import Statistic from '../Statistic/Statistic';
 import MiniGamesStatistics from '../Statistic/Components/MiniGamesStatistics';
 
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
+
 import StartPageOurGame from '../OurGame/StartPageOurGame';
 import MainGame from '../MainGame/MainGame';
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
@@ -75,14 +77,14 @@ const App = () => {
                 <Route exact path={STATISTICS_URL + MINI_GAMES_URL}>
                   <MiniGamesStatistics />
                 </Route>
-                <Route exact path={VOCABULARY_URL + LEARNED_URL}>
-                  <div>learned</div>
-                </Route>
                 <Route exact path={VOCABULARY_URL + COMPLICATED_URL}>
-                  <div>complicated</div>
+                  <Vocabulary path={COMPLICATED_URL} />
                 </Route>
                 <Route exact path={VOCABULARY_URL + DELETED_URL}>
-                  <div>deleted</div>
+                  <Vocabulary path={DELETED_URL} />
+                </Route>
+                <Route path={VOCABULARY_URL}>
+                  <Vocabulary path={LEARNED_URL} />
                 </Route>
                 <Route exact path={MINI_GAMES_URL}>
                   <MiniGames />

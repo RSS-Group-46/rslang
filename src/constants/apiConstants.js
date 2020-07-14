@@ -17,16 +17,30 @@ export const excludeByDifficulty = (difficulty) => ({
   "$or": [{ "userWord.difficulty": { "$ne": difficulty } }, { "userWord": null }]
 });
 
+export const ONLY_USER_WORDS = { "$and": [
+  { "userWord": { "$ne": null } },
+  { "$or": [
+      { "userWord.optional.trash": { "$exists": false } },
+      { "userWord.optional.trash": false }
+    ]
+  }
+]};
+export const ONLY_USER_HARD_WORDS = { "$and": [{
+    "userWord.optional.difficult": true,
+    "$or": [
+    { "userWord.optional.trash": { "$exists": false } },
+    { "userWord.optional.trash": false }
+  ],
+}] };
+export const ONLY_USER_TRASH_WORDS = { "userWord.optional.trash": true };
 export const withPage = (page) => ({
   "page": page,
 });
 
-export const ONLY_USER_WORDS = { "userWord": { "$ne": null } }
 export const EASY_WORDS = filterByDifficulty(DIFFICULTIES.EASY);
 export const HARD_WORDS = filterByDifficulty(DIFFICULTIES.HARD);
 export const NOT_EASY_WORDS = excludeByDifficulty(DIFFICULTIES.EASY);
 export const NOT_HARD_WORDS = excludeByDifficulty(DIFFICULTIES.HARD);
-
 
 export const METHODS = {
   GET: 'GET',
