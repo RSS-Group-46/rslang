@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+
+.none {
+  display: none;
+}
+
+button:active, button:focus {
+  outline: none !important;
+}
+button::-moz-focus-inner {
+  border: 0 !important;
+}
+
+.container__wrap {
+  display: flex;
+  justify-content: center;
+  max-width: 900px;
+}
+
+.maingame {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 600px;
+    
+}
