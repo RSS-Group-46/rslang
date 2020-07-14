@@ -74,6 +74,7 @@ const StartPageAudioChallenge = ({ settings }) => {
           setWords(data);
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [level, round, knowWords]);
 
   useEffect(() => {
@@ -101,6 +102,7 @@ const StartPageAudioChallenge = ({ settings }) => {
           }
         });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [start, knowWords]);
 
   return (

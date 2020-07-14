@@ -7,9 +7,11 @@ import Stats from './Stats';
 import StartPage from './StartPage';
 import PlayCard from './PlayCard';
 import { getPlayData, correctWordUrls } from './utils';
-import { roundTime, wordsPerRound, scoreStep, streakToBonus, PLAY_PATH, ROUND_END_PATH, ROOT_PATH } from './constants';
+import { roundTime, wordsPerRound, scoreStep, streakToBonus, PLAY_PATH, ROUND_END_PATH, ROOT_PATH, SPRINT_NAME } from './constants';
 
 import './Sprint.scss';
+import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
+import { pushMiniGamesRoundStatistics } from '../../services/statistic.service';
 
 export default () => {
   const [currentScore, setScore] = useState(0);
@@ -27,8 +29,21 @@ export default () => {
 
   const endRound = useCallback(() => {
     setRoundEnd(true);
+
+    const statisticsEntity = {
+      time: new Date().toLocaleString(),
+      correct: knownWords.length,
+      wrong: unknownWords.length
+    };
+
+    pushMiniGamesRoundStatistics(SPRINT_NAME,
+      statisticsEntity,
+      knownWords.length + unknownWords.length,
+      { token, userId },
+    );
+
     history.push(ROUND_END_PATH);
-  }, [history]);
+  }, [history, knownWords.length, unknownWords.length, token, userId]);
 
   const resetStates = useCallback(() => {
     setScore(0);
@@ -82,8 +97,9 @@ export default () => {
   }, [resetStates, history]);
 
   return (
-    <div className="container ml-5">
-      <div className="game">
+    <div className="sprint-container">
+      {wordsLoadError && <ErrorIndicator handleCloseError={() => { }} />}
+      {!wordsLoadError && <div className="game">
         <Switch>
           <Route path={PLAY_PATH}>
             <div className="game__title">{currentScore}</div>
@@ -111,7 +127,7 @@ export default () => {
             <StartPage />
           </Route>
         </Switch>
-      </div>
+      </div>}
     </div >
   )
 };

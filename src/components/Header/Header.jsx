@@ -64,29 +64,28 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              <li className="nav-item">
-                <NavLink className="nav-link" to={PROMO_URL}>
-                  Promo
-                </NavLink>
-              </li>
+            <li className="nav-item">
+              <NavLink exact className="nav-link" to={PROMO_URL}>
+                Promo
+              </NavLink>
+            </li>
 
-              <li className="nav-item">
-                <NavLink className="nav-link" to={TEAM_URL}>
-                  About Team
-                </NavLink>
-              </li>
-            </ul>
-            <button
-              className="btn btn-secondary my-2 my-sm-0"
-              type="submit"
-              onClick={auth.logOut}
-            >
-              Log Out
-            </button>
-          </div>
-        )}
-      </nav>
-    </header>
+            <li className="nav-item">
+              <NavLink exact className="nav-link" to={TEAM_URL}>
+                About Team
+              </NavLink>
+            </li>
+          </ul>
+          <button
+            className="btn btn-secondary my-2 my-sm-0"
+            type="submit"
+            onClick={auth.logOut}
+          >
+            Log Out
+          </button>
+        </div>
+      )}
+    </nav>
   );
 };
 

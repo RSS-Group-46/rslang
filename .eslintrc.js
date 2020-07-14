@@ -46,5 +46,6 @@ module.exports = {
       "assert": "either",
     }],
     "no-useless-return": "off",
+    "react-hooks/exhaustive-deps":  "off",
   },
 };

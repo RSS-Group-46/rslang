@@ -14,7 +14,7 @@ export const prepareSettingsForApp = (settings) => {
 export const pushUserSettings = (settings, userData) => {
   const normalizedSettings = prepareSettingsForServer(settings);
   const { userId, token } = userData;
-  
+
   fetch(`https://afternoon-falls-25894.herokuapp.com/users/${userId}/settings`,
     {
       method: 'PUT',

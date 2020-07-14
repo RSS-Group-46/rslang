@@ -4,7 +4,7 @@ import WordsIterator from '../utils/WordsIterator';
 import { TOTAL_GROUPS, PAGES_PER_GROUP, WORDS_PER_PAGE } from '../constants/apiConstants';
 
 const wordsIterator = new WordsIterator(TOTAL_GROUPS, PAGES_PER_GROUP, WORDS_PER_PAGE);
-const getDataUrl = (item) => `https://raw.githubusercontent.com/shevv920/rslang-data/master/${item}`;
+export const getDataUrl = (item) => `https://raw.githubusercontent.com/shevv920/rslang-data/master/${item}`;
 
 const useWords = () => {
   const [data, setData] = useState([]);
@@ -26,18 +26,18 @@ const useWords = () => {
   useEffect(() => {
     const fetchWords = async () => {
       try {
-      const res = await request(wordsURL);
-      const withUrlsCorrected = res.map((obj) => (
-        {
-          ...obj,
-          image: getDataUrl(obj.image),
-          audio: getDataUrl(obj.audio),
-          audioMeaning: getDataUrl(obj.audioMeaning),
-          audioExample: getDataUrl(obj.audioExample),
-        }));
+        const res = await request(wordsURL);
+        const withUrlsCorrected = res.map((obj) => (
+          {
+            ...obj,
+            image: getDataUrl(obj.image),
+            audio: getDataUrl(obj.audio),
+            audioMeaning: getDataUrl(obj.audioMeaning),
+            audioExample: getDataUrl(obj.audioExample),
+          }));
 
-      setData(withUrlsCorrected);
-      setError(null);
+        setData(withUrlsCorrected);
+        setError(null);
       } catch (err) {
         setError(err.message || 'Error get words from API');
       }

@@ -10,9 +10,9 @@ const ButtonRound = ({ handleRound, round }) => {
   return (
     <div className='round__audio-call'>
       <h3>Round</h3>
-      <select name='page' onChange={handleRound}>
+      <select name='page' defaultValue={round+1} onChange={handleRound}>
         {arrRound.map((item) => (
-          (round + 1) === item ? <option value={item} key={item} selected >{item}</option> : <option value={item} key={item} >{item}</option>
+          <option value={item} key={item}>{item}</option>
         ))}
       </select>
     </div>

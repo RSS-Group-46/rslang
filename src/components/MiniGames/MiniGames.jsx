@@ -1,18 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import speakItImg from '../../assets/icons/speakit.png';
-
+import speakIt from '../../assets/icons/speakit.jpg';
+import puzzle from '../../assets/icons/puzzle.jpg';
+import savannah from '../../assets/icons/savannah.jpg';
+import audiocall from '../../assets/icons/audiocall.jpg';
+import sprint from '../../assets/icons/sprint.jpg';
+import dataMiniGames from '../../data/dataMiniGames.json';
 import './MiniGames.scss';
 
-const dataMiniGames = require('../../data/dataMiniGames.json');
-
 const icons = {
-  1: speakItImg,
-  2: speakItImg,
-  3: speakItImg,
-  4: speakItImg,
-  5: speakItImg,
-  6: speakItImg,
+  1: speakIt,
+  2: puzzle,
+  3: savannah,
+  4: audiocall,
+  5: sprint,
+  6: speakIt,
 };
 
 const MiniGames = () => {
@@ -20,13 +22,7 @@ const MiniGames = () => {
     <div className="games  container">
       <h2 className="games__title">Mini-Games</h2>
       <p className="games__text">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-        nemo nulla praesentium unde alias vero omnis animi vel corporis totam
-        harum iusto nesciunt, ipsa eveniet accusamus officia optio. Voluptate,
-        accusantium. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Repudiandae nemo nulla praesentium unde alias vero omnis animi vel
-        corporis totam harum iusto nesciunt, ipsa eveniet accusamus officia
-        optio. Voluptate, accusantium.
+        Mini games age great to update your pronunciation, speaking and other English skills. Challenge yourself!
       </p>
 
       <section className="games__list">
