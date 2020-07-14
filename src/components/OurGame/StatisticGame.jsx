@@ -1,30 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import '@fortawesome/fontawesome-free/js/all';
 import { MINI_GAMES_URL } from '../../constants/urlConstants';
 import { METHODS } from '../../constants/apiConstants';
 
-const StatisticAudioChallenge = ({
-  arrCorrectAnswers,
-  arrErrorAnswers,
-  token,
+const StatisticGame = ({
+  arrErrorAnswer,
+  arrCorrectAnswer,
   userId,
+  token,
+  offLoader,
 }) => {
-  const [statistic, setStatistic] = useState(null);
-  const arrCorrectFilter = new Set(arrCorrectAnswers);
-  const arrErrorsFilter = new Set(arrErrorAnswers);
-  const handleAudio = (audios) => {
+  const [statistic, setStatistic] = useState();
+  const handleAudio = (audioSentece) => {
     const audio = new Audio(
-      `https://raw.githubusercontent.com/irinainina/rslang-data/master/${audios}`,
+      `https://raw.githubusercontent.com/irinainina/rslang-data/master/${audioSentece}`,
     );
     audio.play();
   };
 
   useEffect(() => {
     fetch(
-      `https://pacific-castle-12388.herokuapp.com/users/${userId}/statistics`,
+      `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
       {
-        method: 'GET',
+        method: METHODS.GET,
         withCredentials: true,
         headers: {
           Authorization: `Bearer ${token}`,
@@ -33,15 +31,17 @@ const StatisticAudioChallenge = ({
       },
     )
       .then((response) => response.json())
-      .then((data) => setStatistic(data));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      .then((data) => {
+        setStatistic(data);
+        offLoader();
+      });
   }, []);
 
   useEffect(() => {
     if (statistic) {
       const date = new Date();
       fetch(
-        `https://pacific-castle-12388.herokuapp.com/users/${userId}/statistics`,
+        `https://afternoon-falls-25894.herokuapp.com/users/${userId}/statistics`,
         {
           method: METHODS.PUT,
           withCredentials: true,
@@ -51,17 +51,17 @@ const StatisticAudioChallenge = ({
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            learnedWords: 13,
+            learnedWords: arrCorrectAnswer.length + arrErrorAnswer.length,
             optional: {
               ...statistic.optional,
               miniGames: {
                 ...(statistic.optional?.miniGames || {}),
-                audioCall: [
-                  ...(statistic.optional?.miniGames?.audioCall || []),
+                ourGame: [
+                  ...(statistic.optional?.miniGames?.ourGame || []),
                   {
-                    "time": `${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`,
-                    "correct": arrCorrectAnswers.length,
-                    "wrong": arrErrorAnswers.length,
+                    time: `${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`,
+                    correct: arrCorrectAnswer.length,
+                    wrong: arrErrorAnswer.length,
                   },
                 ],
               },
@@ -70,11 +70,10 @@ const StatisticAudioChallenge = ({
         },
       );
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statistic]);
 
   return (
-    <div className="statistic__audio-challenge">
+    <div className="statistic-round__our-game">
       <div className="col-lg-4">
         <div className="bs-component">
           <div className="alert alert-dismissible alert-success">
@@ -88,33 +87,33 @@ const StatisticAudioChallenge = ({
             </NavLink>
             <div>
               <h4>
-                Errors: <span>{[...arrErrorsFilter].length}</span>
+                Errors: <span>{arrErrorAnswer.length}</span>
               </h4>
-              {[...arrErrorsFilter].map((item) => (
+              {arrErrorAnswer.map((item) => (
                 <div
                   className="table-danger"
-                  onClick={() => handleAudio(item.audio)}
                   role="presentation"
-                  key={item.word}
+                  key={item.id}
+                  onClick={() => handleAudio(item.audioExample)}
                 >
-                  <i className="fas fa-volume-up" />
-                  {item.word}
+                  <i className="fas fa-volume-up" key={`${item.id}1`} />
+                  <span key={`${item.id}2`}>{item.textExample}</span>
                 </div>
               ))}
             </div>
             <div>
               <h4>
-                I know: <span>{[...arrCorrectFilter].length}</span>
+                I know: <span>{arrCorrectAnswer.length}</span>
               </h4>
-              {[...arrCorrectFilter].map((item) => (
+              {arrCorrectAnswer.map((item) => (
                 <div
                   className="table-success"
-                  onClick={() => handleAudio(item.audio)}
                   role="presentation"
-                  key={item.word}
+                  key={item.id}
+                  onClick={() => handleAudio(item.audioExample)}
                 >
                   <i className="fas fa-volume-up" />
-                  {item.word}
+                  <span>{item.textExample}</span>
                 </div>
               ))}
             </div>
@@ -125,4 +124,4 @@ const StatisticAudioChallenge = ({
   );
 };
 
-export default StatisticAudioChallenge;
+export default StatisticGame;

@@ -74,7 +74,8 @@ const StartPageAudioChallenge = ({ settings }) => {
           setWords(data);
         });
     }
-  }, [level, round, knowWords, start]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [level, round, knowWords]);
 
   useEffect(() => {
     if (start && knowWords) {

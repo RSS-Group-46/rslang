@@ -54,7 +54,7 @@ const Settings = () => {
   }
 
   const toLearn = (
-    <button 
+    <button
       type="button"
       className="badge badge-pill badge-success"
       onClick={() => setUpdateWordsAmount(true)}
@@ -91,7 +91,7 @@ const Settings = () => {
       <div className="card mb-3 settings" style={{ left: `-${getSettingsShift(showSettings)}px`, width: `${containerWidth}px` }}>
         <div className="card-header" style={{ padding: `${headerPadding}px` }}>
           <div>Settings</div>
-          <div 
+          <div
             className="header_gear-logo"
             role="button"
             tabIndex={0}
@@ -103,7 +103,7 @@ const Settings = () => {
         <div className={getSettingsBodyClassNames(showSettings)}>
           <form>
             <h2 className="settings_to-learn"><div>To learn per day: </div>{updateWordsAmount ? wordsAmountForm : toLearn}</h2>
-            <General/>
+            <General />
             <CardsSettings />
           </form>
         </div>

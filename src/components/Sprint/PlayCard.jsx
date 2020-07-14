@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
 import Streak from './Streak';
 
+import audioIcon from '../../assets/icons/audio.svg';
+
 export default ({ playData, wordsLoading, handleAnswer, streak, maxStreak }) => {
   const playCurrent = useCallback(() => {
     const audio = new Audio();
@@ -21,7 +23,7 @@ export default ({ playData, wordsLoading, handleAnswer, streak, maxStreak }) => 
       <div className="card-footer">
         <div className="d-flex flex-row justify-content-between">
           <button className="btn btn-danger" type="button" onClick={() => handleAnswer(false)}>Не верно</button>
-          <button className="btn btn-info" type="button" onClick={playCurrent}>Play</button>
+          <button className="btn btn-info" type="button" onClick={playCurrent}><img className="play-icon" src={audioIcon} alt="play audio for the word" /></button>
           <button className="btn btn-success" type="button" onClick={() => handleAnswer(true)}>Верно</button>
         </div>
       </div>

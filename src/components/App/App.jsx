@@ -23,6 +23,8 @@ import {
   TEAM_URL,
   AUTH_URL,
   ERROR,
+  OURGAME_URL,
+  PLAY_URL,
 } from '../../constants/urlConstants';
 import Authorization from '../Authorization/Authorization';
 import AuthContext from '../../contexts/auth.context';
@@ -36,18 +38,21 @@ import Sprint from '../Sprint/Sprint';
 import MiniGames from '../MiniGames/MiniGames';
 import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
+import Vocabulary from "../Vocabulary/Vocabulary";
 import Footer from '../Footer/Footer';
 
 import Statistic from '../Statistic/Statistic';
 import MiniGamesStatistics from '../Statistic/Components/MiniGamesStatistics';
 
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
-import Vocabulary from "../Vocabulary/Vocabulary";
 
+import StartPageOurGame from '../OurGame/StartPageOurGame';
 import MainGame from '../MainGame/MainGame';
-
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
+
+import Savannah from '../Savannah/Savannah';
+import SavannahWelcome from '../Savannah/UI/SavannahWelcome';
 
 import './App.scss';
 
@@ -64,7 +69,6 @@ const App = () => {
               <Settings />
               <Switch>
                 <Route exact path={BASE_URL}>
-                  <div>Hello Group 46 !</div>
                   <MainGame />
                 </Route>
                 <Route exact path={STATISTICS_URL}>
@@ -88,7 +92,10 @@ const App = () => {
                 <Route exact path={MINI_GAMES_URL + SPEAKIT_URL}>
                   <SpeakItWelcome />
                 </Route>
-                <Route exact path={MINI_GAMES_URL + SPEAKIT_URL + PATH_SPEAKIT_TRAIN}>
+                <Route
+                  exact
+                  path={MINI_GAMES_URL + SPEAKIT_URL + PATH_SPEAKIT_TRAIN}
+                >
                   <SpeakItTrain />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + PUZZLE_URL}>
@@ -98,13 +105,19 @@ const App = () => {
                   <Puzzle />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + SAVANNAH_URL}>
-                <div>Savannah</div>
+                  <SavannahWelcome />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + SAVANNAH_URL + PLAY_URL}>
+                  <Savannah />
                 </Route>
                 <Route exact path={MINI_GAMES_URL + AUDIOCALL_URL}>
                   <StartPageAudioChallenge />
                 </Route>
                 <Route path={MINI_GAMES_URL + SPRINT_URL}>
                   <Sprint />
+                </Route>
+                <Route exact path={MINI_GAMES_URL + OURGAME_URL}>
+                  <StartPageOurGame />
                 </Route>
                 <Route exact path={PROMO_URL}>
                   <div>promo</div>
