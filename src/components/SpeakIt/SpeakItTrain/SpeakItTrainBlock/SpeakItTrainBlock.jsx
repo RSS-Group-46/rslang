@@ -5,6 +5,7 @@ import { useSpeechRecognition, useSpeechSynthesis } from 'react-speech-kit';
 import Button from '../../UI/Button/Button';
 import defaultTrainImg from '../../assets/images/train-img.jpg';
 import { STATIC_URL, TRANSLATE_URL } from '../../constants/speakItConstants';
+import SpeakItError from '../SpeakItError/SpeakItError';
 
 import './SpeakItTrainBlock.scss';
 
@@ -17,7 +18,6 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result) => {
       const normalizedWord = result.toLowerCase().trim();
-      // console.log('words: ', words);
       setRecognizedText(normalizedWord);
 
       if (words.find((word) => word.word === normalizedWord)) {
@@ -31,8 +31,10 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
       }
     },
   });
+  const [isError, setIsError] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
-  const wordsURL = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}&group=${
+  const wordsURL = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}$&group=${
     currentTrainLevel - 1
   }`;
 
@@ -50,7 +52,10 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
         const responseResult = response.data.slice(0, 10);
         setWords(responseResult);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setErrorText(error);
+        setIsError(!isError);
+      });
   };
 
   useEffect(() => {
@@ -65,7 +70,10 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
         const [wordTranslate] = response.data.text;
         setTranslate(wordTranslate);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setErrorText(error);
+        setIsError(!isError);
+      });
 
     const imgUrl = `${STATIC_URL}${word.image}`;
     setImage(imgUrl);
@@ -100,6 +108,9 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
 
   return (
     <div className="train  container">
+      <div className="train__error">
+        {isError && <SpeakItError errorText={errorText} />}
+      </div>
       <img className="train__img" src={image} alt="train" />
       <div className="train-word">
         <div className="train-word__train">{listening ? '' : translate}</div>
@@ -114,7 +125,7 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
         <Button
           classes={classesRestart}
           onClick={() => {
-            requestWords()
+            requestWords();
             stop();
           }}
         >

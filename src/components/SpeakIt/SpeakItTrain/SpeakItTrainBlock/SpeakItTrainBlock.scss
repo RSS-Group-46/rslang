@@ -6,6 +6,7 @@
   --gray-color: grey;
   --lightyellow-color: #fbe898;
   --lightgreen-color: #ccf4d3;
+  --red-color: red;
 }
 
 .train {
@@ -16,6 +17,19 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  &__error {
+    width: 400px;
+    height: 30px;
+    margin-bottom: 10px;
+
+    & span {
+      display: block;
+
+      text-align: center;
+      color: var(--red-color);
+    }
+  }
 
   &__img {
     display: block;
@@ -76,6 +90,10 @@
     }
   }
 
+  &-buttons {
+    margin-bottom: 30px;
+  }
+
   &-buttons__restart,
   &-buttons__speak,
   &-buttons__results {
@@ -107,6 +125,7 @@
   flex-wrap: wrap;
 
   width: 1000px;
+  height: 225px;
 
   &__card {
     position: relative;
