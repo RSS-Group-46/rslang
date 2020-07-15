@@ -291,7 +291,7 @@ const MainGame = () => {
           </button>
           <div className="card bg-light mb-3">
             <div className="card-header maingame__header">
-              <AssociationPicture srcAssociationPicture={imageUrl()} />
+              <AssociationPicture srcAssociationPicture={image} />
             </div>
             <div className="card-body">
               <span className={succesClasseName}>Correct!</span>
