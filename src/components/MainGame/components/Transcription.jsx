@@ -1,31 +1,22 @@
-import React  from 'react';
+import React, {useState, useEffect}  from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectShowTranscription } from '../../../redux/selectors/settings.selectors';
 
-let textClassName
-
-const Transcription = (props) => {
+const Transcription = ({wordObj}) => {
     const showTranscription = useSelector(selectShowTranscription);
-    if (showTranscription) {
-        textClassName = 'card-text maingame__sentence';
-      } else {
-        textClassName = 'none';
-      }
 
-    function textShow () {
-        let word;
-        if (props.wordObj) {
-            word = props.wordObj.transcription;
-        } else {
-            word = '';
+    const [wordTranscription, setWordTranscription] = useState('')
+
+    useEffect (()=>{
+        if(wordObj){
+            setWordTranscription(wordObj.transcription)
         }
-        return word
-    }
+    }, [wordObj]);
 
     return (
-        <p  className={textClassName}>
-            {textShow ()}
+        <p  className={showTranscription ? 'card-text maingame__sentence' : 'none'}>
+            {wordTranscription}
         </p>
     );
   };

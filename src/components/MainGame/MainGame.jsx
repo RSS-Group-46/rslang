@@ -2,9 +2,9 @@ import React, {useState, useContext, useRef, useEffect  } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { MAIN_GAME_PLAY_URL,  BASE_URL,} from '../../constants/urlConstants';
+import { BASE_URL } from '../../constants/urlConstants';
+import { EVENT_TYPES } from '../../constants/actionTypeConstants';
 
-import { selectLearnedWords, selectStatistic, selectPassedCards, selectProcentCorrectAnswers, selectNewWords, selectLongSeriesCorrectAnswers } from '../../redux/selectors/statistic.selectors';
 import { saveStatistic } from '../../redux/actions/statistic.actions';
 import { pushUserStatistic, pullUserStatistic, prepareStatisticForApp } from '../../services/statistic.service';
 
@@ -59,15 +59,6 @@ const MainGame = () => {
 
   const [succesClasseName, setSuccesClasseName] = useState('none');
   const [dangerClasseName, setDangerClasseName] = useState('none');
-
-  const learnedWordsNumber = useSelector(selectLearnedWords);
-  const passedCardsNumber = useSelector(selectPassedCards);
-  const procentCorrectAnswersNumber = useSelector(selectProcentCorrectAnswers);
-  const newWordsNumber = useSelector(selectNewWords);
-  const longSeriesCorrectAnswersNumber = useSelector(selectLongSeriesCorrectAnswers);
-  const statistic = useSelector(selectStatistic);
-
-  console.log(learnedWordsNumber,passedCardsNumber, procentCorrectAnswersNumber, newWordsNumber, longSeriesCorrectAnswersNumber)
 
   const dispatch = useDispatch();
   function saveStatisticClick (gettingStatistic) {
@@ -132,21 +123,15 @@ function imageUrl (){
 }
 
 
- if (settings===5){
-  console.log(setStattisticNew(),
-  pushUserStatistic(statistic, userData))}
-
   function showAnswear () {
     setShowAnswear (true);
   }
 
-
-
-  function getSuccesClasseName (){
+  function moveSuccesClasseName (){
     setSuccesClasseName ('text-success')
   };
 
-  function getDangerClasseName (){
+  function moveDangerClasseName (){
     setDangerClasseName ('text-danger')
   };
 
@@ -160,12 +145,9 @@ function imageUrl (){
 
 
   const [retfocus, setRetfocus] = useState(false);
+
   function returnfocus () {
-    if (retfocus) {
-      setRetfocus (false)
-    } else {
-      setRetfocus (true)
-    }
+    setRetfocus(!retfocus);
   }
 
   const [progressBarValue,setProgressBarValue]= useState(0);
@@ -194,7 +176,6 @@ function imageUrl (){
     if (wordImput===wordObj.word && !isWordGuessed) {
       setCurrentWord (currentWord +1);
         setLineCorrectResponse(lineCorrectResponse+1)
-        console.log(lineCorrectResponse)
         if(lineCorrectResponse>=(maxLineCorrectResponse)){
           setMaxLineCorrectResponse(lineCorrectResponse+1);
         }
@@ -203,7 +184,7 @@ function imageUrl (){
       childRef.current.playAudio()
       setShowAnswear (true);
       setIsWordGuessed(true);
-      getSuccesClasseName ();
+      moveSuccesClasseName ();
       
     }
 
@@ -211,7 +192,7 @@ function imageUrl (){
       setLineCorrectResponse(0)
       setBadResponse (badResponse + 1)
       childRef.current.playAudio();
-      getDangerClasseName ();
+      moveDangerClasseName ();
     }
     if (currentWord >=wordsRaw.length){
       setStattisticNew();
@@ -220,8 +201,6 @@ function imageUrl (){
 
   }
 
-
- 
   const ariaValuenow = 50;
   const ariaValuemin = 0;
   const ariaValuemax = 100;
@@ -229,27 +208,16 @@ function imageUrl (){
   const [key, setKey] = useState('');
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      setKey(e.key);  console.log('SSSSS jhjhgjgh')
+    if (e.key === EVENT_TYPES.Enter) {
+      setKey(e.key);
     }
   });
   
   useEffect(() => {
       if (key === 'Enter') {
-        enterAnswer();console.log('jhjhgjgh')
+        enterAnswer();
       };
   }, [key]);
-  
-/*
- useEffect(() => {
-  
-  document.addEventListener('keydown', (e) => {console.log('jhjhgjgh')
-    if (e.key === 'Enter') {
-      enterAnswer();
-    };  
-  });
-}, []);
-*/
 
   const styleWidth = {width: `${progressBarValue}%`}
     return (
@@ -310,8 +278,7 @@ function imageUrl (){
           <Statistic />
         </div>
         <div className="d-flex flex-row justify-content-around">
-          <Link className="btn btn-success" to={MAIN_GAME_PLAY_URL}>Продолжить</Link>
-          <Link className="btn btn-info" to={BASE_URL}>На главную</Link>
+          <Link className="btn btn-success" to={BASE_URL}>Продолжить</Link>
       </div>
 
       </div>

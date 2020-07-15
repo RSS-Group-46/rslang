@@ -8,7 +8,6 @@ import {
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
 import {
   MAIN_GAME_URL,
-  MAIN_GAME_PLAY_URL,
   BASE_URL,
   STATISTICS_URL,
   VOCABULARY_URL,
@@ -75,13 +74,9 @@ const App = () => {
               <Settings />
               <Switch>
                 <Route exact path={BASE_URL}>
-                  <div>!</div>
-                </Route>
-                <Route exact path={MAIN_GAME_PLAY_URL}>
                   <MainGamePlay />
                 </Route>
                 <Route exact path={MAIN_GAME_URL}>
-
                   <MainGame />
                 </Route>
                 <Route exact path={STATISTICS_URL}>

@@ -1,56 +1,34 @@
 
-import React, {useRef, useEffect}  from 'react';
+import React, {useRef, useEffect, useState}  from 'react';
 
-const Word = (props) => {
+const Word = ({wordObj, isShowAnswear, setUserWord, retfocus, wordImput  }) => {
 
+    const [word, setWord] = useState('')
 
-function wordPlaceholder () {
-    let word;
-    if (props.wordObj.word) {
-        word = props.wordObj.word;
-    } else {
-        word = '';
-    }
-    return word
-    }
-
-    function ShowWordPlaceholder () {
-        let show
-        if (!props.isShowAnswear) {
-            show = '';
-        } else {
-            show =  wordPlaceholder ();
+    useEffect (()=>{
+        if(wordObj){
+            setWord(wordObj.word)
         }
-        return show;
-    }
-    
-
-    const { setUserWord } = props;
+    }, [wordObj]);
 
     const focusRef = useRef();
-  
     function returnfocus () {
         focusRef.current.focus();
     }
-    const {retfocus }= props;
 
     useEffect(() => {
         returnfocus ()
       }, [retfocus]);
 
-    
-
     return (
-        <>
             <input type="text" 
                 className="maingame__pasteWord maingame__pasteWord_placeholder" 
-                placeholder={ShowWordPlaceholder ()} 
-                size={wordPlaceholder().length}
+                placeholder={isShowAnswear ? word : ''} 
+                size={word ? word.length : 1}
                 onChange={(e) => setUserWord(e.target.value)} 
-                value={props.wordImput}
+                value={wordImput}
                 ref={focusRef}
             />
-        </>
     );
   };
   
