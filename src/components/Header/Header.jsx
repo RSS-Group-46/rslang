@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import 'bootstrap/js/src/collapse';
 import 'jquery';
 import {
+  MAIN_GAME_PLAY_URL,
   BASE_URL,
   STATISTICS_URL,
   VOCABULARY_URL,
@@ -79,6 +80,7 @@ const Header = () => {
         </div>
       )}
     </nav>
+   </header>  
   );
 };
 

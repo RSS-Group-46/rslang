@@ -291,11 +291,11 @@ const MainGame = () => {
           </button>
           <div className="card bg-light mb-3">
             <div className="card-header maingame__header">
-              <AssociationPicture srcAssociationPicture={image} />
+              <AssociationPicture srcAssociationPicture={imageUrl()} />
             </div>
             <div className="card-body">
-              <span className={succesClasseName}>Правильно!</span>
-              <span className={dangerClasseName}>Не правино!</span>
+              <span className={succesClasseName}>Correct!</span>
+              <span className={dangerClasseName}>Incorrect!</span>
 
               <h4 className="card-title">
                 <TextExample
@@ -370,7 +370,7 @@ const MainGame = () => {
         </div>
         <div className="d-flex flex-row justify-content-around">
           <Link className="btn btn-success" to={BASE_URL}>
-            Продолжить
+            Proceed
           </Link>
         </div>
       </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Button from '../UI/Button/Button';
 import { MINI_GAMES_URL, SPEAKIT_URL } from '../../../constants/urlConstants';
-import { PATH_SPEAKIT_TRAIN } from '../SpeakItTrain/constants/speakItConstants';
+import { PATH_SPEAKIT_TRAIN } from '../constants/speakItConstants';
 
 import './SpeakItWelcome.scss';
 

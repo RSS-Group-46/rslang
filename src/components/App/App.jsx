@@ -7,6 +7,8 @@ import {
 } from 'react-router-dom';
 import ErrorBoundary from '../../errorBoundary/ErrorBoundary';
 import {
+  MAIN_GAME_URL,
+  MAIN_GAME_PLAY_URL,
   BASE_URL,
   STATISTICS_URL,
   VOCABULARY_URL,
@@ -40,19 +42,13 @@ import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Vocabulary from '../Vocabulary/Vocabulary';
 import Footer from '../Footer/Footer';
-
 import Statistic from '../Statistic/Statistic';
 import MiniGamesStatistics from '../Statistic/Components/MiniGamesStatistics';
-
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
-
 import MainGame from '../MainGame/MainGame';
-
 import StartPageOurGame from '../OurGame/StartPageOurGame';
-
 import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
-
 import Savannah from '../Savannah/Savannah';
 import SavannahWelcome from '../Savannah/UI/SavannahWelcome';
 
@@ -71,6 +67,12 @@ const App = () => {
               <Settings />
               <Switch>
                 <Route exact path={BASE_URL}>
+                  <div>!</div>
+                </Route>
+                <Route exact path={MAIN_GAME_PLAY_URL}>
+                  <MainGamePlay />
+                </Route>
+                <Route exact path={MAIN_GAME_URL}>
                   <MainGame />
                 </Route>
                 <Route exact path={STATISTICS_URL}>
