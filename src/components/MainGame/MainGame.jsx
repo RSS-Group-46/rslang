@@ -266,14 +266,11 @@ const MainGame = () => {
     <>
       <div className={!isShowStatistic ? 'maingame  container' : 'none'}>
         <p className="card-title maingame__translation">
-          <span className="badge badge-pill badge-light">Выучено слов -</span>
+          <span className="badge badge-pill badge-light">Learned -</span>
           <span className="badge badge-pill badge-success">
             {correctResponse}
           </span>
-          <span className="badge badge-pill badge-light">
-            {' '}
-            запланировано выучить -{' '}
-          </span>
+          <span className="badge badge-pill badge-light"> To learn - </span>
           <span className="badge badge-pill badge-info">{wordsRaw.length}</span>
         </p>
         <div className="progress">
