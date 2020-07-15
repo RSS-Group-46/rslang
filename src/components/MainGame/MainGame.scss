@@ -1,0 +1,87 @@
+@import '../../styles/variables';
+
+.none {
+  display: none;
+}
+
+button:active,
+button:focus {
+  outline: none !important;
+}
+button::-moz-focus-inner {
+  border: 0 !important;
+}
+
+.container__wrap {
+  display: flex;
+  justify-content: center;
+  max-width: 900px;
+}
+
+.maingame {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 600px;
+
+  &__pasteWord {
+    display: inline;
+    margin: 5px;
+    padding: 2px;
+
+    border-radius: 3px;
+    border: 0px;
+    font-size: 24px;
+    text-align: left;
+  }
+
+  &__pasteWord_placeholder {
+    background-color: $gray-300;
+  }
+
+  &__pasteWord_textMeaning {
+    background-color: $white;
+  }
+
+  &__text {
+    font-size: 16px;
+  }
+
+  &__sentence {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  &__translation {
+    font-size: 36px;
+  }
+
+  &__indicator {
+    font-size: 24px;
+    margin: 5px;
+  }
+
+  &__line {
+    color: $gray-300;
+  }
+
+  &__button {
+    margin: 15px auto;
+    border: 0px;
+    font-size: 64px;
+    background-color: #ffffff00;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+
+    &_img {
+      max-width: 500px;
+      max-height: 300px;
+    }
+  }
+}

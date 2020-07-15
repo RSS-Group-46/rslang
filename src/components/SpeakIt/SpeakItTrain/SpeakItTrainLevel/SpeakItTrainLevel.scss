@@ -1,0 +1,62 @@
+@import '../../../../styles//variables';
+
+:root {
+  --blue-color: #048bc2;
+}
+
+.train {
+  &-page {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &-levels {
+    position: absolute;
+    top: 90px;
+    left: 100px;
+    content: '';
+
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    height: 300px;
+
+    &:before {
+      position: absolute;
+      content: '';
+      left: 45%;
+      top: 50%;
+
+      height: 100%;
+      width: 3px;
+
+      background-color: var(--blue-color);
+      transform: translateY(-50%);
+    }
+
+    &__level {
+      position: relative;
+
+      width: 36px;
+      height: 36px;
+
+      border-radius: 50%;
+      background-color: var(--blue-color);
+
+      cursor: pointer;
+
+      &--active {
+        box-shadow: 0 0 0 2px var(--blue-color), inset 0 0 0 4px var(--white-color),
+          inset 0 0 0 3px var(--blue-color);
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+}

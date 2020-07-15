@@ -1,0 +1,20 @@
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+
+  display: flex;
+  justify-content: flex-end;
+
+  border: 2px solid;
+  border-radius: 25px 25px 55px 5px/5px 55px 25px 25px;
+
+  &__text {
+    margin: 0;
+    padding: 18px;
+
+    font-size: 15px;
+  }
+}
