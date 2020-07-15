@@ -1,0 +1,17 @@
+.youtube {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin-top: 40px;
+
+  & h3 {
+    font-size: 50px;
+    font-weight: 700;
+    text-align: center;
+    color: #6f42c1;
+
+    margin-bottom: 50px;
+  }
+}
