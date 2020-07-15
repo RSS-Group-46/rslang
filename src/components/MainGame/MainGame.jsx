@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef, useEffect  } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -6,7 +6,11 @@ import { BASE_URL } from '../../constants/urlConstants';
 import { EVENT_TYPES } from '../../constants/actionTypeConstants';
 
 import { saveStatistic } from '../../redux/actions/statistic.actions';
-import { pushUserStatistic, pullUserStatistic, prepareStatisticForApp } from '../../services/statistic.service';
+import {
+  pushUserStatistic,
+  pullUserStatistic,
+  prepareStatisticForApp,
+} from '../../services/statistic.service';
 
 import Statistic from '../Statistic/Statistic';
 
@@ -25,21 +29,22 @@ import AuthContext from '../../contexts/auth.context';
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import { selectSettings } from '../../redux/selectors/settings.selectors';
 
-import { getPlayData, getDataUrl, progressBarProcent} from './components/utils';
- 
-import './MainGame.scss';  
+import {
+  getPlayData,
+  getDataUrl,
+  progressBarProcent,
+} from './components/utils';
 
+import './MainGame.scss';
 
 const MainGame = () => {
-
   const { userId, token } = useContext(AuthContext);
   const userData = { userId, token };
-
 
   let image = '';
   const settings = useSelector(selectSettings);
 
- const wordsPerRound = settings.wordsPerDay;
+  const wordsPerRound = settings.wordsPerDay;
 
   const [currentGroup] = useState(0);
 
@@ -50,10 +55,10 @@ const MainGame = () => {
   const [countArrWord, setCountArrWord] = useState(0);
   const [loadedStatistic, setLoadedStatistic] = useState(0);
 
-  const [correctResponse,setCorrectResponse]= useState(0);
-  const [badResponse,setBadResponse]= useState(0);
-  const [lineCorrectResponse,setLineCorrectResponse]= useState(0);
-  const [maxLineCorrectResponse,setMaxLineCorrectResponse]= useState(0);
+  const [correctResponse, setCorrectResponse] = useState(0);
+  const [badResponse, setBadResponse] = useState(0);
+  const [lineCorrectResponse, setLineCorrectResponse] = useState(0);
+  const [maxLineCorrectResponse, setMaxLineCorrectResponse] = useState(0);
 
   const [isWordGuessed, setIsWordGuessed] = useState(false);
 
@@ -61,28 +66,35 @@ const MainGame = () => {
   const [dangerClasseName, setDangerClasseName] = useState('none');
 
   const dispatch = useDispatch();
-  function saveStatisticClick (gettingStatistic) {
-      pushUserStatistic(gettingStatistic, userData)
-    dispatch(saveStatistic(gettingStatistic))
+  function saveStatisticClick(gettingStatistic) {
+    pushUserStatistic(gettingStatistic, userData);
+    dispatch(saveStatistic(gettingStatistic));
   }
- 
+
   function setStattisticNew() {
-      const learnedWords = loadedStatistic.learnedWords+ correctResponse;
-      const passedCards = correctResponse;
-      const procentCorrectAnswers = Math.round(correctResponse/(correctResponse+badResponse)*100);
-      const newWords = correctResponse;
-      const longSeriesCorrectAnswers =maxLineCorrectResponse;
-      const currentPageFor = loadedStatistic.currentPageFor+1;
+    const learnedWords = loadedStatistic.learnedWords + correctResponse;
+    const passedCards = correctResponse;
+    const procentCorrectAnswers = Math.round(
+      (correctResponse / (correctResponse + badResponse)) * 100,
+    );
+    const newWords = correctResponse;
+    const longSeriesCorrectAnswers = maxLineCorrectResponse;
+    const currentPageFor = loadedStatistic.currentPageFor + 1;
 
-      const gettingStatistic = {
-      learnedWords, passedCards, procentCorrectAnswers, newWords, longSeriesCorrectAnswers, currentPageFor 
-    }
-   
-    saveStatisticClick (gettingStatistic)
+    const gettingStatistic = {
+      learnedWords,
+      passedCards,
+      procentCorrectAnswers,
+      newWords,
+      longSeriesCorrectAnswers,
+      currentPageFor,
+    };
+
+    saveStatisticClick(gettingStatistic);
   }
 
-  function deleteImputValue (){
-    setUserWord('')
+  function deleteImputValue() {
+    setUserWord('');
   }
 
   const childRef = useRef();
@@ -92,113 +104,110 @@ const MainGame = () => {
     token,
     group: currentGroup,
     wordsPerPage: wordsPerRound,
-    filter: { "$or": [{ "page": loadedStatistic.currentPageFor }, { "page": loadedStatistic.currentPageFor + 1 }] },
+    filter: {
+      $or: [
+        { page: loadedStatistic.currentPageFor },
+        { page: loadedStatistic.currentPageFor + 1 },
+      ],
+    },
   };
 
-const { data } = useUserAggregatedWords(wordsConfig);
-const wordsRaw = data && data[0].paginatedResults || [];
+  const { data } = useUserAggregatedWords(wordsConfig);
+  const wordsRaw = (data && data[0].paginatedResults) || [];
 
-const wordObj = getPlayData(wordsRaw[countArrWord]);
+  const wordObj = getPlayData(wordsRaw[countArrWord]);
 
-
-useEffect(() => {
-  if (userData) {
-    pullUserStatistic(userData)
-      .then(dataExp => {
+  useEffect(() => {
+    if (userData) {
+      pullUserStatistic(userData).then((dataExp) => {
         if (dataExp) {
-          setLoadedStatistic(prepareStatisticForApp(dataExp))
+          setLoadedStatistic(prepareStatisticForApp(dataExp));
         }
-      })
-  }
-}, [isWordGuessed]);
+      });
+    }
+  }, [isWordGuessed]);
 
-
-function imageUrl (){
-  if (wordObj.image) {
-    image = getDataUrl (wordObj.image)
-  } else {
-    image = '';
-  }
-  return image;
-}
-
-
-  function showAnswear () {
-    setShowAnswear (true);
+  function imageUrl() {
+    if (wordObj.image) {
+      image = getDataUrl(wordObj.image);
+    } else {
+      image = '';
+    }
+    return image;
   }
 
-  function moveSuccesClasseName (){
-    setSuccesClasseName ('text-success')
-  };
+  function showAnswear() {
+    setShowAnswear(true);
+  }
 
-  function moveDangerClasseName (){
-    setDangerClasseName ('text-danger')
-  };
+  function moveSuccesClasseName() {
+    setSuccesClasseName('text-success');
+  }
 
-  function removeSuccesClasseName (){
-    setDangerClasseName ('none')
-  };
+  function moveDangerClasseName() {
+    setDangerClasseName('text-danger');
+  }
 
-  function removeDangerClasseName (){
-    setSuccesClasseName ('none')
-  };
+  function removeSuccesClasseName() {
+    setDangerClasseName('none');
+  }
 
+  function removeDangerClasseName() {
+    setSuccesClasseName('none');
+  }
 
   const [retfocus, setRetfocus] = useState(false);
 
-  function returnfocus () {
+  function returnfocus() {
     setRetfocus(!retfocus);
   }
 
-  const [progressBarValue,setProgressBarValue]= useState(0);
+  const [progressBarValue, setProgressBarValue] = useState(0);
 
   useEffect(() => {
-    setProgressBarValue(progressBarProcent(currentWord,wordsRaw))
+    setProgressBarValue(progressBarProcent(currentWord, wordsRaw));
   }, [currentWord]);
 
-  const [isShowStatistic,setShowStatistic]= useState(false);
-  function enterAnswer () {
-    if(currentWord >=wordsRaw.length && (succesClasseName === 'text-success')){
-      setShowStatistic(true)
-  }
-    setProgressBarValue(progressBarProcent(currentWord,wordsRaw))
-    removeDangerClasseName ()
-    removeSuccesClasseName ()
-    returnfocus ()
+  const [isShowStatistic, setShowStatistic] = useState(false);
+  function enterAnswer() {
+    if (currentWord >= wordsRaw.length && succesClasseName === 'text-success') {
+      setShowStatistic(true);
+    }
+    setProgressBarValue(progressBarProcent(currentWord, wordsRaw));
+    removeDangerClasseName();
+    removeSuccesClasseName();
+    returnfocus();
 
-    if (wordImput===wordObj.word && isWordGuessed) {
-      setCountArrWord (countArrWord+1)
-      deleteImputValue ();
+    if (wordImput === wordObj.word && isWordGuessed) {
+      setCountArrWord(countArrWord + 1);
+      deleteImputValue();
       setIsWordGuessed(false);
-      setShowAnswear (false);
+      setShowAnswear(false);
     }
 
-    if (wordImput===wordObj.word && !isWordGuessed) {
-      setCurrentWord (currentWord +1);
-        setLineCorrectResponse(lineCorrectResponse+1)
-        if(lineCorrectResponse>=(maxLineCorrectResponse)){
-          setMaxLineCorrectResponse(lineCorrectResponse+1);
-        }
-    
-      setCorrectResponse (correctResponse + 1)
-      childRef.current.playAudio()
-      setShowAnswear (true);
-      setIsWordGuessed(true);
-      moveSuccesClasseName ();
-      
-    }
+    if (wordImput === wordObj.word && !isWordGuessed) {
+      setCurrentWord(currentWord + 1);
+      setLineCorrectResponse(lineCorrectResponse + 1);
+      if (lineCorrectResponse >= maxLineCorrectResponse) {
+        setMaxLineCorrectResponse(lineCorrectResponse + 1);
+      }
 
-    if (!(wordImput===wordObj.word) && !isWordGuessed) {
-      setLineCorrectResponse(0)
-      setBadResponse (badResponse + 1)
+      setCorrectResponse(correctResponse + 1);
       childRef.current.playAudio();
-      moveDangerClasseName ();
+      setShowAnswear(true);
+      setIsWordGuessed(true);
+      moveSuccesClasseName();
     }
-    if (currentWord >=wordsRaw.length){
-      setStattisticNew();
-      
-    } 
 
+    if (!(wordImput === wordObj.word) && !isWordGuessed) {
+      setLineCorrectResponse(0);
+      setBadResponse(badResponse + 1);
+      childRef.current.playAudio();
+      moveDangerClasseName();
+    }
+    if (currentWord >= wordsRaw.length) {
+      setStattisticNew();
+    }
   }
 
   const ariaValuenow = 50;
@@ -212,78 +221,109 @@ function imageUrl (){
       setKey(e.key);
     }
   });
-  
+
   useEffect(() => {
-      if (key === 'Enter') {
-        enterAnswer();
-      };
+    if (key === 'Enter') {
+      enterAnswer();
+    }
   }, [key]);
 
-  const styleWidth = {width: `${progressBarValue}%`}
-    return (
-      <>
-      <div className={ !isShowStatistic ? "maingame  container" : "none"} >
+  const styleWidth = { width: `${progressBarValue}%` };
+  return (
+    <>
+      <div className={!isShowStatistic ? 'maingame  container' : 'none'}>
         <p className="card-title maingame__translation">
-        <span className="badge badge-pill badge-light">Выучено слов -</span>
-          <span className="badge badge-pill badge-success">{correctResponse}</span>
-          <span className="badge badge-pill badge-light"> запланировано выучить - </span>
-          <span className="badge badge-pill badge-info">{wordsRaw.length}</span></p>
+          <span className="badge badge-pill badge-light">Выучено слов -</span>
+          <span className="badge badge-pill badge-success">
+            {correctResponse}
+          </span>
+          <span className="badge badge-pill badge-light">
+            {' '}
+            запланировано выучить -{' '}
+          </span>
+          <span className="badge badge-pill badge-info">{wordsRaw.length}</span>
+        </p>
         <div className="progress">
-          <div className="progress-bar progress-bar-striped bg-info" style={styleWidth} role="progressbar" aria-valuenow={ariaValuenow} aria-valuemin={ariaValuemin} aria-valuemax={ariaValuemax}> </div>
+          <div
+            className="progress-bar progress-bar-striped bg-info"
+            style={styleWidth}
+            role="progressbar"
+            aria-valuenow={ariaValuenow}
+            aria-valuemin={ariaValuemin}
+            aria-valuemax={ariaValuemax}
+          >
+            {' '}
+          </div>
         </div>
         <div className="container__wrap">
-          <button type="button" className="maingame__button">&#60;</button>
-          <div className="card bg-light mb-3" >
+          <button type="button" className="maingame__button">
+            &#60;
+          </button>
+          <div className="card bg-light mb-3">
             <div className="card-header maingame__header">
-              <AssociationPicture srcAssociationPicture={ imageUrl() } />
+              <AssociationPicture srcAssociationPicture={imageUrl()} />
             </div>
-            <div className="card-body" >
-            
-                  <span className={succesClasseName}>Правильно!</span>
-                  <span className={dangerClasseName}>Не правино!</span>
-                
-                <h4 className="card-title" >
-                  <TextExample wordObj={wordObj} isShowAnswear={isShowAnswear}
-                    setUserWord={setUserWord} 
-                    wordImput={wordImput}
-                    retfocus={retfocus}
-                    />
-                </h4>
-                <Transcription wordObj={wordObj} isShowAnswear={isShowAnswear}/>
-                <TextMeaning wordObj={wordObj} isShowAnswear={isShowAnswear}/>
-                <p className="card-text maingame__line">__________________________________</p>
-                <TextExampleTranslate wordObj={wordObj} />
-                <TextMeaningTranslate wordObj={wordObj}/>
-                <WordTranslate wordObj={wordObj}/>
-                <Audio wordObj={wordObj} ref={childRef} />
+            <div className="card-body">
+              <span className={succesClasseName}>Правильно!</span>
+              <span className={dangerClasseName}>Не правино!</span>
+
+              <h4 className="card-title">
+                <TextExample
+                  wordObj={wordObj}
+                  isShowAnswear={isShowAnswear}
+                  setUserWord={setUserWord}
+                  wordImput={wordImput}
+                  retfocus={retfocus}
+                />
+              </h4>
+              <Transcription wordObj={wordObj} isShowAnswear={isShowAnswear} />
+              <TextMeaning wordObj={wordObj} isShowAnswear={isShowAnswear} />
+              <p className="card-text maingame__line">
+                __________________________________
+              </p>
+              <TextExampleTranslate wordObj={wordObj} />
+              <TextMeaningTranslate wordObj={wordObj} />
+              <WordTranslate wordObj={wordObj} />
+              <Audio wordObj={wordObj} ref={childRef} />
             </div>
           </div>
-          <button type="button" 
-          className="maingame__button" 
-          onClick={()=>enterAnswer ()}
-          
-          >&#62;</button>
+          <button
+            type="button"
+            className="maingame__button"
+            onClick={() => enterAnswer()}
+          >
+            &#62;
+          </button>
         </div>
         <div className="container__wrap">
-          <button type="button" className="btn btn-info" onClick={()=>showAnswear ()}>
+          <button
+            type="button"
+            className="btn btn-info"
+            onClick={() => showAnswear()}
+          >
             Показать ответ
           </button>
-          <button type="button" className="btn btn-success" onClick={()=>enterAnswer ()}>
-            {succesClasseName === 'text-success' ? "Далее...":"Проверить"}
+          <button
+            type="button"
+            className="btn btn-success"
+            onClick={() => enterAnswer()}
+          >
+            {succesClasseName === 'text-success' ? 'Далее...' : 'Проверить'}
           </button>
         </div>
       </div>
-      <div className={ isShowStatistic ? "maingame  container" : "none"} >
+      <div className={isShowStatistic ? 'maingame  container' : 'none'}>
         <div>
           <Statistic />
         </div>
         <div className="d-flex flex-row justify-content-around">
-          <Link className="btn btn-success" to={BASE_URL}>Продолжить</Link>
+          <Link className="btn btn-success" to={BASE_URL}>
+            Продолжить
+          </Link>
+        </div>
       </div>
+    </>
+  );
+};
 
-      </div>
-      </>
-    );
-  };
-  
-  export default MainGame;
+export default MainGame;
