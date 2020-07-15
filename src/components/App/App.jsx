@@ -42,21 +42,14 @@ import ErrorIndicator from '../ErrorIndicator/ErrorIndicator';
 import SpeakItWelcome from '../SpeakIt/SpeakItWelcome/SpeakItWelcome';
 import Vocabulary from "../Vocabulary/Vocabulary";
 import Footer from '../Footer/Footer';
-
 import Statistic from '../Statistic/Statistic';
 import MiniGamesStatistics from '../Statistic/Components/MiniGamesStatistics';
-
 import SpeakItTrain from '../SpeakIt/SpeakItTrain/SpeakItTrain';
-
 import MainGamePlay from '../MainGame/MainGamePlay';
-
 import MainGame from '../MainGame/MainGame';
-
+import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/constants/speakItConstants';
 import StartPageOurGame from '../OurGame/StartPageOurGame';
-
-import { PATH_SPEAKIT_TRAIN } from '../SpeakIt/SpeakItTrain/constants/speakItConstants';
 import StartPageAudioChallenge from '../AudioChallenge/StartPageAudioChallenge';
-
 import Savannah from '../Savannah/Savannah';
 import SavannahWelcome from '../Savannah/UI/SavannahWelcome';
 

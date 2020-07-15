@@ -1,5 +1,4 @@
 import React from 'react';
-import SpeakItTrainBlock from '../SpeakItTrainBlock/SpeakItTrainBlock';
 
 import './SpeakItTrainLevel.scss';
 
@@ -12,9 +11,7 @@ const levels = [
   { id: 6 },
 ];
 
-let currentTrainLevel = 1;
-
-const SpeakItTrainLevel = () => {
+const SpeakItTrainLevel = ({ currentTrainLevel, setCurrentTrainLevel }) => {
   const handleCheck = (event) => {
     const clickedElement = event.target;
 
@@ -23,12 +20,12 @@ const SpeakItTrainLevel = () => {
         ...document.querySelectorAll('.train-levels__level'),
       ];
       trainLevelElements.forEach((el) =>
-        el.classList.remove('train-levels__level--active')
+        el.classList.remove('train-levels__level--active'),
       );
-  
+
       clickedElement.classList.add('train-levels__level--active');
-  
-      currentTrainLevel = event.target.id;
+
+      setCurrentTrainLevel(event.target.id);
     }
   };
 
@@ -50,12 +47,7 @@ const SpeakItTrainLevel = () => {
     });
   };
 
-  return (
-    <div className="train-page  container">
-      <ul className="train-levels">{createItem()}</ul>
-      <SpeakItTrainBlock />
-    </div>
-  );
+  return <ul className="train-levels">{createItem()}</ul>;
 };
 
 export default SpeakItTrainLevel;

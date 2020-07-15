@@ -6,6 +6,7 @@
   --gray-color: grey;
   --lightyellow-color: #fbe898;
   --lightgreen-color: #ccf4d3;
+  --red-color: red;
 }
 
 .train {
@@ -16,6 +17,19 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  &__error {
+    width: 400px;
+    height: 30px;
+    margin-bottom: 10px;
+
+    & span {
+      display: block;
+
+      text-align: center;
+      color: var(--red-color);
+    }
+  }
 
   &__img {
     display: block;
@@ -33,10 +47,51 @@
     height: 60px;
     margin-bottom: 20px;
 
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    text-align: center;
 
     font-size: 20px;
+
+    &__train {
+      height: 30px;
+      width: 100%;
+    }
+
+    &__speak {
+      height: 30px;
+      width: 100%;
+
+      &-result {
+        position: relative;
+
+        display: block;
+        height: 30px;
+        width: 100%;
+        padding-bottom: 5px;
+
+        font-size: 20px;
+        text-align: center;
+        border-bottom: 2px solid grey;
+
+        &::before {
+          position: absolute;
+          left: 0;
+          top: -10px;
+          content: '';
+
+          width: 40px;
+          height: 40px;
+
+          background-image: url('../../assets/icons/microphone.png');
+          background-size: cover;
+        }
+      }
+    }
+  }
+
+  &-buttons {
+    margin-bottom: 30px;
   }
 
   &-buttons__restart,
@@ -70,6 +125,7 @@
   flex-wrap: wrap;
 
   width: 1000px;
+  height: 225px;
 
   &__card {
     position: relative;
@@ -115,10 +171,10 @@
     }
 
     &--guessed {
-      background-color: --lightgreen-color;
+      background-color: var(--lightgreen-color);
 
       &:before {
-        background-color: --lightgreen-color;
+        background-color: var(--lightgreen-color);
       }
     }
 
@@ -130,6 +186,6 @@
     }
   }
   &__transcription {
-    color: --gray-color;
+    color: var(--gray-color);
   }
 }
