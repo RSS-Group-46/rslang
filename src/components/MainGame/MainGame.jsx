@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -28,6 +30,8 @@ import AuthContext from '../../contexts/auth.context';
 
 import useUserAggregatedWords from '../../hooks/userAggregatedWords.hook';
 import { selectSettings } from '../../redux/selectors/settings.selectors';
+import useWord from '../../hooks/word.hook';
+import { DIFFICULTY_DESCRIPTIONS } from '../../constants/settingsConstants';
 
 import {
   getPlayData,
@@ -41,15 +45,13 @@ const MainGame = () => {
   const { userId, token } = useContext(AuthContext);
   const userData = { userId, token };
 
-  let image = '';
   const settings = useSelector(selectSettings);
 
   const wordsPerRound = settings.wordsPerDay;
 
-  const [currentGroup] = useState(0);
-
+  const [image, setImage] = useState('');
   const [wordImput, setUserWord] = useState('');
-  const [currentWord, setCurrentWord] = useState(0);
+  const [currentWordNum, setCurrentWord] = useState(0);
   const [isShowAnswear, setShowAnswear] = useState(false);
 
   const [countArrWord, setCountArrWord] = useState(0);
@@ -64,6 +66,8 @@ const MainGame = () => {
 
   const [succesClasseName, setSuccesClasseName] = useState('none');
   const [dangerClasseName, setDangerClasseName] = useState('none');
+
+  const { createUserWord, deleteUserWord, updateUserWord } = useWord();
 
   const dispatch = useDispatch();
   function saveStatisticClick(gettingStatistic) {
@@ -102,7 +106,7 @@ const MainGame = () => {
   const wordsConfig = {
     userId,
     token,
-    group: currentGroup,
+    group: Number(settings.difficulty),
     wordsPerPage: wordsPerRound,
     filter: {
       $or: [
@@ -127,14 +131,11 @@ const MainGame = () => {
     }
   }, [isWordGuessed]);
 
-  function imageUrl() {
+  useEffect(() => {
     if (wordObj.image) {
-      image = getDataUrl(wordObj.image);
-    } else {
-      image = '';
+      setImage(getDataUrl(wordObj.image));
     }
-    return image;
-  }
+  }, [wordObj]);
 
   function showAnswear() {
     setShowAnswear(true);
@@ -164,29 +165,36 @@ const MainGame = () => {
 
   const [progressBarValue, setProgressBarValue] = useState(0);
 
+  const moveToNextWord = () => {
+    setCountArrWord(countArrWord + 1);
+    deleteImputValue();
+    setIsWordGuessed(false);
+    setShowAnswear(false);
+  };
+
   useEffect(() => {
-    setProgressBarValue(progressBarProcent(currentWord, wordsRaw));
-  }, [currentWord]);
+    setProgressBarValue(progressBarProcent(currentWordNum, wordsRaw));
+  }, [currentWordNum]);
 
   const [isShowStatistic, setShowStatistic] = useState(false);
   function enterAnswer() {
-    if (currentWord >= wordsRaw.length && succesClasseName === 'text-success') {
+    if (
+      currentWordNum >= wordsRaw.length &&
+      succesClasseName === 'text-success'
+    ) {
       setShowStatistic(true);
     }
-    setProgressBarValue(progressBarProcent(currentWord, wordsRaw));
+    setProgressBarValue(progressBarProcent(currentWordNum, wordsRaw));
     removeDangerClasseName();
     removeSuccesClasseName();
     returnfocus();
 
     if (wordImput === wordObj.word && isWordGuessed) {
-      setCountArrWord(countArrWord + 1);
-      deleteImputValue();
-      setIsWordGuessed(false);
-      setShowAnswear(false);
+      moveToNextWord();
     }
 
     if (wordImput === wordObj.word && !isWordGuessed) {
-      setCurrentWord(currentWord + 1);
+      setCurrentWord(currentWordNum + 1);
       setLineCorrectResponse(lineCorrectResponse + 1);
       if (lineCorrectResponse >= maxLineCorrectResponse) {
         setMaxLineCorrectResponse(lineCorrectResponse + 1);
@@ -196,6 +204,18 @@ const MainGame = () => {
       childRef.current.playAudio();
       setShowAnswear(true);
       setIsWordGuessed(true);
+      createUserWord({
+        userId,
+        token,
+        wordId: wordObj._id,
+        word: {
+          difficulty: DIFFICULTY_DESCRIPTIONS[wordObj.group],
+          optional: {
+            trash: false,
+            difficult: false,
+          },
+        },
+      });
       moveSuccesClasseName();
     }
 
@@ -205,7 +225,7 @@ const MainGame = () => {
       childRef.current.playAudio();
       moveDangerClasseName();
     }
-    if (currentWord >= wordsRaw.length) {
+    if (currentWordNum >= wordsRaw.length) {
       setStattisticNew();
     }
   }
@@ -227,6 +247,19 @@ const MainGame = () => {
       enterAnswer();
     }
   }, [key]);
+
+  const moveToDifficult = () => {
+    updateUserWord({
+      userId,
+      token,
+      wordId: wordObj._id,
+      word: {
+        optional: {
+          difficult: true,
+        },
+      },
+    });
+  };
 
   const styleWidth = { width: `${progressBarValue}%` };
   return (
@@ -261,7 +294,7 @@ const MainGame = () => {
           </button>
           <div className="card bg-light mb-3">
             <div className="card-header maingame__header">
-              <AssociationPicture srcAssociationPicture={imageUrl()} />
+              <AssociationPicture srcAssociationPicture={image} />
             </div>
             <div className="card-body">
               <span className={succesClasseName}>Правильно!</span>
@@ -296,19 +329,41 @@ const MainGame = () => {
           </button>
         </div>
         <div className="container__wrap">
-          <button
-            type="button"
-            className="btn btn-info"
-            onClick={() => showAnswear()}
-          >
-            Показать ответ
-          </button>
+          {settings.showAnswerButton && (
+            <button
+              type="button"
+              className="btn btn-info"
+              onClick={() => showAnswear()}
+            >
+              Reveal the answer
+            </button>
+          )}
+          {settings.showDeleteButton && (
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={() =>
+                deleteUserWord({ userId, token, wordId: wordObj._id })
+              }
+            >
+              Delete this word
+            </button>
+          )}
+          {settings.showMoveToComplicatedButton && (
+            <button
+              type="button"
+              className="btn btn-warning"
+              onClick={() => moveToDifficult()}
+            >
+              Move to difficult
+            </button>
+          )}
           <button
             type="button"
             className="btn btn-success"
             onClick={() => enterAnswer()}
           >
-            {succesClasseName === 'text-success' ? 'Далее...' : 'Проверить'}
+            {succesClasseName === 'text-success' ? 'Next...' : 'Check!'}
           </button>
         </div>
       </div>

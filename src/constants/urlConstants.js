@@ -10,7 +10,6 @@ export const PROMO_URL = '/promo';
 export const TEAM_URL = '/team';
 export const ERROR = '/error';
 export const MAIN_GAME_URL = '/main-game';
-export const MAIN_GAME_PLAY_URL = '/main-game-play';
 
 // vocabulary
 export const LEARNED_URL = '/learned';
