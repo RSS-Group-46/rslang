@@ -40,28 +40,30 @@ const promptsInitialState = {
   showVoice: false,
   hasTranslate: true,
   hasImageShown: true,
-  hasVoice: true
-}
+  hasVoice: true,
+};
 
 const optionsInitialState = {
   page: START_PAGE,
   level: START_LEVEL,
-  useUserWords: true
-}
+  useUserWords: true,
+};
 
 const resultsInitialState = {
   guessed: [],
-  unguessed: []
-}
+  unguessed: [],
+};
 
 const puzzleGameName = 'puzzle';
 
-const normalizeSentences = (sentences) => sentences.map((w) => ({
-  sentence: removeHtml(w.textExample),
-  translate: w.textExampleTranslate,
-  audioExample: w.audioExample
-}))
-  .filter((s) => s.sentence.split(' ').length <= MAX_WORDS);
+const normalizeSentences = (sentences) =>
+  sentences
+    .map((w) => ({
+      sentence: removeHtml(w.textExample),
+      translate: w.textExampleTranslate,
+      audioExample: w.audioExample,
+    }))
+    .filter((s) => s.sentence.split(' ').length <= MAX_WORDS);
 
 const Puzzle = () => {
   const [sentences, setSentences] = useState([]);
@@ -71,7 +73,10 @@ const Puzzle = () => {
   const [sentenceInRightOrder, setSentenceInRightOrder] = useState([]);
   const [results, setResults] = useState(resultsInitialState);
   const [backgroundImage, setBackgroundImage] = useState(null);
-  const [nativeImageDimensions, setNativeImageDimensions] = useState({ width: 0, height: 0 });
+  const [nativeImageDimensions, setNativeImageDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
   const [needToCheck, setNeedToCheck] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [imageHeight, setImageHeight] = useState(0);
@@ -82,9 +87,17 @@ const Puzzle = () => {
   const [needToShowResults, setNeedToShowResults] = useState(false);
 
   const { token, userId } = useAuth();
-  const wordsConfig = { userId, token, group: options.level, wordsPerPage: MAX_WORDS, filter: ONLY_USER_WORDS };
+  const wordsConfig = {
+    userId,
+    token,
+    group: options.level,
+    wordsPerPage: MAX_WORDS,
+    filter: ONLY_USER_WORDS,
+  };
   const { data } = useUserAggregatedWords(wordsConfig);
-  const userSentences = normalizeSentences(data && data[0].paginatedResults || []);
+  const userSentences = normalizeSentences(
+    (data && data[0].paginatedResults) || [],
+  );
 
   const { width: screenWidth } = useWindowDimensions();
 
@@ -98,15 +111,17 @@ const Puzzle = () => {
         return;
       }
       const { page, level } = options;
-      getWords(level, page, MAX_WORDS).then(newSentences => {
+      getWords(level, page, MAX_WORDS).then((newSentences) => {
         if (sentences.length) {
           return;
         }
         const normalized = normalizeSentences(newSentences);
-        const merged = options.useUserWords ? mergeSentences(userSentences, normalized) : normalized;
+        const merged = options.useUserWords
+          ? mergeSentences(userSentences, normalized)
+          : normalized;
         setSentences(merged);
       });
-    }
+    };
 
     const background = getRandomImage();
     const img = new Image();
@@ -114,9 +129,11 @@ const Puzzle = () => {
       setBackgroundImage(background);
       const { width, height } = img;
       setNativeImageDimensions({ width, height });
-      setImageHeight(Math.floor(((height * getContentWidth(screenWidth)) / width)));
+      setImageHeight(
+        Math.floor((height * getContentWidth(screenWidth)) / width),
+      );
       getAndSetWords();
-    }
+    };
     img.src = background.url;
   }, [backgroundImage, screenWidth, options, sentences, userSentences]);
 
@@ -125,18 +142,22 @@ const Puzzle = () => {
       return;
     }
     const next = sentences.shift();
-    if (mergeSentences(results.guessed, results.unguessed).includes(next.sentence)) {
+    if (
+      mergeSentences(results.guessed, results.unguessed).includes(next.sentence)
+    ) {
       prepareNextSentence();
     } else {
       const sentenceInRightOrderToSet = next.sentence.split(' ');
-      const sentenceToCompileToSet = shuffle(mapSentenceToWordWithId(sentenceInRightOrderToSet));
+      const sentenceToCompileToSet = shuffle(
+        mapSentenceToWordWithId(sentenceInRightOrderToSet),
+      );
 
       setSentenceToCompille(sentenceToCompileToSet);
       setSentenceInRightOrder(sentenceInRightOrderToSet);
       setPrompts({
         ...promptsInitialState,
         translate: next.translate,
-        audioExampleUrl: getDataUrl(next.audioExample)
+        audioExampleUrl: getDataUrl(next.audioExample),
       });
     }
   }, [results, sentences]);
@@ -148,7 +169,7 @@ const Puzzle = () => {
     setNeedToCheck(false);
     setIsChecked(false);
     setPrompts(promptsInitialState);
-  }
+  };
 
   const restartGame = useCallback(() => {
     clearWorkzone();
@@ -172,10 +193,11 @@ const Puzzle = () => {
 
   useEffect(() => {
     const { width, height } = nativeImageDimensions;
-    setImageHeight(Math.floor(((height * getContentWidth(screenWidth)) / width)));
+    setImageHeight(Math.floor((height * getContentWidth(screenWidth)) / width));
   }, [screenWidth, nativeImageDimensions]);
 
-  const getListById = (droppableId) => droppableId === STORE_DROPPABLE_ID ? sentenceToCompile : compilledSentence;
+  const getListById = (droppableId) =>
+    droppableId === STORE_DROPPABLE_ID ? sentenceToCompile : compilledSentence;
 
   const doReorder = (source, destination) => {
     if (needToCheck) {
@@ -185,27 +207,22 @@ const Puzzle = () => {
     const recompilled = reorder(
       isSentenceToCompile ? sentenceToCompile : compilledSentence,
       source.index,
-      destination.index
+      destination.index,
     );
     if (isSentenceToCompile) {
       setSentenceToCompille(recompilled);
     } else {
       setCompilledSentence(recompilled);
     }
-  }
+  };
 
   const doMove = (source, destination) => {
     const sourceList = getListById(source.droppableId);
     const destinationList = getListById(destination.droppableId);
-    const result = move(
-      sourceList,
-      destinationList,
-      source,
-      destination
-    );
+    const result = move(sourceList, destinationList, source, destination);
     setCompilledSentence(result[PICTURE_ROW_DROPPABLE_ID]);
     setSentenceToCompille(result[STORE_DROPPABLE_ID]);
-  }
+  };
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
@@ -218,7 +235,7 @@ const Puzzle = () => {
     } else {
       doMove(source, destination);
     }
-  }
+  };
 
   const finishGame = () => setPuzzleIsCompilled(true);
 
@@ -230,16 +247,18 @@ const Puzzle = () => {
     setSentenceToCompille([]);
     setCompilledSentence(mapSentenceToWordWithId(sentenceInRightOrder));
     addUnguessed(sentenceInRightOrder.join(' '));
-  }
+  };
 
-  const getIsCompilledCorrect = () => JSON.stringify(compilledSentence.map((w) => w.word)) === JSON.stringify(sentenceInRightOrder);
+  const getIsCompilledCorrect = () =>
+    JSON.stringify(compilledSentence.map((w) => w.word)) ===
+    JSON.stringify(sentenceInRightOrder);
 
   const checkCompilledSentence = () => {
     setNeedToCheck(true);
     if (getIsCompilledCorrect()) {
       setIsChecked(true);
     }
-  }
+  };
 
   const upgradeLevel = () => {
     const { level, page } = options;
@@ -247,9 +266,9 @@ const Puzzle = () => {
     setOptions({
       ...options,
       level: nextLevel,
-      page: nextPage
-    })
-  }
+      page: nextPage,
+    });
+  };
 
   const proceedGame = () => {
     freezedSentences.push(compilledSentence);
@@ -259,7 +278,7 @@ const Puzzle = () => {
     } else {
       prepareNextSentence();
     }
-  }
+  };
 
   const sendStatistics = () => {
     const userData = localStorage.getItem(USER_DATA_STORAGE_NAME);
@@ -269,11 +288,16 @@ const Puzzle = () => {
     const statisticsEntity = {
       time: new Date().toLocaleString(),
       correct: guessed.length,
-      wrong: unguessed.length
-    }
+      wrong: unguessed.length,
+    };
 
-    pushMiniGamesRoundStatistics(puzzleGameName, statisticsEntity, guessed.length + unguessed.length, JSON.parse(userData))
-  }
+    pushMiniGamesRoundStatistics(
+      puzzleGameName,
+      statisticsEntity,
+      guessed.length + unguessed.length,
+      JSON.parse(userData),
+    );
+  };
 
   const doContinue = () => {
     const previousSentence = sentenceInRightOrder.join(' ');
@@ -286,7 +310,7 @@ const Puzzle = () => {
     } else {
       proceedGame();
     }
-  }
+  };
 
   const moveToCompilled = (word) => {
     const compilledSentenceClone = Array.from(compilledSentence);
@@ -295,7 +319,7 @@ const Puzzle = () => {
     compilledSentenceClone.push(word);
     setSentenceToCompille(sentenceToCompileClone);
     setCompilledSentence(compilledSentenceClone);
-  }
+  };
 
   const doTranslate = () => {
     if (prompts.hasTranslate) {
@@ -303,57 +327,60 @@ const Puzzle = () => {
         ...prompts,
         hasTranslate: false,
         showTranslate: true,
-      })
+      });
     }
-  }
+  };
 
   const doShowImage = () => {
     if (prompts.hasImageShown) {
       setPrompts({
         ...prompts,
         showImage: true,
-        hasImageShown: false
-      })
+        hasImageShown: false,
+      });
     }
-  }
+  };
 
   const doVoice = () => {
     if (prompts.hasVoice) {
       setPrompts({
         ...prompts,
         showVoice: true,
-        hasVoice: false
-      })
+        hasVoice: false,
+      });
     }
-  }
+  };
 
   const doChangeLevel = (e) => {
     const level = Number(e.target.value);
     setOptions({
       ...options,
-      level
-    })
-  }
+      level,
+    });
+  };
 
   const doChangePage = (e) => {
     const page = Number(e.target.value);
     setOptions({
       ...options,
-      page
-    })
-  }
+      page,
+    });
+  };
 
   const doCheckUseUserWords = () => {
     setOptions({
       ...options,
-      useUserWords: !options.useUserWords
-    })
-  }
+      useUserWords: !options.useUserWords,
+    });
+  };
 
   return (
     <div className="puzzle_wrapper">
       <div className="puzzle_background" />
-      <div className="puzzle_container" style={{ minWidth: getContentWidth(screenWidth) }}>
+      <div
+        className="puzzle_container"
+        style={{ minWidth: getContentWidth(screenWidth) }}
+      >
         <ScreenWidthContext.Provider value={screenWidth}>
           <PuzzleOptions
             doTranslate={doTranslate}
@@ -365,27 +392,25 @@ const Puzzle = () => {
             prompts={prompts}
             options={options}
           />
-          <PuzzlePromptShow
-            prompts={prompts}
-          />
+          <PuzzlePromptShow prompts={prompts} />
           <BackgroundContext.Provider value={backgroundImage}>
-            {puzzleIsCompilled &&
+            {puzzleIsCompilled && (
               <PuzzleImageContainer imageHeight={imageHeight} />
-            }
-            {!puzzleIsCompilled &&
+            )}
+            {!puzzleIsCompilled && (
               <div className="puzzle__freezed">
-                {freezedSentences.map((freezedSentence, i) =>
+                {freezedSentences.map((freezedSentence, i) => (
                   <PuzzleFreezedRow
                     sentence={freezedSentence}
                     puzzleHeight={puzzleHeight}
                     rowNum={i}
                     key={freezedSentence.map((s) => s.word).join(' ')}
                   />
-                )}
+                ))}
               </div>
-            }
+            )}
             <DragDropContext onDragEnd={onDragEnd}>
-              {!puzzleIsCompilled &&
+              {!puzzleIsCompilled && (
                 <PuzzleCompilledSentence
                   puzzleHeight={puzzleHeight}
                   compilledSentence={compilledSentence}
@@ -395,14 +420,15 @@ const Puzzle = () => {
                   showImage={prompts.showImage}
                   sentenceInRightOrder={sentenceInRightOrder}
                 />
-              }
-              {puzzleIsCompilled &&
-                <div className="puzzle__picture-row round-end"
+              )}
+              {puzzleIsCompilled && (
+                <div
+                  className="puzzle__picture-row round-end"
                   style={{ height: puzzleHeight }}
                 >
                   <p>{backgroundImage.pictureName}</p>
                 </div>
-              }
+              )}
               <PuzzleSentenceToCompile
                 sentenceToCompile={sentenceToCompile}
                 puzzleHeight={puzzleHeight}
@@ -431,7 +457,7 @@ const Puzzle = () => {
         </ScreenWidthContext.Provider>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Puzzle;

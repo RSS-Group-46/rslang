@@ -1,62 +1,47 @@
-import React  from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectShowDescribe } from '../../../redux/selectors/settings.selectors';
 import WordReadonly from './WordReadonly';
 
-let textClassName
+const TextMeaning = ({ wordObj, isShowAnswear }) => {
+  const showDescribe = useSelector(selectShowDescribe);
 
-const TextMeaning = (props) => {
-    const showDescribe = useSelector(selectShowDescribe);
-    if (showDescribe) {
-        textClassName = 'card-text maingame__sentence';
-      } else {
-        textClassName = 'none';
-      }
-
-function firstPartSentens (){
+  function firstPartSentens() {
     let textMeaning;
-    let textShowString
+    let textShowString;
     const regexp = /<i>/i;
-    if (props.wordObj) {
-        textMeaning = props.wordObj.textMeaning;
-        if (regexp.test(textMeaning)) {
-            const [seatchtSring] =  textMeaning.split('<i>')
-            textShowString =  seatchtSring;
-        } else {
-        textShowString =  '';
-        }
-    } else {
-        textShowString = '';
+    if (wordObj) {
+      textMeaning = wordObj.textMeaning;
+      if (regexp.test(textMeaning)) {
+        const [seatchtSring] = textMeaning.split('<i>');
+        textShowString = seatchtSring;
+      }
     }
     return textShowString;
-}
+  }
 
-function secondPartSentens (){
+  function secondPartSentens() {
     let textMeaning;
     const regexp = /<\/i>/i;
-    let textShowString
-    if (props.wordObj) {
-        textMeaning = props.wordObj.textMeaning;
-        if (regexp.test(textMeaning)) {
-            const [, seatchtSring] =  textMeaning.split('</i>')
-            textShowString =  seatchtSring;
-        }else {
-            textShowString =  '';
-            }
-    } else {
-        textShowString = '';
+    let textShowString;
+    if (wordObj) {
+      textMeaning = wordObj.textMeaning;
+      if (regexp.test(textMeaning)) {
+        const [, seatchtSring] = textMeaning.split('</i>');
+        textShowString = seatchtSring;
+      }
     }
     return textShowString;
-}
+  }
 
-    return (
-        <p  className={textClassName}>
-            <span>{firstPartSentens ()}</span>
-            <WordReadonly wordObj={props.wordObj} isShowAnswear={props.isShowAnswear}/>
-            <span>{secondPartSentens ()}</span>
-        </p>
-    );
-  };
-  
-  export default TextMeaning;
+  return (
+    <p className={showDescribe ? 'card-text maingame__sentence' : 'none'}>
+      <span>{firstPartSentens()}</span>
+      <WordReadonly wordObj={wordObj} isShowAnswear={isShowAnswear} />
+      <span>{secondPartSentens()}</span>
+    </p>
+  );
+};
+
+export default TextMeaning;

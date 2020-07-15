@@ -1,57 +1,34 @@
+import React, { useRef, useEffect, useState } from 'react';
 
-import React, {useRef, useEffect}  from 'react';
+const Word = ({ wordObj, isShowAnswear, setUserWord, retfocus, wordImput }) => {
+  const [word, setWord] = useState('');
 
-const Word = (props) => {
-
-
-function wordPlaceholder () {
-    let word;
-    if (props.wordObj.word) {
-        word = props.wordObj.word;
-    } else {
-        word = '';
+  useEffect(() => {
+    if (wordObj) {
+      setWord(wordObj.word);
     }
-    return word
-    }
+  }, [wordObj]);
 
-    function ShowWordPlaceholder () {
-        let show
-        if (!props.isShowAnswear) {
-            show = '';
-        } else {
-            show =  wordPlaceholder ();
-        }
-        return show;
-    }
-    
+  const focusRef = useRef();
+  function returnfocus() {
+    focusRef.current.focus();
+  }
 
-    const { setUserWord } = props;
+  useEffect(() => {
+    returnfocus();
+  }, [retfocus]);
 
-    const focusRef = useRef();
-  
-    function returnfocus () {
-        focusRef.current.focus();
-    }
-    const {retfocus }= props;
+  return (
+    <input
+      type="text"
+      className="maingame__pasteWord maingame__pasteWord_placeholder"
+      placeholder={isShowAnswear ? word : ''}
+      size={word ? word.length : 1}
+      onChange={(e) => setUserWord(e.target.value)}
+      value={wordImput}
+      ref={focusRef}
+    />
+  );
+};
 
-    useEffect(() => {
-        returnfocus ()
-      }, [retfocus]);
-
-    
-
-    return (
-        <>
-            <input type="text" 
-                className="maingame__pasteWord maingame__pasteWord_placeholder" 
-                placeholder={ShowWordPlaceholder ()} 
-                size={wordPlaceholder().length}
-                onChange={(e) => setUserWord(e.target.value)} 
-                value={props.wordImput}
-                ref={focusRef}
-            />
-        </>
-    );
-  };
-  
-  export default Word;
+export default Word;

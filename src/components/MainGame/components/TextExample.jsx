@@ -1,74 +1,59 @@
-import React  from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectShowExample } from '../../../redux/selectors/settings.selectors';
 import Word from './Word';
 
-let textClassName
+const TextExample = ({
+  wordObj,
+  isShowAnswear,
+  setUserWord,
+  wordImput,
+  retfocus,
+}) => {
+  const showExample = useSelector(selectShowExample);
 
-const TextExample = (props) => {
-    const showExample = useSelector(selectShowExample);
-    if (showExample) {
-        textClassName = '';
-      } else {
-        textClassName = 'none';
+  function firstPartSentens() {
+    let textMeaning;
+    let textShowString;
+    const regexp = /<b>/i;
+    if (wordObj) {
+      textMeaning = wordObj.textExample;
+      if (regexp.test(textMeaning)) {
+        const [seatchtSring] = textMeaning.split('<b>');
+        textShowString = seatchtSring;
       }
-
-    function firstPartSentens (){
-        let textMeaning;
-        let textShowString
-        const regexp = /<b>/i;
-        if (props.wordObj) {
-            textMeaning = props.wordObj.textExample;
-            if (regexp.test(textMeaning)) {
-                const [seatchtSring] =  textMeaning.split('<b>')
-                textShowString =  seatchtSring;
-            } else {
-                textShowString =  '';
-                }
-        } else {
-            textShowString = '';
-        }
-        return textShowString;
     }
-    
-    function secondPartSentens (){
-        let textMeaning;
-        const regexp = /<\/b>/i;
-        let textShowString
-        if (props.wordObj) {
-            textMeaning = props.wordObj.textExample;
-            if (regexp.test(textMeaning)) {
-                const [, seatchtSring] =  textMeaning.split('</b>')
-                textShowString =  seatchtSring;
-            } else {
-                textShowString =  '';
-                }
-        } else {
-            textShowString = '';
-        }
-        return textShowString;
-    } 
+    return textShowString;
+  }
 
-    return (
-        <>
-            <span className={textClassName}>{firstPartSentens ()}</span>
-            <Word wordObj={props.wordObj} isShowAnswear={props.isShowAnswear} 
-            setUserWord={props.setUserWord} wordImput={props.wordImput} retfocus={props.retfocus}/>
-            <span className={textClassName}>{secondPartSentens ()}</span>
-        </>
-    );
-  };
-  
-  export default TextExample;
+  function secondPartSentens() {
+    let textMeaning;
+    const regexp = /<\/b>/i;
+    let textShowString;
+    if (wordObj) {
+      textMeaning = wordObj.textExample;
+      if (regexp.test(textMeaning)) {
+        const [, seatchtSring] = textMeaning.split('</b>');
+        textShowString = seatchtSring;
+      }
+    }
+    return textShowString;
+  }
 
-  /*
-  useEffect(() => {
-  
-  document.addEventListenet('keydown', (e) => {
-    if (e.key === 'Enter') {
-      enterAnswear();
-    };  
-  });
-}, []);
-*/
+  return (
+    <>
+      <span className={showExample ? '' : 'none'}>{firstPartSentens()}</span>
+      <Word
+        wordObj={wordObj}
+        isShowAnswear={isShowAnswear}
+        setUserWord={setUserWord}
+        wordImput={wordImput}
+        retfocus={retfocus}
+      />
+      <span className={showExample ? '' : 'none'}>{secondPartSentens()}</span>
+    </>
+  );
+};
+
+export default TextExample;

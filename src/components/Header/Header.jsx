@@ -19,50 +19,44 @@ const Header = () => {
   const isAuth = !!auth.token;
 
   return (
-    <header className="header">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <NavLink className="navbar-brand" to={BASE_URL}>
-          RS Lang
-        </NavLink>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarColor03"
-          aria-controls="navbarColor03"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
-        {isAuth && (
-          <div className="collapse navbar-collapse" id="navbarColor03">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
-                <NavLink className="nav-link" to={BASE_URL}>
-                  Home <span className="sr-only">(current)</span>
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to={MAIN_GAME_PLAY_URL}>
-                  Main game
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to={STATISTICS_URL}>
-                  Statistics
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to={VOCABULARY_URL}>
-                  Vocabulary
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to={MINI_GAMES_URL}>
-                  Mini-Games
-                </NavLink>
-              </li>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <NavLink className="navbar-brand" to={BASE_URL}>
+        RS Lang
+      </NavLink>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarColor03"
+        aria-controls="navbarColor03"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon" />
+      </button>
+      {isAuth && (
+        <div className="collapse navbar-collapse" id="navbarColor03">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <NavLink className="nav-link" to={BASE_URL}>
+                Home <span className="sr-only">(current)</span>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to={STATISTICS_URL}>
+                Statistics
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to={VOCABULARY_URL}>
+                Vocabulary
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to={MINI_GAMES_URL}>
+                Mini-Games
+              </NavLink>
+            </li>
 
             <li className="nav-item">
               <NavLink exact className="nav-link" to={PROMO_URL}>

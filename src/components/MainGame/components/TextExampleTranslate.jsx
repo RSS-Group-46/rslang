@@ -1,31 +1,22 @@
-import React  from 'react';
+import React, {useState, useEffect}   from 'react';
 import { useSelector } from 'react-redux';
-
 import { selectShowExample } from '../../../redux/selectors/settings.selectors';
 
-let textClassName
 
-const TextExampleTranslate = (props) => {
+const TextExampleTranslate = ({wordObj}) => {
     const showExample = useSelector(selectShowExample);
-    if (showExample) {
-        textClassName = 'card-text maingame__sentence';
-      } else {
-        textClassName = 'none';
-      }
 
-    function textExampleShow () {
-        let word;
-        if (props.wordObj) {
-            word = props.wordObj.textExampleTranslate;
-        } else {
-            word = '';
+    const [textExampleTranslate, setWordTranscription] = useState('')
+
+    useEffect (()=>{
+        if(wordObj){
+            setWordTranscription(wordObj.textExampleTranslate)
         }
-        return word
-    }
+    }, [wordObj]);
 
     return (
-        <p  className={textClassName}>
-            {textExampleShow ()}
+        <p  className={showExample ? 'card-text maingame__sentence' : 'none'}>
+            {textExampleTranslate}
         </p>
     );
   };

@@ -1,31 +1,25 @@
-import React  from 'react';
+import React, { useState, useEffect } from 'react';
 
-const WordReadonly = (props) => {
+const WordReadonly = ({ wordObj, isShowAnswear }) => {
+  const [word, setWord] = useState(' ');
 
-function wordPlaceholder () {
-    let word;
-    if (props.wordObj.word) {
-        word = props.wordObj.word;
-    } else {
-        word = '';
+  useEffect(() => {
+    if (wordObj) {
+      setWord(wordObj.word);
     }
-    return word
-    }
-    function ShowWordPlaceholder () {
-        let show
-        if (!props.isShowAnswear) {
-            show = '';
-        } else {
-            show =  wordPlaceholder ();
-        }
-        return show;
-    }
+  }, [wordObj]);
 
-    return (
-        <>
-            <input type="text" readOnly='readOnly' className="maingame__pasteWord maingame__pasteWord_placeholder" placeholder={ShowWordPlaceholder ()} size={wordPlaceholder().length}/>
-        </>
-    );
-  };
-  
-  export default WordReadonly;
+  return (
+    <>
+      <input
+        type="text"
+        readOnly="readOnly"
+        className="maingame__pasteWord maingame__pasteWord_textMeaning"
+        placeholder={isShowAnswear ? word : '.................................'}
+        size={word ? word.length : 1}
+      />
+    </>
+  );
+};
+
+export default WordReadonly;
