@@ -6,6 +6,7 @@ import Button from '../../UI/Button/Button';
 import defaultTrainImg from '../../assets/images/train-img.jpg';
 import { STATIC_URL, TRANSLATE_URL } from '../../constants/speakItConstants';
 import SpeakItError from '../SpeakItError/SpeakItError';
+import SpeakItStatistics from '../../SpeakItStatistics/SpeakItStatistics';
 
 import './SpeakItTrainBlock.scss';
 
@@ -33,6 +34,7 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
   });
   const [isError, setIsError] = useState(false);
   const [errorText, setErrorText] = useState('');
+  const [statistics, setStatistics] = useState(false);
 
   const wordsURL = `https://afternoon-falls-25894.herokuapp.com/words?page=${page}$&group=${
     currentTrainLevel - 1
@@ -106,6 +108,10 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
   const classesSpeak = 'train-buttons__speak';
   const classesResult = 'train-buttons__results';
 
+  const showStatistics = () => {
+    setStatistics(!statistics);
+  };
+
   return (
     <div className="train  container">
       <div className="train__error">
@@ -140,7 +146,12 @@ const SpeakItTrainBlock = ({ currentTrainLevel, words, setWords }) => {
             Speak please
           </Button>
         )}
-        <Button classes={classesResult}>Results</Button>
+        <Button classes={classesResult} onClick={showStatistics}>
+          Results
+        </Button>
+        {statistics && (
+          <SpeakItStatistics words={words} setStatistics={setStatistics} />
+        )}
       </div>
     </div>
   );
